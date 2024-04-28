@@ -74,18 +74,23 @@ public class PartA {
     }
 
     public static List<Node> bfs(Node start, Node goal, int planetSize) {
-        Queue<Node> frontier = new PriorityQueue<>(Comparator.comparingDouble(n -> n.cost));
+        Queue<Node> frontier = new LinkedList<>();
         Set<Node> explored = new HashSet<>();
         frontier.add(start);
+        printPath(Arrays.asList(start), false); // Print initial node
 
         while (!frontier.isEmpty()) {
             Node current = frontier.poll();
-            if (current.equals(goal))
-                return constructPath(current);
+            if (current.equals(goal)) {
+                List<Node> finalPath = constructPath(current);
+                printPath(finalPath, true); // Print the final path once found
+                return finalPath;
+            }
             explored.add(current);
 
             for (Node child : current.getSuccessors(planetSize)) {
                 if (!explored.contains(child) && !frontier.contains(child)) {
+                    printPath(Arrays.asList(child), false); // Print each node as it's explored
                     frontier.add(child);
                 }
             }
@@ -123,18 +128,21 @@ public class PartA {
         return path;
     }
 
-    public static void printPath(List<Node> path) {
+    public static void printPath(List<Node> path, boolean isFinalPath) {
         if (path == null) {
             System.out.println("fail");
             return;
         }
-        // Printing the full path in the required format
-        path.forEach(node -> System.out.print(String.format("(%d:%d)", node.d, node.angle)));
-        Node lastNode = path.get(path.size() - 1);
-        System.out.printf("\n%.3f\n%d\n", lastNode.cost, path.size());
-    }
-
-    public static void main(String[] args) {
-        // Test your PartA class with appropriate nodes and planet size
+        if (isFinalPath) {
+            // Only print the path and cost when it's the final path
+            path.forEach(node -> System.out.print(String.format("(%d:%d)", node.d, node.angle)));
+            Node lastNode = path.get(path.size() - 1);
+            System.out.printf("\n%.3f\n%d\n", lastNode.cost, path.size());
+        } else {
+            // During BFS, print each node as it is explored
+            System.out.print("[");
+            path.forEach(node -> System.out.print(String.format("(%d:%d),", node.d, node.angle)));
+            System.out.println("]");
+        }
     }
 }

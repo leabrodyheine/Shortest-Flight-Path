@@ -120,18 +120,19 @@ public class P3main {
 				0.0);
 
 		List<PartA.Node> path;
+		boolean isFinalPath = true;
 
 		switch (algo) {
 			case "BFS":
 				path = PartA.bfs(startNode, goalNode, size);
 				// Calculate path cost and nodes visited
-				PartA.printPath(path);
+				PartA.printPath(path, isFinalPath);
 				break;
 			case "DFS":
 				path = PartA.dfs(startNode, goalNode, size);
 				// Calculate path cost and nodes visited
-				PartA.printPath(path);
-				break;
+				PartA.printPath(path, isFinalPath);
+
 			case "BestF": // Placeholder for future implementation
 				// Implement Best-first search when PartB is ready
 				break;
