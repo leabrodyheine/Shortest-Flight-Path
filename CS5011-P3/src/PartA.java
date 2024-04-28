@@ -19,27 +19,26 @@ public class PartA {
 
         public List<Node> getSuccessors(int planetSize) {
             List<Node> successors = new ArrayList<>();
-            int[] validDirections = { 0, 90, 180, 270 }; // Assuming these are the only valid moves
-
-            for (int direction : validDirections) {
+            int[] directions = {0, 90, 180, 270}; // Valid directions
+        
+            for (int direction : directions) {
                 int newD = this.d;
                 int newAngle = (this.angle + direction) % 360;
-
+        
                 if (direction == 0 && newD > 0) { // North
                     newD--;
                 } else if (direction == 180 && newD < planetSize - 1) { // South
                     newD++;
-                } else if ((direction == 90 || direction == 270) && newD == 0) {
-                    continue; // No east/west at the poles
+                } else if ((direction == 90 || direction == 270) && newD == 0) { // Invalid East/West at pole
+                    continue;
                 }
-
-                if (isValidCoordinate(newD, newAngle, planetSize)) {
-                    double newCost = this.cost + calculateCost(this.d, newD);
-                    successors.add(new Node(newD, newAngle, this, newCost));
-                }
+        
+                // Assuming the coordinate is valid based on other rules
+                double newCost = this.cost + calculateCost(this.d, newD);
+                successors.add(new Node(newD, newAngle, this, newCost));
             }
             return successors;
-        }
+        }        
 
         private boolean isValidCoordinate(int d, int angle, int planetSize) {
             return d >= 0 && d < planetSize; // Ensure within bounds
