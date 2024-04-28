@@ -119,10 +119,7 @@ public class P3main {
 		PartA.Node goalNode = new PartA.Node(Integer.parseInt(goalParams[0]), Integer.parseInt(goalParams[1]), null,
 				0.0);
 
-		PartA partA = new PartA();
 		List<PartA.Node> path;
-		double pathCost;
-		int nodesVisited;
 
 		switch (algo) {
 			case "BFS":

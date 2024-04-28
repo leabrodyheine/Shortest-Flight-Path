@@ -19,43 +19,38 @@ public class PartA {
 
         public List<Node> getSuccessors(int planetSize) {
             List<Node> successors = new ArrayList<>();
-
             for (int direction : DIRECTIONS) {
                 int newD = this.d;
                 int newAngle = (this.angle + direction) % 360;
+                newAngle = (newAngle < 360) ? newAngle : newAngle - 360; // Normalize angle within 360 degrees
 
-                // Skip angles not on principal directions
-                if (newAngle % 45 != 0) {
-                    continue;
-                }
+                if (newAngle % 45 != 0)
+                    continue; // Ensure angle is one of the principal directions
 
-                if (direction == 0 && newD > 0) { // North
-                    newD -= 1;
-                } else if (direction == 180 && newD < planetSize - 1) { // South
-                    newD += 1;
-                } else if ((direction == 90 || direction == 270) && newD == 0) { // East/West at pole
-                    continue;
-                }
+                // Movement logic based on direction
+                if (direction == 0 && newD > 0)
+                    newD--; // North
+                else if (direction == 180 && newD < planetSize - 1)
+                    newD++; // South
+                else if ((direction == 90 || direction == 270) && newD == 0)
+                    continue; // Cannot move East/West at the pole
 
                 if (isValidCoordinate(newD, newAngle, planetSize)) {
                     double newCost = this.cost + calculateCost(this.d, newD);
                     successors.add(new Node(newD, newAngle, this, newCost));
                 }
             }
-
-            successors.sort(Comparator.comparingInt((Node n) -> n.d).thenComparingInt(n -> n.angle));
             return successors;
         }
 
         private boolean isValidCoordinate(int d, int angle, int planetSize) {
-            if (d < 0 || d >= planetSize) {
-                return false;
-            }
-            return angle % 45 == 0 && (d != 0 || angle == 0);
+            return d >= 0 && d < planetSize && (angle % 45 == 0); // Check valid distance and angle
         }
 
         private double calculateCost(int currentD, int newD) {
-            return currentD != newD ? 1.0 : (2 * Math.PI * currentD) / 8;
+            if (currentD != newD)
+                return 1.0; // Cost for moving between parallels
+            return 2 * Math.PI * currentD / 8; // Cost for moving along the same parallel
         }
 
         @Override
@@ -81,17 +76,17 @@ public class PartA {
 
         while (!frontier.isEmpty()) {
             Node current = frontier.poll();
-            if (current.equals(goal)) {
+            if (current.equals(goal))
                 return constructPath(current);
-            }
             explored.add(current);
+
             for (Node child : current.getSuccessors(planetSize)) {
                 if (!explored.contains(child) && !frontier.contains(child)) {
                     frontier.add(child);
                 }
             }
         }
-        return null;
+        return null; // No path found
     }
 
     public static List<Node> dfs(Node start, Node goal, int planetSize) {
@@ -115,29 +110,21 @@ public class PartA {
     }
 
     private static List<Node> constructPath(Node goal) {
-        LinkedList<Node> path = new LinkedList<>();
+        List<Node> path = new LinkedList<>();
         Node current = goal;
-        double totalCost = 0;
-
         while (current != null) {
-            path.addFirst(current);
-            if (current.parent != null) {
-                totalCost += current.cost;
-            }
+            path.add(0, current);
             current = current.parent;
         }
         return path;
     }
 
     public static void printPath(List<Node> path) {
-        if (path == null || path.isEmpty()) {
+        if (path == null) {
             System.out.println("fail");
-        } else {
-            path.forEach(node -> System.out.print(String.format("(%d:%d)", node.d, node.angle)));
-            System.out.println();
-            double totalCost = path.get(path.size() - 1).cost;
-            System.out.println(String.format("%.3f", totalCost));
-            System.out.println(path.size());
+            return;
         }
+        path.forEach(node -> System.out.print(String.format("(%d:%d)", node.d, node.angle)));
+        System.out.println();
     }
 }
