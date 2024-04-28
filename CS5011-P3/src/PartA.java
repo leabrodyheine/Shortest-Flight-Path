@@ -19,27 +19,34 @@ public class PartA {
 
         public List<Node> getSuccessors(int planetSize) {
             List<Node> successors = new ArrayList<>();
-            int[] validDirections = { 0, 90, 180, 270 }; // Restrict to cardinal directions
+            int[] validDirections = { 0, 90, 180, 270 }; // Restrict to valid cardinal directions only
 
             for (int direction : validDirections) {
                 int newD = this.d;
                 int newAngle = (this.angle + direction) % 360;
 
-                // Conditionally allow directions
-                if (direction == 0 && newD > 0) { // North
-                    newD--;
-                } else if (direction == 180 && newD < planetSize - 1) { // South
-                    newD++;
-                } else if ((direction == 90 || direction == 270) && newD == 0) {
-                    continue; // Skip East and West at the poles
-                } else {
-                    continue; // Skip invalid directions
+                // Only allow valid movements:
+                switch (direction) {
+                    case 0: // North
+                        if (newD > 0)
+                            newD--;
+                        break;
+                    case 180: // South
+                        if (newD < planetSize - 1)
+                            newD++;
+                        break;
+                    case 90:
+                    case 270: // East and West
+                        if (newD == 0)
+                            continue; // Skip East/West at poles
+                        break;
+                    default:
+                        continue; // Ignore invalid directions
                 }
 
                 if (isValidCoordinate(newD, newAngle, planetSize)) {
                     double newCost = this.cost + calculateCost(this.d, newD);
                     successors.add(new Node(newD, newAngle, this, newCost));
-                    System.out.println("Adding direction: " + direction + " newD: " + newD + " newAngle: " + newAngle);
                 }
             }
             return successors;
