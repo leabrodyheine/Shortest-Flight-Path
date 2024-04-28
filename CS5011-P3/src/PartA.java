@@ -19,23 +19,16 @@ public class PartA {
 
         public List<Node> getSuccessors(int planetSize) {
             List<Node> successors = new ArrayList<>();
-            // Only include possible and valid moves based on your problem's constraints.
-            int[] validDirections = { 0, 180 }; // For example, let's assume only North and South are valid.
+            int[] validDirections = calculateValidDirections(this.d, planetSize);
 
             for (int direction : validDirections) {
                 int newD = this.d;
                 int newAngle = (this.angle + direction) % 360;
 
-                // Implement specific movement logic based on the game's rules
-                switch (direction) {
-                    case 0: // North
-                        if (newD > 0)
-                            newD--;
-                        break;
-                    case 180: // South
-                        if (newD < planetSize - 1)
-                            newD++;
-                        break;
+                if (direction == 0) {
+                    newD--; // Moving North, towards the pole
+                } else if (direction == 180) {
+                    newD++; // Moving South, away from the pole
                 }
 
                 if (isValidCoordinate(newD, newAngle, planetSize)) {
@@ -46,14 +39,30 @@ public class PartA {
             return successors;
         }
 
+        private int[] calculateValidDirections(int d, int planetSize) {
+            List<Integer> directions = new ArrayList<>();
+
+            if (d > 0) {
+                directions.add(0); // North is valid unless at the pole
+            }
+            if (d < planetSize - 1) {
+                directions.add(180); // South is valid unless at the last parallel
+            }
+            if (d != 0) { // Cannot move East or West at the pole
+                directions.add(90); // East
+                directions.add(270); // West
+            }
+            return directions.stream().mapToInt(i -> i).toArray();
+        }
+
         private boolean isValidCoordinate(int d, int angle, int planetSize) {
-            return d >= 0 && d < planetSize;
+            return d >= 0 && d < planetSize && (angle % 45 == 0);
         }
 
         private double calculateCost(int currentD, int newD) {
             if (currentD == newD)
-                return 2 * Math.PI * currentD / 8;
-            return 1.0;
+                return 2 * Math.PI * currentD / 8; // Moving along the same parallel
+            return 1.0; // Moving to a different parallel
         }
 
         @Override
@@ -76,27 +85,23 @@ public class PartA {
         Queue<Node> frontier = new LinkedList<>();
         Set<Node> explored = new HashSet<>();
         frontier.add(start);
-        printFrontier(frontier); // Print initial frontier
+        printFrontier(frontier);
 
         while (!frontier.isEmpty()) {
-            Queue<Node> currentLevel = new LinkedList<>();
-            for (Node current : frontier) {
-                if (current.equals(goal)) {
-                    List<Node> path = constructPath(current);
-                    printPath(path);
-                    return path;
-                }
-                explored.add(current);
+            Node current = frontier.poll();
+            if (current.equals(goal)) {
+                List<Node> path = constructPath(current);
+                printPath(path);
+                return path;
+            }
+            explored.add(current);
 
-                for (Node child : current.getSuccessors(planetSize)) {
-                    if (!explored.contains(child) && !frontier.contains(child) && !currentLevel.contains(child)) {
-                        currentLevel.add(child);
-                    }
+            for (Node child : current.getSuccessors(planetSize)) {
+                if (!explored.contains(child) && !frontier.contains(child)) {
+                    frontier.add(child);
                 }
             }
-            frontier = currentLevel;
-            if (!frontier.isEmpty())
-                printFrontier(frontier);
+            printFrontier(frontier);
         }
         return null;
     }
@@ -122,15 +127,13 @@ public class PartA {
     }
 
     private static void printFrontier(Collection<Node> frontier) {
-        if (frontier.isEmpty())
-            return;
         System.out.print("[");
-        Iterator<Node> iterator = frontier.iterator();
-        while (iterator.hasNext()) {
-            Node node = iterator.next();
+        for (Iterator<Node> it = frontier.iterator(); it.hasNext();) {
+            Node node = it.next();
             System.out.print(String.format("(%d:%d)", node.d, node.angle));
-            if (iterator.hasNext())
+            if (it.hasNext()) {
                 System.out.print(",");
+            }
         }
         System.out.println("]");
     }
