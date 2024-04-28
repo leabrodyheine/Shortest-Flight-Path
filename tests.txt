@@ -18,8 +18,7 @@ Departure airport -- Start: 3:45
 Destination airport -- Goal: 2:45
 Search algorithm: BFS
 [(3:45)]
-Adding direction: 0 newD: 2 newAngle: 45
-[(2:45)]
+[(2:45),(3:135),(3:225),(3:315)]
 (3:45)(2:45)
 1.000
 2
@@ -43,25 +42,21 @@ Departure airport -- Start: 2:45
 Destination airport -- Goal: 2:0
 Search algorithm: BFS
 [(2:45)]
-Adding direction: 0 newD: 1 newAngle: 45
-Adding direction: 180 newD: 3 newAngle: 225
-[(1:45),(3:225)]
-Adding direction: 0 newD: 0 newAngle: 45
-Adding direction: 180 newD: 2 newAngle: 225
-[(3:225),(0:45),(2:225)]
-Adding direction: 0 newD: 2 newAngle: 225
-[(0:45),(2:225)]
-Adding direction: 180 newD: 1 newAngle: 225
-[(2:225),(1:225)]
-Adding direction: 0 newD: 1 newAngle: 225
-Adding direction: 180 newD: 3 newAngle: 45
-[(1:225),(3:45)]
-Adding direction: 0 newD: 0 newAngle: 225
-Adding direction: 180 newD: 2 newAngle: 45
-[(3:45),(0:225)]
-Adding direction: 0 newD: 2 newAngle: 45
+[(1:45),(2:135),(3:225),(2:315)]
+[(2:135),(3:225),(2:315),(0:45),(1:135),(2:225),(1:315)]
+[(3:225),(2:315),(0:45),(1:135),(2:225),(1:315),(3:315)]
+[(2:315),(0:45),(1:135),(2:225),(1:315),(3:315),(3:45),(3:135)]
+[(0:45),(1:135),(2:225),(1:315),(3:315),(3:45),(3:135)]
+[(1:135),(2:225),(1:315),(3:315),(3:45),(3:135),(1:225)]
+[(2:225),(1:315),(3:315),(3:45),(3:135),(1:225),(0:135)]
+[(1:315),(3:315),(3:45),(3:135),(1:225),(0:135)]
+[(3:315),(3:45),(3:135),(1:225),(0:135),(0:315)]
+[(3:45),(3:135),(1:225),(0:135),(0:315)]
+[(3:135),(1:225),(0:135),(0:315)]
+[(1:225),(0:135),(0:315)]
+[(0:135),(0:315),(0:225)]
+[(0:315),(0:225)]
 [(0:225)]
-Adding direction: 180 newD: 1 newAngle: 45
 ---
 
 * COMPARISON TEST - 02_BFS2/prog-run-02_BFS2.out : fail
@@ -110,31 +105,25 @@ Departure airport -- Start: 2:45
 Destination airport -- Goal: 0:0
 Search algorithm: BFS
 [(2:45)]
-Adding direction: 0 newD: 1 newAngle: 45
-Adding direction: 180 newD: 3 newAngle: 225
-[(1:45),(3:225)]
-Adding direction: 0 newD: 0 newAngle: 45
-Adding direction: 180 newD: 2 newAngle: 225
-[(3:225),(0:45),(2:225)]
-Adding direction: 0 newD: 2 newAngle: 225
-Adding direction: 180 newD: 4 newAngle: 45
-[(0:45),(2:225),(4:45)]
-Adding direction: 180 newD: 1 newAngle: 225
-[(2:225),(4:45),(1:225)]
-Adding direction: 0 newD: 1 newAngle: 225
-Adding direction: 180 newD: 3 newAngle: 45
-[(4:45),(1:225),(3:45)]
-Adding direction: 0 newD: 3 newAngle: 45
-[(1:225),(3:45)]
-Adding direction: 0 newD: 0 newAngle: 225
-Adding direction: 180 newD: 2 newAngle: 45
-[(3:45),(0:225)]
-Adding direction: 0 newD: 2 newAngle: 45
-Adding direction: 180 newD: 4 newAngle: 225
-[(0:225),(4:225)]
-Adding direction: 180 newD: 1 newAngle: 45
-[(4:225)]
-Adding direction: 0 newD: 3 newAngle: 225
+[(1:45),(2:135),(3:225),(2:315)]
+[(2:135),(3:225),(2:315),(0:45),(1:135),(2:225),(1:315)]
+[(3:225),(2:315),(0:45),(1:135),(2:225),(1:315),(3:315)]
+[(2:315),(0:45),(1:135),(2:225),(1:315),(3:315),(4:45),(3:135)]
+[(0:45),(1:135),(2:225),(1:315),(3:315),(4:45),(3:135)]
+[(1:135),(2:225),(1:315),(3:315),(4:45),(3:135),(1:225)]
+[(2:225),(1:315),(3:315),(4:45),(3:135),(1:225),(0:135)]
+[(1:315),(3:315),(4:45),(3:135),(1:225),(0:135),(3:45)]
+[(3:315),(4:45),(3:135),(1:225),(0:135),(3:45),(0:315)]
+[(4:45),(3:135),(1:225),(0:135),(3:45),(0:315),(4:135)]
+[(3:135),(1:225),(0:135),(3:45),(0:315),(4:135),(4:225),(4:315)]
+[(1:225),(0:135),(3:45),(0:315),(4:135),(4:225),(4:315)]
+[(0:135),(3:45),(0:315),(4:135),(4:225),(4:315),(0:225)]
+[(3:45),(0:315),(4:135),(4:225),(4:315),(0:225)]
+[(0:315),(4:135),(4:225),(4:315),(0:225)]
+[(4:135),(4:225),(4:315),(0:225)]
+[(4:225),(4:315),(0:225)]
+[(4:315),(0:225)]
+[(0:225)]
 ---
 
 * COMPARISON TEST - 03_BFS3/prog-run-03_BFS.out : fail
@@ -174,31 +163,25 @@ Departure airport -- Start: 2:45
 Destination airport -- Goal: 1:180
 Search algorithm: BFS
 [(2:45)]
-Adding direction: 0 newD: 1 newAngle: 45
-Adding direction: 180 newD: 3 newAngle: 225
-[(1:45),(3:225)]
-Adding direction: 0 newD: 0 newAngle: 45
-Adding direction: 180 newD: 2 newAngle: 225
-[(3:225),(0:45),(2:225)]
-Adding direction: 0 newD: 2 newAngle: 225
-Adding direction: 180 newD: 4 newAngle: 45
-[(0:45),(2:225),(4:45)]
-Adding direction: 180 newD: 1 newAngle: 225
-[(2:225),(4:45),(1:225)]
-Adding direction: 0 newD: 1 newAngle: 225
-Adding direction: 180 newD: 3 newAngle: 45
-[(4:45),(1:225),(3:45)]
-Adding direction: 0 newD: 3 newAngle: 45
-[(1:225),(3:45)]
-Adding direction: 0 newD: 0 newAngle: 225
-Adding direction: 180 newD: 2 newAngle: 45
-[(3:45),(0:225)]
-Adding direction: 0 newD: 2 newAngle: 45
-Adding direction: 180 newD: 4 newAngle: 225
-[(0:225),(4:225)]
-Adding direction: 180 newD: 1 newAngle: 45
-[(4:225)]
-Adding direction: 0 newD: 3 newAngle: 225
+[(1:45),(2:135),(3:225),(2:315)]
+[(2:135),(3:225),(2:315),(0:45),(1:135),(2:225),(1:315)]
+[(3:225),(2:315),(0:45),(1:135),(2:225),(1:315),(3:315)]
+[(2:315),(0:45),(1:135),(2:225),(1:315),(3:315),(4:45),(3:135)]
+[(0:45),(1:135),(2:225),(1:315),(3:315),(4:45),(3:135)]
+[(1:135),(2:225),(1:315),(3:315),(4:45),(3:135),(1:225)]
+[(2:225),(1:315),(3:315),(4:45),(3:135),(1:225),(0:135)]
+[(1:315),(3:315),(4:45),(3:135),(1:225),(0:135),(3:45)]
+[(3:315),(4:45),(3:135),(1:225),(0:135),(3:45),(0:315)]
+[(4:45),(3:135),(1:225),(0:135),(3:45),(0:315),(4:135)]
+[(3:135),(1:225),(0:135),(3:45),(0:315),(4:135),(4:225),(4:315)]
+[(1:225),(0:135),(3:45),(0:315),(4:135),(4:225),(4:315)]
+[(0:135),(3:45),(0:315),(4:135),(4:225),(4:315),(0:225)]
+[(3:45),(0:315),(4:135),(4:225),(4:315),(0:225)]
+[(0:315),(4:135),(4:225),(4:315),(0:225)]
+[(4:135),(4:225),(4:315),(0:225)]
+[(4:225),(4:315),(0:225)]
+[(4:315),(0:225)]
+[(0:225)]
 ---
 
 * COMPARISON TEST - 04_DFS0/prog-run-04_DFS0.out : fail
@@ -217,7 +200,6 @@ World: Oedipus 4
 Departure airport -- Start: 3:45
 Destination airport -- Goal: 2:45
 Search algorithm: DFS
-Adding direction: 0 newD: 2 newAngle: 45
 ---
 
 * COMPARISON TEST - 05_DFS1/prog-run-05_DFS1.out : fail
@@ -236,18 +218,6 @@ World: Oedipus 4
 Departure airport -- Start: 1:0
 Destination airport -- Goal: 1:45
 Search algorithm: DFS
-Adding direction: 0 newD: 0 newAngle: 0
-Adding direction: 180 newD: 2 newAngle: 180
-Adding direction: 0 newD: 1 newAngle: 180
-Adding direction: 180 newD: 3 newAngle: 0
-Adding direction: 0 newD: 2 newAngle: 0
-Adding direction: 0 newD: 1 newAngle: 0
-Adding direction: 180 newD: 3 newAngle: 180
-Adding direction: 0 newD: 2 newAngle: 180
-Adding direction: 0 newD: 0 newAngle: 180
-Adding direction: 180 newD: 2 newAngle: 0
-Adding direction: 180 newD: 1 newAngle: 0
-Adding direction: 180 newD: 1 newAngle: 180
 ---
 
 * COMPARISON TEST - 06_DFS2/prog-run-06_DFS2.out : fail
@@ -271,22 +241,6 @@ World: Oedipus 5
 Departure airport -- Start: 2:45
 Destination airport -- Goal: 1:180
 Search algorithm: DFS
-Adding direction: 0 newD: 1 newAngle: 45
-Adding direction: 180 newD: 3 newAngle: 225
-Adding direction: 0 newD: 2 newAngle: 225
-Adding direction: 180 newD: 4 newAngle: 45
-Adding direction: 0 newD: 3 newAngle: 45
-Adding direction: 0 newD: 2 newAngle: 45
-Adding direction: 180 newD: 4 newAngle: 225
-Adding direction: 0 newD: 3 newAngle: 225
-Adding direction: 0 newD: 1 newAngle: 225
-Adding direction: 180 newD: 3 newAngle: 45
-Adding direction: 0 newD: 0 newAngle: 225
-Adding direction: 180 newD: 2 newAngle: 45
-Adding direction: 180 newD: 1 newAngle: 45
-Adding direction: 0 newD: 0 newAngle: 45
-Adding direction: 180 newD: 2 newAngle: 225
-Adding direction: 180 newD: 1 newAngle: 225
 ---
 
 * COMPARISON TEST - 07_BESTF0/prog-run-07_BESTF0.out : fail
