@@ -27,16 +27,17 @@ public class PartA {
                 switch (direction) {
                     case 0:
                         if (newD > 0)
-                            newD--;
-                        break; // North
+                            newD--; // North
+                        break;
                     case 180:
                         if (newD < planetSize - 1)
-                            newD++;
-                        break; // South
+                            newD++; // South
+                        break;
                     case 90:
                     case 270:
                         if (newD == 0)
                             continue; // Skip East/West at poles
+                        break;
                 }
 
                 if (isValidCoordinate(newD, newAngle, planetSize)) {
@@ -77,35 +78,29 @@ public class PartA {
         Queue<Node> frontier = new LinkedList<>();
         Set<Node> explored = new HashSet<>();
         frontier.add(start);
-        printFrontier(frontier); // Initial frontier
+        printFrontier(frontier); // Print initial frontier
 
         while (!frontier.isEmpty()) {
-            int levelSize = frontier.size(); // Number of nodes at the current level
-            Queue<Node> currentLevelNodes = new LinkedList<>();
-
-            for (int i = 0; i < levelSize; i++) {
-                Node current = frontier.poll();
+            Queue<Node> currentLevel = new LinkedList<>();
+            for (Node current : frontier) {
                 if (current.equals(goal)) {
-                    List<Node> finalPath = constructPath(current);
-                    printPath(finalPath); // Print the final path once found
-                    return finalPath;
+                    List<Node> path = constructPath(current);
+                    printPath(path);
+                    return path;
                 }
                 explored.add(current);
 
                 for (Node child : current.getSuccessors(planetSize)) {
-                    if (!explored.contains(child) && !frontier.contains(child)) {
-                        frontier.add(child);
-                        currentLevelNodes.add(child); // Add to temp storage to print after all nodes at this level are
-                                                      // processed
+                    if (!explored.contains(child) && !frontier.contains(child) && !currentLevel.contains(child)) {
+                        currentLevel.add(child);
                     }
                 }
             }
-
-            if (!currentLevelNodes.isEmpty()) {
-                printFrontier(currentLevelNodes); // Print all new frontier nodes together
-            }
+            frontier = currentLevel;
+            if (!frontier.isEmpty())
+                printFrontier(frontier);
         }
-        return null; // No path found
+        return null;
     }
 
     public static List<Node> dfs(Node start, Node goal, int planetSize) {
@@ -129,17 +124,15 @@ public class PartA {
     }
 
     private static void printFrontier(Collection<Node> frontier) {
-        if (frontier.isEmpty()) {
+        if (frontier.isEmpty())
             return;
-        }
         System.out.print("[");
-        Iterator<Node> it = frontier.iterator();
-        while (it.hasNext()) {
-            Node node = it.next();
+        Iterator<Node> iterator = frontier.iterator();
+        while (iterator.hasNext()) {
+            Node node = iterator.next();
             System.out.print(String.format("(%d:%d)", node.d, node.angle));
-            if (it.hasNext()) {
+            if (iterator.hasNext())
                 System.out.print(",");
-            }
         }
         System.out.println("]");
     }
