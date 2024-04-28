@@ -19,27 +19,25 @@ public class PartA {
 
         public List<Node> getSuccessors(int planetSize) {
             List<Node> successors = new ArrayList<>();
-            int[] possibleDirections = { 0, 90, 180, 270 }; // Assuming only cardinal directions are allowed
+            // Explicitly define valid moves; remove any unnecessary directions if not
+            // applicable.
+            int[] validDirections = { 0, 90, 180, 270 }; // North, East, South, West
 
-            for (int direction : possibleDirections) {
+            for (int direction : validDirections) {
                 int newD = this.d;
                 int newAngle = (this.angle + direction) % 360;
 
-                switch (direction) {
-                    case 0: // North
-                        if (newD > 0)
-                            newD--;
-                        break;
-                    case 180: // South
-                        if (newD < planetSize - 1)
-                            newD++;
-                        break;
-                    case 90: // East
-                    case 270: // West
-                        if (newD == 0)
-                            continue; // Skip East and West movement at the poles
-                        break;
+                // Detailed conditions for each direction based on the node's context
+                if ((direction == 0 && newD > 0) || (direction == 180 && newD < planetSize - 1)) {
+                    // Only allow North or South if not at boundary limits
+                    newD += (direction == 0) ? -1 : 1;
+                } else if ((direction == 90 || direction == 270) && newD == 0) {
+                    // East or West movement is not allowed at the poles
+                    continue;
                 }
+
+                // Debug output to track which directions are being added and why
+                System.out.println("Adding direction: " + direction + " newD: " + newD + " newAngle: " + newAngle);
 
                 if (isValidCoordinate(newD, newAngle, planetSize)) {
                     double newCost = this.cost + calculateCost(this.d, newD);
