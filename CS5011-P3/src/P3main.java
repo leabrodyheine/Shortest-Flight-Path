@@ -46,21 +46,21 @@ public class P3main {
 				path = PartA.bfs(startNode, goalNode, size);
 				// Calculate path cost and nodes visited
 				// Print the path if found
-				if (path != null) {
-					PartA.printPath(path);
-				} else {
-					System.out.println("No path found.");
-				}
+				// if (path != null) {
+				// 	PartA.printPath(path);
+				// } else {
+				// 	System.out.println("No path found.");
+				// }
 				break;
 			case "DFS":
 				path = PartA.dfs(startNode, goalNode, size);
 				// Calculate path cost and nodes visited
 				// Print the path if found
-				if (path != null) {
-					PartA.printPath(path);
-				} else {
-					System.out.println("No path found.");
-				}
+				// if (path != null) {
+				// 	PartA.printPath(path);
+				// } else {
+				// 	System.out.println("No path found.");
+				// }
 				break;
 			case "BestF": // Placeholder for future implementation
 				// Implement Best-first search when PartB is ready

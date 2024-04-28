@@ -19,18 +19,23 @@ public class PartA {
 
         public List<Node> getSuccessors(int planetSize) {
             List<Node> successors = new ArrayList<>();
-            int[] possibleDirections = { 0, 45, 90, 135, 180, 225, 270, 315 }; // Only consider valid directions if
-                                                                               // specific rules apply
+            // Only include possible and valid moves based on your problem's constraints.
+            int[] validDirections = { 0, 180 }; // For example, let's assume only North and South are valid.
 
-            for (int direction : possibleDirections) {
+            for (int direction : validDirections) {
                 int newD = this.d;
                 int newAngle = (this.angle + direction) % 360;
 
-                // Adjust movement based on direction and specific rules
-                if ((direction == 0 && newD > 0) || (direction == 180 && newD < planetSize - 1)) {
-                    newD += direction == 0 ? -1 : 1; // Simplify North/South movement
-                } else if ((direction == 90 || direction == 270) && newD == 0) {
-                    continue; // Skip East/West when at the poles
+                // Implement specific movement logic based on the game's rules
+                switch (direction) {
+                    case 0: // North
+                        if (newD > 0)
+                            newD--;
+                        break;
+                    case 180: // South
+                        if (newD < planetSize - 1)
+                            newD++;
+                        break;
                 }
 
                 if (isValidCoordinate(newD, newAngle, planetSize)) {
