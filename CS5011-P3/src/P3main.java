@@ -126,12 +126,12 @@ public class P3main {
 			case "BFS":
 				path = PartA.bfs(startNode, goalNode, size);
 				// Calculate path cost and nodes visited
-				PartA.printPath(path, isFinalPath);
+				PartA.printPath(path);
 				break;
 			case "DFS":
 				path = PartA.dfs(startNode, goalNode, size);
 				// Calculate path cost and nodes visited
-				PartA.printPath(path, isFinalPath);
+				PartA.printPath(path);
 
 			case "BestF": // Placeholder for future implementation
 				// Implement Best-first search when PartB is ready

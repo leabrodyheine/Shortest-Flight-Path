@@ -77,22 +77,26 @@ public class PartA {
         Queue<Node> frontier = new LinkedList<>();
         Set<Node> explored = new HashSet<>();
         frontier.add(start);
-        printPath(Arrays.asList(start), false); // Print initial node
+        printFrontier(frontier); // Print the initial state of the frontier
 
         while (!frontier.isEmpty()) {
             Node current = frontier.poll();
             if (current.equals(goal)) {
                 List<Node> finalPath = constructPath(current);
-                printPath(finalPath, true); // Print the final path once found
+                printPath(finalPath); // Print the final path once found
                 return finalPath;
             }
             explored.add(current);
 
+            List<Node> currentSuccessors = new ArrayList<>(); // Collect current level successors to print together
             for (Node child : current.getSuccessors(planetSize)) {
                 if (!explored.contains(child) && !frontier.contains(child)) {
-                    printPath(Arrays.asList(child), false); // Print each node as it's explored
                     frontier.add(child);
+                    currentSuccessors.add(child);
                 }
+            }
+            if (!currentSuccessors.isEmpty()) {
+                printFrontier(currentSuccessors); // Print all new frontier nodes together
             }
         }
         return null; // No path found
@@ -118,6 +122,22 @@ public class PartA {
         return null; // No path found
     }
 
+    public static void printFrontier(Collection<Node> frontier) {
+        if (frontier.isEmpty()) {
+            return;
+        }
+        System.out.print("[");
+        Iterator<Node> it = frontier.iterator();
+        while (it.hasNext()) {
+            Node node = it.next();
+            System.out.print(String.format("(%d:%d)", node.d, node.angle));
+            if (it.hasNext()) {
+                System.out.print(",");
+            }
+        }
+        System.out.println("]");
+    }
+
     private static List<Node> constructPath(Node goal) {
         List<Node> path = new LinkedList<>();
         Node current = goal;
@@ -128,21 +148,15 @@ public class PartA {
         return path;
     }
 
-    public static void printPath(List<Node> path, boolean isFinalPath) {
-        if (path == null) {
+    public static void printPath(List<Node> path) {
+        if (path == null || path.isEmpty()) {
             System.out.println("fail");
-            return;
-        }
-        if (isFinalPath) {
-            // Only print the path and cost when it's the final path
+        } else {
             path.forEach(node -> System.out.print(String.format("(%d:%d)", node.d, node.angle)));
             Node lastNode = path.get(path.size() - 1);
+            System.out.println();
             System.out.printf("\n%.3f\n%d\n", lastNode.cost, path.size());
-        } else {
-            // During BFS, print each node as it is explored
-            System.out.print("[");
-            path.forEach(node -> System.out.print(String.format("(%d:%d),", node.d, node.angle)));
-            System.out.println("]");
         }
     }
+
 }
