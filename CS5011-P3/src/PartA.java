@@ -19,25 +19,21 @@ public class PartA {
 
         public List<Node> getSuccessors(int planetSize) {
             List<Node> successors = new ArrayList<>();
-            // Explicitly define valid moves; remove any unnecessary directions if not
-            // applicable.
-            int[] validDirections = { 0, 90, 180, 270 }; // North, East, South, West
+            int[] validDirections = { 0, 90, 180, 270 }; // Directly North, East, South, and West
 
             for (int direction : validDirections) {
                 int newD = this.d;
                 int newAngle = (this.angle + direction) % 360;
 
-                // Detailed conditions for each direction based on the node's context
-                if ((direction == 0 && newD > 0) || (direction == 180 && newD < planetSize - 1)) {
-                    // Only allow North or South if not at boundary limits
-                    newD += (direction == 0) ? -1 : 1;
-                } else if ((direction == 90 || direction == 270) && newD == 0) {
-                    // East or West movement is not allowed at the poles
-                    continue;
+                if (direction == 0 && newD > 0) { // North
+                    newD--;
+                } else if (direction == 180 && newD < planetSize - 1) { // South
+                    newD++;
+                } else if ((direction == 90 || direction == 270) && this.d != 0) { // East or West, skip if at poles
+                    // Do not change `d` for East and West
+                } else {
+                    continue; // Skip invalid moves
                 }
-
-                // Debug output to track which directions are being added and why
-                System.out.println("Adding direction: " + direction + " newD: " + newD + " newAngle: " + newAngle);
 
                 if (isValidCoordinate(newD, newAngle, planetSize)) {
                     double newCost = this.cost + calculateCost(this.d, newD);
