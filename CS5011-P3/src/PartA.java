@@ -77,27 +77,30 @@ public class PartA {
         Queue<Node> frontier = new LinkedList<>();
         Set<Node> explored = new HashSet<>();
         frontier.add(start);
-        printFrontier(frontier); // Print the initial state of the frontier
+        printFrontier(frontier); // Initial frontier
 
         while (!frontier.isEmpty()) {
-            Node current = frontier.poll();
-            if (current.equals(goal)) {
-                List<Node> finalPath = constructPath(current);
-                printPath(finalPath); // Print the final path once found
-                return finalPath;
-            }
-            explored.add(current);
+            Queue<Node> nextFrontier = new LinkedList<>(); // Prepare the next level's frontier
 
-            List<Node> currentSuccessors = new ArrayList<>(); // Collect current level successors to print together
-            for (Node child : current.getSuccessors(planetSize)) {
-                if (!explored.contains(child) && !frontier.contains(child)) {
-                    frontier.add(child);
-                    currentSuccessors.add(child);
+            while (!frontier.isEmpty()) {
+                Node current = frontier.poll();
+                if (current.equals(goal)) {
+                    List<Node> finalPath = constructPath(current);
+                    printPath(finalPath); // Print the final path once found
+                    return finalPath;
+                }
+                explored.add(current);
+
+                for (Node child : current.getSuccessors(planetSize)) {
+                    if (!explored.contains(child) && !frontier.contains(child) && !nextFrontier.contains(child)) {
+                        nextFrontier.add(child);
+                    }
                 }
             }
-            if (!currentSuccessors.isEmpty()) {
-                printFrontier(currentSuccessors); // Print all new frontier nodes together
-            }
+
+            // Update the main frontier with the next level and print it
+            frontier.addAll(nextFrontier);
+            printFrontier(frontier); // Print the frontier state for the next level
         }
         return null; // No path found
     }
@@ -122,10 +125,7 @@ public class PartA {
         return null; // No path found
     }
 
-    public static void printFrontier(Collection<Node> frontier) {
-        if (frontier.isEmpty()) {
-            return;
-        }
+    private static void printFrontier(Collection<Node> frontier) {
         System.out.print("[");
         Iterator<Node> it = frontier.iterator();
         while (it.hasNext()) {
