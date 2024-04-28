@@ -19,20 +19,22 @@ public class PartA {
 
         public List<Node> getSuccessors(int planetSize) {
             List<Node> successors = new ArrayList<>();
-            int[] validDirections = { 0, 90, 180, 270 }; // Directly North, East, South, and West
+            // Define only the valid cardinal directions.
+            int[] validDirections = { 0, 90, 180, 270 }; // North, East, South, West
 
             for (int direction : validDirections) {
                 int newD = this.d;
                 int newAngle = (this.angle + direction) % 360;
 
+                // Adjust the logic to properly account for movements:
                 if (direction == 0 && newD > 0) { // North
                     newD--;
                 } else if (direction == 180 && newD < planetSize - 1) { // South
                     newD++;
-                } else if ((direction == 90 || direction == 270) && this.d != 0) { // East or West, skip if at poles
-                    // Do not change `d` for East and West
+                } else if ((direction == 90 || direction == 270) && newD == 0) {
+                    continue; // Skip East and West at the poles
                 } else {
-                    continue; // Skip invalid moves
+                    continue; // Skip other directions not applicable
                 }
 
                 if (isValidCoordinate(newD, newAngle, planetSize)) {
