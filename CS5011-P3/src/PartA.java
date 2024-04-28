@@ -19,16 +19,17 @@ public class PartA {
 
         public List<Node> getSuccessors(int planetSize) {
             List<Node> successors = new ArrayList<>();
-            int[] validDirections = calculateValidDirections(this.d, planetSize);
-
-            for (int direction : validDirections) {
+            for (int direction : DIRECTIONS) {
                 int newD = this.d;
                 int newAngle = (this.angle + direction) % 360;
 
-                if (direction == 0) {
-                    newD--; // Moving North, towards the pole
-                } else if (direction == 180) {
-                    newD++; // Moving South, away from the pole
+                if (direction == 0 && newD > 0) { // North
+                    newD--;
+                } else if (direction == 180 && newD < planetSize - 1) { // South
+                    newD++;
+                } else if (direction == 90 || direction == 270) {
+                    if (this.d == 0)
+                        continue; // No east or west at the poles
                 }
 
                 if (isValidCoordinate(newD, newAngle, planetSize)) {
@@ -39,30 +40,12 @@ public class PartA {
             return successors;
         }
 
-        private int[] calculateValidDirections(int d, int planetSize) {
-            List<Integer> directions = new ArrayList<>();
-
-            if (d > 0) {
-                directions.add(0); // North is valid unless at the pole
-            }
-            if (d < planetSize - 1) {
-                directions.add(180); // South is valid unless at the last parallel
-            }
-            if (d != 0) { // Cannot move East or West at the pole
-                directions.add(90); // East
-                directions.add(270); // West
-            }
-            return directions.stream().mapToInt(i -> i).toArray();
-        }
-
         private boolean isValidCoordinate(int d, int angle, int planetSize) {
-            return d >= 0 && d < planetSize && (angle % 45 == 0);
+            return d >= 0 && d < planetSize; // Ensure within bounds
         }
 
         private double calculateCost(int currentD, int newD) {
-            if (currentD == newD)
-                return 2 * Math.PI * currentD / 8; // Moving along the same parallel
-            return 1.0; // Moving to a different parallel
+            return currentD == newD ? (2 * Math.PI * currentD) / 8 : 1.0; // Cost logic
         }
 
         @Override
@@ -85,7 +68,7 @@ public class PartA {
         Queue<Node> frontier = new LinkedList<>();
         Set<Node> explored = new HashSet<>();
         frontier.add(start);
-        printFrontier(frontier);
+        printFrontier(frontier); // Initial print
 
         while (!frontier.isEmpty()) {
             Node current = frontier.poll();
@@ -95,7 +78,6 @@ public class PartA {
                 return path;
             }
             explored.add(current);
-
             for (Node child : current.getSuccessors(planetSize)) {
                 if (!explored.contains(child) && !frontier.contains(child)) {
                     frontier.add(child);
@@ -103,7 +85,7 @@ public class PartA {
             }
             printFrontier(frontier);
         }
-        return null;
+        return null; // Path not found
     }
 
     public static List<Node> dfs(Node start, Node goal, int planetSize) {
@@ -127,22 +109,24 @@ public class PartA {
     }
 
     private static void printFrontier(Collection<Node> frontier) {
+        if (frontier.isEmpty())
+            return;
         System.out.print("[");
-        for (Iterator<Node> it = frontier.iterator(); it.hasNext();) {
+        Iterator<Node> it = frontier.iterator();
+        while (it.hasNext()) {
             Node node = it.next();
             System.out.print(String.format("(%d:%d)", node.d, node.angle));
-            if (it.hasNext()) {
+            if (it.hasNext())
                 System.out.print(",");
-            }
         }
         System.out.println("]");
     }
 
     private static List<Node> constructPath(Node goal) {
-        List<Node> path = new LinkedList<>();
+        LinkedList<Node> path = new LinkedList<>();
         Node current = goal;
         while (current != null) {
-            path.add(0, current); // Add to front to reverse the path
+            path.addFirst(current);
             current = current.parent;
         }
         return path;
@@ -155,7 +139,7 @@ public class PartA {
             path.forEach(node -> System.out.print(String.format("(%d:%d)", node.d, node.angle)));
             Node lastNode = path.get(path.size() - 1);
             System.out.println();
-            System.out.printf("\n%.3f\n%d\n", lastNode.cost, path.size());
+            System.out.printf("%.3f\n%d\n", lastNode.cost, path.size());
         }
     }
 
