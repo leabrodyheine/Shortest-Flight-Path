@@ -22,18 +22,22 @@ public class PartA {
             for (int direction : DIRECTIONS) {
                 int newD = this.d;
                 int newAngle = (this.angle + direction) % 360;
-                newAngle = (newAngle < 360) ? newAngle : newAngle - 360; // Normalize angle within 360 degrees
 
-                if (newAngle % 45 != 0)
-                    continue; // Ensure angle is one of the principal directions
-
-                // Movement logic based on direction
-                if (direction == 0 && newD > 0)
-                    newD--; // North
-                else if (direction == 180 && newD < planetSize - 1)
-                    newD++; // South
-                else if ((direction == 90 || direction == 270) && newD == 0)
-                    continue; // Cannot move East/West at the pole
+                // Adjust movement based on direction
+                switch (direction) {
+                    case 0:
+                        if (newD > 0)
+                            newD--;
+                        break; // North
+                    case 180:
+                        if (newD < planetSize - 1)
+                            newD++;
+                        break; // South
+                    case 90:
+                    case 270:
+                        if (newD == 0)
+                            continue; // Skip East/West at poles
+                }
 
                 if (isValidCoordinate(newD, newAngle, planetSize)) {
                     double newCost = this.cost + calculateCost(this.d, newD);
@@ -44,13 +48,13 @@ public class PartA {
         }
 
         private boolean isValidCoordinate(int d, int angle, int planetSize) {
-            return d >= 0 && d < planetSize && (angle % 45 == 0); // Check valid distance and angle
+            return d >= 0 && d < planetSize;
         }
 
         private double calculateCost(int currentD, int newD) {
-            if (currentD != newD)
-                return 1.0; // Cost for moving between parallels
-            return 2 * Math.PI * currentD / 8; // Cost for moving along the same parallel
+            if (currentD == newD)
+                return 2 * Math.PI * currentD / 8;
+            return 1.0;
         }
 
         @Override
@@ -70,7 +74,7 @@ public class PartA {
     }
 
     public static List<Node> bfs(Node start, Node goal, int planetSize) {
-        Queue<Node> frontier = new LinkedList<>();
+        Queue<Node> frontier = new PriorityQueue<>(Comparator.comparingDouble(n -> n.cost));
         Set<Node> explored = new HashSet<>();
         frontier.add(start);
 
@@ -101,19 +105,19 @@ public class PartA {
             }
             explored.add(current);
             for (Node child : current.getSuccessors(planetSize)) {
-                if (!explored.contains(child)) {
+                if (!explored.contains(child) && !frontier.contains(child)) {
                     frontier.push(child);
                 }
             }
         }
-        return null;
+        return null; // No path found
     }
 
     private static List<Node> constructPath(Node goal) {
         List<Node> path = new LinkedList<>();
         Node current = goal;
         while (current != null) {
-            path.add(0, current);
+            path.add(0, current); // Add to front to reverse the path
             current = current.parent;
         }
         return path;
@@ -124,7 +128,13 @@ public class PartA {
             System.out.println("fail");
             return;
         }
+        // Printing the full path in the required format
         path.forEach(node -> System.out.print(String.format("(%d:%d)", node.d, node.angle)));
-        System.out.println();
+        Node lastNode = path.get(path.size() - 1);
+        System.out.printf("\n%.3f\n%d\n", lastNode.cost, path.size());
+    }
+
+    public static void main(String[] args) {
+        // Test your PartA class with appropriate nodes and planet size
     }
 }
