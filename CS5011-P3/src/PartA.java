@@ -80,9 +80,10 @@ public class PartA {
         printFrontier(frontier); // Initial frontier
 
         while (!frontier.isEmpty()) {
-            Queue<Node> nextFrontier = new LinkedList<>(); // Prepare the next level's frontier
+            int levelSize = frontier.size(); // Number of nodes at the current level
+            Queue<Node> currentLevelNodes = new LinkedList<>();
 
-            while (!frontier.isEmpty()) {
+            for (int i = 0; i < levelSize; i++) {
                 Node current = frontier.poll();
                 if (current.equals(goal)) {
                     List<Node> finalPath = constructPath(current);
@@ -92,15 +93,17 @@ public class PartA {
                 explored.add(current);
 
                 for (Node child : current.getSuccessors(planetSize)) {
-                    if (!explored.contains(child) && !frontier.contains(child) && !nextFrontier.contains(child)) {
-                        nextFrontier.add(child);
+                    if (!explored.contains(child) && !frontier.contains(child)) {
+                        frontier.add(child);
+                        currentLevelNodes.add(child); // Add to temp storage to print after all nodes at this level are
+                                                      // processed
                     }
                 }
             }
 
-            // Update the main frontier with the next level and print it
-            frontier.addAll(nextFrontier);
-            printFrontier(frontier); // Print the frontier state for the next level
+            if (!currentLevelNodes.isEmpty()) {
+                printFrontier(currentLevelNodes); // Print all new frontier nodes together
+            }
         }
         return null; // No path found
     }
@@ -126,6 +129,9 @@ public class PartA {
     }
 
     private static void printFrontier(Collection<Node> frontier) {
+        if (frontier.isEmpty()) {
+            return;
+        }
         System.out.print("[");
         Iterator<Node> it = frontier.iterator();
         while (it.hasNext()) {
