@@ -17,7 +17,7 @@ World: Oedipus 4
 Departure airport -- Start: 3:45
 Destination airport -- Goal: 2:45
 Search algorithm: BFS
-[Node@44b]
+[(3:45)][(2:45),(3:90),(3:135),(3:180),(3:225),(3:270),(3:315),(3:0)]
 (3:45)(2:45)
 1.000
 2
@@ -40,7 +40,7 @@ World: Oedipus 4
 Departure airport -- Start: 2:45
 Destination airport -- Goal: 2:0
 Search algorithm: BFS
-[Node@42c][Node@459,Node@486,Node@4b3,Node@4ff,Node@50d,Node@53a,Node@3ff][Node@486,Node@4b3,Node@4ff,Node@50d,Node@53a,Node@3ff,Node@3ee,Node@43a,Node@467,Node@494,Node@4e0,Node@4ee,Node@51b,Node@3e0][Node@4b3,Node@4ff,Node@50d,Node@53a,Node@3ff,Node@3ee, ... (line truncated)
+[(2:45)][(1:45),(2:90),(2:135),(2:180),(3:225),(2:270),(2:315),(2:0)][(0:45),(1:90),(1:135),(1:180),(2:225),(1:270),(1:315),(1:0)][(3:270)][(3:315)][(3:0)][(3:45),(3:90),(3:135),(3:180)]
 (2:45)(2:0)
 1.531
 2
@@ -91,7 +91,7 @@ World: Oedipus 5
 Departure airport -- Start: 2:45
 Destination airport -- Goal: 0:0
 Search algorithm: BFS
-[Node@42c][Node@459,Node@486,Node@4b3,Node@4ff,Node@50d,Node@53a,Node@3ff][Node@486,Node@4b3,Node@4ff,Node@50d,Node@53a,Node@3ff,Node@3ee,Node@43a,Node@467,Node@494,Node@4e0,Node@4ee,Node@51b,Node@3e0][Node@4b3,Node@4ff,Node@50d,Node@53a,Node@3ff,Node@3ee, ... (line truncated)
+[(2:45)][(1:45),(2:90),(2:135),(2:180),(3:225),(2:270),(2:315),(2:0)][(0:45),(1:90),(1:135),(1:180),(2:225),(1:270),(1:315),(1:0)][(3:270)][(3:315)][(3:0)][(4:45),(3:90),(3:135),(3:180)][(0:90),(0:180),(1:225),(0:270),(0:0)][(0:135)][(3:45)][(0:315)][(4:90 ... (line truncated)
 (2:45)(1:45)(0:45)(0:0)
 2.000
 4
@@ -133,7 +133,7 @@ World: Oedipus 5
 Departure airport -- Start: 2:45
 Destination airport -- Goal: 1:180
 Search algorithm: BFS
-[Node@42c][Node@459,Node@486,Node@4b3,Node@4ff,Node@50d,Node@53a,Node@3ff][Node@486,Node@4b3,Node@4ff,Node@50d,Node@53a,Node@3ff,Node@3ee,Node@43a,Node@467,Node@494,Node@4e0,Node@4ee,Node@51b,Node@3e0][Node@4b3,Node@4ff,Node@50d,Node@53a,Node@3ff,Node@3ee, ... (line truncated)
+[(2:45)][(1:45),(2:90),(2:135),(2:180),(3:225),(2:270),(2:315),(2:0)][(0:45),(1:90),(1:135),(1:180),(2:225),(1:270),(1:315),(1:0)][(3:270)][(3:315)][(3:0)][(4:45),(3:90),(3:135),(3:180)][(0:90),(0:180),(1:225),(0:270),(0:0)][(0:135)]
 (2:45)(1:45)(1:180)
 2.848
 3
