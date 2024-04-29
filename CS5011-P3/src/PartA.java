@@ -2,8 +2,6 @@ import java.util.*;
 
 public class PartA {
 
-    private static final int[] DIRECTIONS = { 0, 45, 90, 135, 180, 225, 270, 315 };
-
     public static class Node {
         int d; // Distance from the pole
         int angle; // Angle in degrees
@@ -19,12 +17,12 @@ public class PartA {
 
         public List<Node> getSuccessors(int planetSize) {
             List<Node> successors = new ArrayList<>();
-            int[] directions = {0, 90, 180, 270}; // Valid directions
-        
+            int[] directions = { 0, 90, 180, 270 }; // Valid directions
+
             for (int direction : directions) {
                 int newD = this.d;
                 int newAngle = (this.angle + direction) % 360;
-        
+
                 if (direction == 0 && newD > 0) { // North
                     newD--;
                 } else if (direction == 180 && newD < planetSize - 1) { // South
@@ -32,16 +30,12 @@ public class PartA {
                 } else if ((direction == 90 || direction == 270) && newD == 0) { // Invalid East/West at pole
                     continue;
                 }
-        
+
                 // Assuming the coordinate is valid based on other rules
                 double newCost = this.cost + calculateCost(this.d, newD);
                 successors.add(new Node(newD, newAngle, this, newCost));
             }
             return successors;
-        }        
-
-        private boolean isValidCoordinate(int d, int angle, int planetSize) {
-            return d >= 0 && d < planetSize; // Ensure within bounds
         }
 
         private double calculateCost(int currentD, int newD) {
@@ -88,25 +82,25 @@ public class PartA {
         return null; // Path not found
     }
 
-    public static List<Node> dfs(Node start, Node goal, int planetSize) {
-        Stack<Node> frontier = new Stack<>();
-        Set<Node> explored = new HashSet<>();
-        frontier.push(start);
+    // public static List<Node> dfs(Node start, Node goal, int planetSize) {
+    // Stack<Node> frontier = new Stack<>();
+    // Set<Node> explored = new HashSet<>();
+    // frontier.push(start);
 
-        while (!frontier.isEmpty()) {
-            Node current = frontier.pop();
-            if (current.equals(goal)) {
-                return constructPath(current);
-            }
-            explored.add(current);
-            for (Node child : current.getSuccessors(planetSize)) {
-                if (!explored.contains(child) && !frontier.contains(child)) {
-                    frontier.push(child);
-                }
-            }
-        }
-        return null; // No path found
-    }
+    // while (!frontier.isEmpty()) {
+    // Node current = frontier.pop();
+    // if (current.equals(goal)) {
+    // return constructPath(current);
+    // }
+    // explored.add(current);
+    // for (Node child : current.getSuccessors(planetSize)) {
+    // if (!explored.contains(child) && !frontier.contains(child)) {
+    // frontier.push(child);
+    // }
+    // }
+    // }
+    // return null; // No path found
+    // }
 
     private static void printFrontier(Collection<Node> frontier) {
         if (frontier.isEmpty())
