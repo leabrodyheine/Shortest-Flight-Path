@@ -17,21 +17,28 @@ public class PartA {
 
         public List<Node> getSuccessors(int planetSize) {
             List<Node> successors = new ArrayList<>();
-            int[] directions = { 0, 90, 180, 270 }; // Valid directions
+            int[] directions = { -45, 45 };
 
             for (int direction : directions) {
                 int newD = this.d;
-                int newAngle = (this.angle + direction) % 360;
+                int newAngle = (this.angle + direction + 360) % 360; // Ensure positive angle
 
-                if (direction == 0 && newD > 0) { // North
+                if (direction == -45 && newAngle == 0) { // Handle wrap-around from 0 to 360
+                    newAngle = 315;
+                }
+
+                if (direction == 45 && newAngle == 360) { // Handle wrap-around from 360 to 0
+                    newAngle = 0;
+                }
+
+                if (direction == -45 && newD > 0) { // North
                     newD--;
-                } else if (direction == 180 && newD < planetSize - 1) { // South
+                } else if (direction == 45 && newD < planetSize - 1) { // South
                     newD++;
-                } else if ((direction == 90 || direction == 270) && newD == 0) { // Invalid East/West at pole
+                } else if ((direction == 45 || direction == -45) && newD == 0) { // Invalid at pole
                     continue;
                 }
 
-                // Assuming the coordinate is valid based on other rules
                 double newCost = this.cost + calculateCost(this.d, newD);
                 successors.add(new Node(newD, newAngle, this, newCost));
             }
@@ -39,7 +46,7 @@ public class PartA {
         }
 
         private double calculateCost(int currentD, int newD) {
-            return currentD == newD ? (2 * Math.PI * currentD) / 8 : 1.0; // Cost logic
+            return currentD == newD ? (2 * Math.PI * currentD) / 8 : 1.0;
         }
 
         @Override
@@ -62,7 +69,7 @@ public class PartA {
         Queue<Node> frontier = new LinkedList<>();
         Set<Node> explored = new HashSet<>();
         frontier.add(start);
-        printFrontier(frontier); // Initial print
+        printFrontier(frontier);
 
         while (!frontier.isEmpty()) {
             Node current = frontier.poll();
@@ -79,7 +86,7 @@ public class PartA {
             }
             printFrontier(frontier);
         }
-        return null; // Path not found
+        return null;
     }
 
     // public static List<Node> dfs(Node start, Node goal, int planetSize) {

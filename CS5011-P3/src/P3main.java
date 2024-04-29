@@ -1,17 +1,5 @@
 import java.util.List;
 
-/********************
- * Starter Code
- * 
- * This class contains some examples of required inputs and outputs
- * 
- * @author alice toniolo
- *
- *         run with
- *         java P3main <Algo> <N> <ds:as> <dg:ag>
- *         we assume <N> <ds:as> <dg:ag> are valid parameters, no need to check
- */
-
 public class P3main {
 
 	public static void main(String[] args) {
