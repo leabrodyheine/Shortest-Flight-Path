@@ -28,4 +28,10 @@ public class Node {
     public int hashCode() {
         return Objects.hash(d, angle); // Use Objects.hash() to generate hashCode
     }
+
+    @Override
+    public String toString() {
+        return String.format("(%d:%d)", d, angle); // Ensure this matches the required format
+    }
+
 }

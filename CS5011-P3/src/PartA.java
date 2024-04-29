@@ -17,30 +17,45 @@ public class PartA {
             Queue<Node> frontier = new LinkedList<>();
             frontier.add(start);
             Set<Node> explored = new HashSet<>();
-            System.out.print("[" + start + "]"); // Initial frontier state
+
+            // Initial frontier state for debugging
+            printFrontier(frontier);
 
             while (!frontier.isEmpty()) {
                 Node current = frontier.poll();
+
+                // Check goal before expanding
                 if (current.equals(goal)) {
                     System.out.println(); // Ensures new line before final path print
                     return util.constructPath(current);
                 }
+
                 explored.add(current);
                 List<Node> successors = util.getSuccessors(current, planetSize, directions);
 
-                // Debugging output for interim frontier states
-                if (!frontier.isEmpty()) {
-                    System.out
-                            .print("[" + frontier.stream().map(Node::toString).collect(Collectors.joining(",")) + "]");
-                }
-
+                // Collect names for debugging before adding to frontier
+                List<String> debugNodes = new ArrayList<>();
                 for (Node next : successors) {
                     if (!explored.contains(next) && !frontier.contains(next)) {
                         frontier.add(next);
+                        debugNodes.add(next.toString());
                     }
+                }
+
+                // Print newly added nodes to frontier for next loop
+                if (!debugNodes.isEmpty()) {
+                    System.out.print("[" + String.join(",", debugNodes) + "]");
                 }
             }
             return null;
+        }
+
+        public void printFrontier(Collection<Node> frontier) {
+            if (frontier.isEmpty()) {
+                System.out.print("[]");
+            } else {
+                System.out.print("[" + frontier.stream().map(Node::toString).collect(Collectors.joining(",")) + "]");
+            }
         }
     }
 
