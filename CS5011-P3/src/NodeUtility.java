@@ -25,10 +25,13 @@ public class NodeUtility {
                     if (newD < planetSize - 1)
                         newD++;
                     break;
-                case 90: // East and 270 West: these do not affect 'd', only 'angle'
+                case 90: // East
+                case 270: // West
+                    if (newD == 0)
+                        continue; // Skip East/West movements at the pole
                     break;
                 default:
-                    continue; // Skip any other directions that might have sneaked in
+                    continue; // Ensures only valid directions are processed
             }
 
             if (newD >= 0 && newD < planetSize) {
