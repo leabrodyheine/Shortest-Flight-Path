@@ -17,33 +17,42 @@ public class PartA {
 
         public List<Node> getSuccessors(int planetSize) {
             List<Node> successors = new ArrayList<>();
-            int[] angleChanges = { -45, 45 }; // Allowed angle changes
-            int[] distanceChanges = { -1, 1 }; // Allowed distance changes
+            // Angular movement +/- 45 degrees
+            int[] angleChanges = { -45, 45 };
 
-            // Handle angular changes
+            // Radial movement +/- 1 distance
+            int[] distanceChanges = { -1, 1 };
+
+            // Handling angular changes
             for (int angleChange : angleChanges) {
                 int newAngle = (this.angle + angleChange) % 360;
                 if (newAngle < 0)
-                    newAngle += 360; // Correct negative angles
-                if (this.d > 0 && this.d < planetSize - 1) { // Ensure valid distance
-                    successors.add(new Node(this.d, newAngle, this, this.cost + calculateCost(this.d, this.d)));
-                }
+                    newAngle += 360; // Ensure angle wraps correctly
+
+                // Add nodes for angular changes at the same radius
+                successors.add(new Node(this.d, newAngle, this, this.cost + calculateAngularCost(angleChange)));
             }
 
-            // Handle radial changes
+            // Handling radial changes
             for (int distanceChange : distanceChanges) {
                 int newD = this.d + distanceChange;
-                if (newD >= 0 && newD < planetSize) { // Ensure new distance is within bounds
-                    successors.add(new Node(newD, this.angle, this, this.cost + calculateCost(this.d, newD)));
+                if (newD >= 0 && newD < planetSize) { // Ensure within bounds
+                    // Add nodes for radial changes at the current angle
+                    successors.add(new Node(newD, this.angle, this, this.cost + calculateRadialCost(distanceChange)));
                 }
             }
 
             return successors;
         }
 
-        private double calculateCost(int currentD, int newD) {
-            // This might be a simplified placeholder for your actual cost calculation logic
-            return currentD == newD ? (2 * Math.PI * currentD) / 360 : 1.0;
+        private double calculateAngularCost(int angleChange) {
+            // Assuming a cost model for angular movements
+            return Math.abs(angleChange) / 45.0; // Simplified cost for each 45 degree turn
+        }
+
+        private double calculateRadialCost(int distanceChange) {
+            // Assuming a cost model for radial movements
+            return Math.abs(distanceChange); // Cost 1 for each radial movement
         }
 
         @Override
