@@ -17,25 +17,17 @@ public class PartA {
 
         public List<Node> getSuccessors(int planetSize) {
             List<Node> successors = new ArrayList<>();
-            int[] directions = { -45, 45 };
+            int[] directions = { -45, 45};
 
             for (int direction : directions) {
                 int newD = this.d;
                 int newAngle = (this.angle + direction + 360) % 360; // Ensure positive angle
 
-                if (direction == -45 && newAngle == 0) { // Handle wrap-around from 0 to 360
-                    newAngle = 315;
-                }
-
-                if (direction == 45 && newAngle == 360) { // Handle wrap-around from 360 to 0
-                    newAngle = 0;
-                }
-
-                if (direction == -45 && newD > 0) { // North
+                if (direction == 0 && newD > 0) { // North
                     newD--;
-                } else if (direction == 45 && newD < planetSize - 1) { // South
+                } else if (direction == 180 && newD < planetSize - 1) {
                     newD++;
-                } else if ((direction == 45 || direction == -45) && newD == 0) { // Invalid at pole
+                } else if ((direction == 90 || direction == 270) && newD == 0) {
                     continue;
                 }
 
@@ -46,7 +38,7 @@ public class PartA {
         }
 
         private double calculateCost(int currentD, int newD) {
-            return currentD == newD ? (2 * Math.PI * currentD) / 8 : 1.0;
+            return currentD == newD ? (2 * Math.PI * currentD) / 8 : 1.0; 
         }
 
         @Override
