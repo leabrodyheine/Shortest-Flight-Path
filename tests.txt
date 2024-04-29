@@ -18,7 +18,9 @@ Departure airport -- Start: 3:45
 Destination airport -- Goal: 2:45
 Search algorithm: BFS
 [(3:45)]
-[(2:45)]
+[(3:0),(3:90),(2:45)]
+[(3:315),(2:0)]
+[(3:135),(2:90)]
 (3:45)(2:45)
 1.000
 2
