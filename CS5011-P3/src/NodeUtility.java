@@ -10,25 +10,35 @@ public class NodeUtility {
         return Math.sqrt(r1 * r1 + r2 * r2 - 2 * r1 * r2 * Math.cos(angularDistance));
     }
 
-    public List<Node> getSuccessors(Node current, int planetSize) {
+    public List<Node> getSuccessors(Node current, int planetSize, int[] directions) {
         List<Node> successors = new ArrayList<>();
-        int[] directions = { 0, 90, 180, 270 };
         for (int direction : directions) {
             int newD = current.d;
             int newAngle = (current.angle + direction) % 360;
 
-            if (direction == 0 && newD > 0) {
-                newD--;
-            } else if (direction == 180 && newD < planetSize - 1) {
-                newD++;
-            } else if ((direction == 90 || direction == 270) && newD == 0) {
-                continue;
+            // Handle movements, adjust for specific directions
+            switch (direction) {
+                case 0: // North
+                    if (newD > 0)
+                        newD--;
+                    break;
+                case 180: // South
+                    if (newD < planetSize - 1)
+                        newD++;
+                    break;
+                case 90: // East
+                case 270: // West
+                    if (newD == 0)
+                        continue; // Skip invalid east/west at the pole
+                    break;
             }
 
-            Node newNode = new Node(newD, newAngle, current, current.cost);
-            double additionalCost = calculateCost(current, newNode);
-            newNode.cost += additionalCost;
-            successors.add(newNode);
+            if (newD >= 0 && newD < planetSize) { // Ensure valid grid position
+                Node newNode = new Node(newD, newAngle, current, current.cost);
+                double additionalCost = calculateCost(current, newNode);
+                newNode.cost += additionalCost;
+                successors.add(newNode);
+            }
         }
         return successors;
     }

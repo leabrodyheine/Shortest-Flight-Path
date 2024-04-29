@@ -4,17 +4,18 @@ public class PartA {
 
     public static class BFS implements SearchStrategy {
         private NodeUtility util;
+        private int[] directions;
 
-        public BFS(NodeUtility utility) {
+        public BFS(NodeUtility utility, int[] directions) {
             this.util = utility;
+            this.directions = directions;
         }
 
         @Override
         public List<Node> search(Node start, Node goal, int planetSize) {
             Queue<Node> frontier = new LinkedList<>();
-            Set<Node> explored = new HashSet<>();
             frontier.add(start);
-            util.printFrontier(frontier);
+            Set<Node> explored = new HashSet<>();
 
             while (!frontier.isEmpty()) {
                 Node current = frontier.poll();
@@ -22,12 +23,11 @@ public class PartA {
                     return util.constructPath(current);
                 }
                 explored.add(current);
-                for (Node child : util.getSuccessors(current, planetSize)) {
-                    if (!explored.contains(child) && !frontier.contains(child)) {
-                        frontier.add(child);
+                for (Node next : util.getSuccessors(current, planetSize, directions)) {
+                    if (!explored.contains(next) && !frontier.contains(next)) {
+                        frontier.add(next);
                     }
                 }
-                util.printFrontier(frontier);
             }
             return null;
         }
@@ -35,9 +35,12 @@ public class PartA {
 
     public static class DFS implements SearchStrategy {
         private NodeUtility util;
+        private int[] directions;
 
-        public DFS(NodeUtility utility) {
+
+        public DFS(NodeUtility utility, int[] directions) {
             this.util = utility;
+            this.directions = directions;
         }
 
         @Override
@@ -52,7 +55,7 @@ public class PartA {
                     return util.constructPath(current);
                 }
                 explored.add(current);
-                for (Node child : util.getSuccessors(current, planetSize)) {
+                for (Node child : util.getSuccessors(current, planetSize, directions)) {
                     if (!explored.contains(child) && !frontier.contains(child)) {
                         frontier.push(child);
                     }

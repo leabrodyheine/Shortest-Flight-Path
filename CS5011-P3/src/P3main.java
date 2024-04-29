@@ -33,13 +33,16 @@ public class P3main {
 	}
 
 	private static SearchStrategy getSearchStrategy(String algo, NodeUtility util) {
+		int[] fullDirections = { 0, 45, 90, 135, 180, 225, 270, 315 };
+		int[] restrictedDirections = { 0, 90, 180, 270 };
+
 		switch (algo) {
 			case "BFS":
-				return new PartA.BFS(util);
+				return new PartA.BFS(util, fullDirections);
 			case "DFS":
-				return new PartA.DFS(util);
+				return new PartA.DFS(util, fullDirections);
 			case "BestF":
-				// return new PartB.BestFirstSearch(util);
+				// return new PartB.BestFirstSearch(util, restrictedDirections);
 			case "AStar":
 				// return new AStarSearch(util);
 			case "SMAStar":

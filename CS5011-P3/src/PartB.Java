@@ -4,9 +4,11 @@ public class PartB {
 
     public static class BestFirstSearch implements SearchStrategy {
         private NodeUtility util;
+        private int[] directions;
 
-        public BestFirstSearch(NodeUtility utility) {
+        public BestFirstSearch(NodeUtility utility, int[] directions) {
             this.util = utility;
+            this.directions = directions;
         }
 
         @Override
@@ -24,7 +26,7 @@ public class PartB {
                     return util.constructPath(current);
                 }
 
-                for (Node next : util.getSuccessors(current, planetSize)) {
+                for (Node next : util.getSuccessors(current, planetSize, directions)) {
                     double newCost = costSoFar.get(current) + util.calculateCost(current, next);
                     if (!costSoFar.containsKey(next) || newCost < costSoFar.get(next)) {
                         costSoFar.put(next, newCost);
