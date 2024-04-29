@@ -17,27 +17,49 @@ public class PartA {
 
         public List<Node> getSuccessors(int planetSize) {
             List<Node> successors = new ArrayList<>();
-            // Handling angular changes of +/- 45 degrees
+            // Debugging: Output current state before generating successors
+            System.out.println("Generating successors for Node: " + this);
+
             int[] angleChanges = { -45, 45 };
-            // Handling radial changes of +/- 1
             int[] distanceChanges = { -1, 1 };
 
+            // Generate successors
             for (int angleChange : angleChanges) {
-                int newAngle = (this.angle + angleChange + 360) % 360; // Ensure correct angle wrapping
-                // Assume angular cost does not depend on radial position
+                int newAngle = (this.angle + angleChange + 360) % 360;
                 successors.add(new Node(this.d, newAngle, this, this.cost + calculateAngularCost(angleChange)));
             }
 
             for (int distanceChange : distanceChanges) {
                 int newD = this.d + distanceChange;
-                if (newD >= 0 && newD < planetSize) { // Check for valid radial positions
-                    // Assume radial cost may depend on the specific movement
+                if (newD >= 0 && newD < planetSize) {
                     successors.add(new Node(newD, this.angle, this, this.cost + calculateRadialCost(distanceChange)));
                 }
             }
 
+            // Debugging: Output generated successors
+            System.out.println("Successors generated: " + successors.size());
+            for (Node s : successors) {
+                System.out.println(" -> Successor: " + s);
+            }
+
             return successors;
         }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null || getClass() != obj.getClass())
+                return false;
+            Node node = (Node) obj;
+            return d == node.d && angle == node.angle;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(d, angle);
+        }
+
     }
 
     private static double calculateAngularCost(int angleChange) {
