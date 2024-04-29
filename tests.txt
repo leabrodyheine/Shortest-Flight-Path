@@ -17,6 +17,9 @@ World: Oedipus 4
 Departure airport -- Start: 3:45
 Destination airport -- Goal: 2:45
 Search algorithm: BFS
+Frontier: []
+Expanding: Node@44b, Successors: [Node@42c, Node@478, Node@4a5, Node@4d2, Node@4ff, Node@52c, Node@559, Node@41e]
+Frontier: [Node@478, Node@4a5, Node@4d2, Node@4ff, Node@52c, Node@559, Node@41e]
 (3:45)(2:45)
 1.000
 2
@@ -39,6 +42,23 @@ World: Oedipus 4
 Departure airport -- Start: 2:45
 Destination airport -- Goal: 2:0
 Search algorithm: BFS
+Frontier: []
+Expanding: Node@42c, Successors: [Node@40d, Node@459, Node@486, Node@4b3, Node@4ff, Node@50d, Node@53a, Node@3ff]
+Frontier: [Node@459, Node@486, Node@4b3, Node@4ff, Node@50d, Node@53a, Node@3ff]
+Expanding: Node@40d, Successors: [Node@3ee, Node@43a, Node@467, Node@494, Node@4e0, Node@4ee, Node@51b, Node@3e0]
+Frontier: [Node@486, Node@4b3, Node@4ff, Node@50d, Node@53a, Node@3ff, Node@3ee, Node@43a, Node@467, Node@494, Node@4e0, Node@4ee, Node@51b, Node@3e0]
+Expanding: Node@459, Successors: [Node@43a, Node@486, Node@4b3, Node@4e0, Node@52c, Node@53a, Node@3ff, Node@42c]
+Frontier: [Node@4b3, Node@4ff, Node@50d, Node@53a, Node@3ff, Node@3ee, Node@43a, Node@467, Node@494, Node@4e0, Node@4ee, Node@51b, Node@3e0, Node@52c]
+Expanding: Node@486, Successors: [Node@467, Node@4b3, Node@4e0, Node@50d, Node@559, Node@3ff, Node@42c, Node@459]
+Frontier: [Node@4ff, Node@50d, Node@53a, Node@3ff, Node@3ee, Node@43a, Node@467, Node@494, Node@4e0, Node@4ee, Node@51b, Node@3e0, Node@52c, Node@559]
+Expanding: Node@4b3, Successors: [Node@494, Node@4e0, Node@50d, Node@53a, Node@41e, Node@42c, Node@459, Node@486]
+Frontier: [Node@50d, Node@53a, Node@3ff, Node@3ee, Node@43a, Node@467, Node@494, Node@4e0, Node@4ee, Node@51b, Node@3e0, Node@52c, Node@559, Node@41e]
+Expanding: Node@4ff, Successors: [Node@4e0, Node@52c, Node@559, Node@41e, Node@44b, Node@478, Node@4a5, Node@4d2]
+Frontier: [Node@53a, Node@3ff, Node@3ee, Node@43a, Node@467, Node@494, Node@4e0, Node@4ee, Node@51b, Node@3e0, Node@52c, Node@559, Node@41e, Node@44b, Node@478, Node@4a5, Node@4d2]
+Expanding: Node@50d, Successors: [Node@4ee, Node@53a, Node@3ff, Node@42c, Node@478, Node@486, Node@4b3, Node@4e0]
+Frontier: [Node@3ff, Node@3ee, Node@43a, Node@467, Node@494, Node@4e0, Node@4ee, Node@51b, Node@3e0, Node@52c, Node@559, Node@41e, Node@44b, Node@478, Node@4a5, Node@4d2]
+Expanding: Node@53a, Successors: [Node@51b, Node@3ff, Node@42c, Node@459, Node@4a5, Node@4b3, Node@4e0, Node@50d]
+Frontier: [Node@3ee, Node@43a, Node@467, Node@494, Node@4e0, Node@4ee, Node@51b, Node@3e0, Node@52c, Node@559, Node@41e, Node@44b, Node@478, Node@4a5, Node@4d2]
 (2:45)(2:0)
 1.531
 2
@@ -89,9 +109,66 @@ World: Oedipus 5
 Departure airport -- Start: 2:45
 Destination airport -- Goal: 0:0
 Search algorithm: BFS
+Frontier: []
+Expanding: Node@42c, Successors: [Node@40d, Node@459, Node@486, Node@4b3, Node@4ff, Node@50d, Node@53a, Node@3ff]
+Frontier: [Node@459, Node@486, Node@4b3, Node@4ff, Node@50d, Node@53a, Node@3ff]
+Expanding: Node@40d, Successors: [Node@3ee, Node@43a, Node@467, Node@494, Node@4e0, Node@4ee, Node@51b, Node@3e0]
+Frontier: [Node@486, Node@4b3, Node@4ff, Node@50d, Node@53a, Node@3ff, Node@3ee, Node@43a, Node@467, Node@494, Node@4e0, Node@4ee, Node@51b, Node@3e0]
+Expanding: Node@459, Successors: [Node@43a, Node@486, Node@4b3, Node@4e0, Node@52c, Node@53a, Node@3ff, Node@42c]
+Frontier: [Node@4b3, Node@4ff, Node@50d, Node@53a, Node@3ff, Node@3ee, Node@43a, Node@467, Node@494, Node@4e0, Node@4ee, Node@51b, Node@3e0, Node@52c]
+Expanding: Node@486, Successors: [Node@467, Node@4b3, Node@4e0, Node@50d, Node@559, Node@3ff, Node@42c, Node@459]
+Frontier: [Node@4ff, Node@50d, Node@53a, Node@3ff, Node@3ee, Node@43a, Node@467, Node@494, Node@4e0, Node@4ee, Node@51b, Node@3e0, Node@52c, Node@559]
+Expanding: Node@4b3, Successors: [Node@494, Node@4e0, Node@50d, Node@53a, Node@41e, Node@42c, Node@459, Node@486]
+Frontier: [Node@50d, Node@53a, Node@3ff, Node@3ee, Node@43a, Node@467, Node@494, Node@4e0, Node@4ee, Node@51b, Node@3e0, Node@52c, Node@559, Node@41e]
+Expanding: Node@4ff, Successors: [Node@4e0, Node@52c, Node@559, Node@41e, Node@46a, Node@478, Node@4a5, Node@4d2]
+Frontier: [Node@53a, Node@3ff, Node@3ee, Node@43a, Node@467, Node@494, Node@4e0, Node@4ee, Node@51b, Node@3e0, Node@52c, Node@559, Node@41e, Node@46a, Node@478, Node@4a5, Node@4d2]
+Expanding: Node@50d, Successors: [Node@4ee, Node@53a, Node@3ff, Node@42c, Node@478, Node@486, Node@4b3, Node@4e0]
+Frontier: [Node@3ff, Node@3ee, Node@43a, Node@467, Node@494, Node@4e0, Node@4ee, Node@51b, Node@3e0, Node@52c, Node@559, Node@41e, Node@46a, Node@478, Node@4a5, Node@4d2]
+Expanding: Node@53a, Successors: [Node@51b, Node@3ff, Node@42c, Node@459, Node@4a5, Node@4b3, Node@4e0, Node@50d]
+Frontier: [Node@3ee, Node@43a, Node@467, Node@494, Node@4e0, Node@4ee, Node@51b, Node@3e0, Node@52c, Node@559, Node@41e, Node@46a, Node@478, Node@4a5, Node@4d2]
+Expanding: Node@3ff, Successors: [Node@3e0, Node@42c, Node@459, Node@486, Node@4d2, Node@4e0, Node@50d, Node@53a]
+Frontier: [Node@43a, Node@467, Node@494, Node@4e0, Node@4ee, Node@51b, Node@3e0, Node@52c, Node@559, Node@41e, Node@46a, Node@478, Node@4a5, Node@4d2]
+Expanding: Node@3ee, Successors: [Node@3ee, Node@41b, Node@475, Node@4c1, Node@4cf, Node@3c1]
+Frontier: [Node@467, Node@494, Node@4e0, Node@4ee, Node@51b, Node@3e0, Node@52c, Node@559, Node@41e, Node@46a, Node@478, Node@4a5, Node@4d2, Node@41b, Node@475, Node@4c1, Node@4cf, Node@3c1]
+Expanding: Node@43a, Successors: [Node@41b, Node@467, Node@494, Node@4c1, Node@50d, Node@51b, Node@3e0, Node@40d]
+Frontier: [Node@494, Node@4e0, Node@4ee, Node@51b, Node@3e0, Node@52c, Node@559, Node@41e, Node@46a, Node@478, Node@4a5, Node@4d2, Node@41b, Node@475, Node@4c1, Node@4cf, Node@3c1]
+Expanding: Node@467, Successors: [Node@448, Node@494, Node@4c1, Node@4ee, Node@53a, Node@3e0, Node@40d, Node@43a]
+Frontier: [Node@4e0, Node@4ee, Node@51b, Node@3e0, Node@52c, Node@559, Node@41e, Node@46a, Node@478, Node@4a5, Node@4d2, Node@41b, Node@475, Node@4c1, Node@4cf, Node@3c1, Node@448]
+Expanding: Node@494, Successors: [Node@475, Node@4c1, Node@4ee, Node@51b, Node@3ff, Node@40d, Node@43a, Node@467]
+Frontier: [Node@4ee, Node@51b, Node@3e0, Node@52c, Node@559, Node@41e, Node@46a, Node@478, Node@4a5, Node@4d2, Node@41b, Node@475, Node@4c1, Node@4cf, Node@3c1, Node@448]
+Expanding: Node@4e0, Successors: [Node@4c1, Node@50d, Node@53a, Node@3ff, Node@44b, Node@459, Node@486, Node@4b3]
+Frontier: [Node@51b, Node@3e0, Node@52c, Node@559, Node@41e, Node@46a, Node@478, Node@4a5, Node@4d2, Node@41b, Node@475, Node@4c1, Node@4cf, Node@3c1, Node@448, Node@44b]
+Expanding: Node@4ee, Successors: [Node@4cf, Node@51b, Node@3e0, Node@40d, Node@459, Node@467, Node@494, Node@4c1]
+Frontier: [Node@3e0, Node@52c, Node@559, Node@41e, Node@46a, Node@478, Node@4a5, Node@4d2, Node@41b, Node@475, Node@4c1, Node@4cf, Node@3c1, Node@448, Node@44b]
+Expanding: Node@51b, Successors: [Node@4fc, Node@3e0, Node@40d, Node@43a, Node@486, Node@494, Node@4c1, Node@4ee]
+Frontier: [Node@52c, Node@559, Node@41e, Node@46a, Node@478, Node@4a5, Node@4d2, Node@41b, Node@475, Node@4c1, Node@4cf, Node@3c1, Node@448, Node@44b, Node@4fc]
+Expanding: Node@3e0, Successors: [Node@3c1, Node@40d, Node@43a, Node@467, Node@4b3, Node@4c1, Node@4ee, Node@51b]
+Frontier: [Node@559, Node@41e, Node@46a, Node@478, Node@4a5, Node@4d2, Node@41b, Node@475, Node@4c1, Node@4cf, Node@3c1, Node@448, Node@44b, Node@4fc]
+Expanding: Node@52c, Successors: [Node@50d, Node@559, Node@41e, Node@44b, Node@497, Node@4a5, Node@4d2, Node@4ff]
+Frontier: [Node@41e, Node@46a, Node@478, Node@4a5, Node@4d2, Node@41b, Node@475, Node@4c1, Node@4cf, Node@3c1, Node@448, Node@44b, Node@4fc, Node@497]
+Expanding: Node@559, Successors: [Node@53a, Node@41e, Node@44b, Node@478, Node@4c4, Node@4d2, Node@4ff, Node@52c]
+Frontier: [Node@46a, Node@478, Node@4a5, Node@4d2, Node@41b, Node@475, Node@4c1, Node@4cf, Node@3c1, Node@448, Node@44b, Node@4fc, Node@497, Node@4c4]
+Expanding: Node@41e, Successors: [Node@3ff, Node@44b, Node@478, Node@4a5, Node@4f1, Node@4ff, Node@52c, Node@559]
+Frontier: [Node@478, Node@4a5, Node@4d2, Node@41b, Node@475, Node@4c1, Node@4cf, Node@3c1, Node@448, Node@44b, Node@4fc, Node@497, Node@4c4, Node@4f1]
+Expanding: Node@46a, Successors: [Node@44b, Node@497, Node@4c4, Node@4f1, Node@51e, Node@54b, Node@578, Node@43d]
+Frontier: [Node@4a5, Node@4d2, Node@41b, Node@475, Node@4c1, Node@4cf, Node@3c1, Node@448, Node@44b, Node@4fc, Node@497, Node@4c4, Node@4f1, Node@51e, Node@54b, Node@578, Node@43d]
+Expanding: Node@478, Successors: [Node@459, Node@4a5, Node@4d2, Node@4ff, Node@54b, Node@559, Node@41e, Node@44b]
+Frontier: [Node@4d2, Node@41b, Node@475, Node@4c1, Node@4cf, Node@3c1, Node@448, Node@44b, Node@4fc, Node@497, Node@4c4, Node@4f1, Node@51e, Node@54b, Node@578, Node@43d]
+Expanding: Node@4a5, Successors: [Node@486, Node@4d2, Node@4ff, Node@52c, Node@578, Node@41e, Node@44b, Node@478]
+Frontier: [Node@41b, Node@475, Node@4c1, Node@4cf, Node@3c1, Node@448, Node@44b, Node@4fc, Node@497, Node@4c4, Node@4f1, Node@51e, Node@54b, Node@578, Node@43d]
+Expanding: Node@4d2, Successors: [Node@4b3, Node@4ff, Node@52c, Node@559, Node@43d, Node@44b, Node@478, Node@4a5]
+Frontier: [Node@475, Node@4c1, Node@4cf, Node@3c1, Node@448, Node@44b, Node@4fc, Node@497, Node@4c4, Node@4f1, Node@51e, Node@54b, Node@578, Node@43d]
+Expanding: Node@41b, Successors: [Node@41b, Node@448, Node@4a2, Node@4ee, Node@4fc, Node@3ee]
+Frontier: [Node@4c1, Node@4cf, Node@3c1, Node@448, Node@44b, Node@4fc, Node@497, Node@4c4, Node@4f1, Node@51e, Node@54b, Node@578, Node@43d, Node@4a2]
+Expanding: Node@475, Successors: [Node@475, Node@4a2, Node@4fc, Node@3e0, Node@3ee, Node@448]
+Frontier: [Node@4cf, Node@3c1, Node@448, Node@44b, Node@4fc, Node@497, Node@4c4, Node@4f1, Node@51e, Node@54b, Node@578, Node@43d, Node@4a2]
+Expanding: Node@4c1, Successors: [Node@4a2, Node@4ee, Node@51b, Node@3e0, Node@42c, Node@43a, Node@467, Node@494]
+Frontier: [Node@3c1, Node@448, Node@44b, Node@4fc, Node@497, Node@4c4, Node@4f1, Node@51e, Node@54b, Node@578, Node@43d, Node@4a2]
+Expanding: Node@4cf, Successors: [Node@4cf, Node@4fc, Node@3ee, Node@43a, Node@448, Node@4a2]
+Frontier: [Node@448, Node@44b, Node@4fc, Node@497, Node@4c4, Node@4f1, Node@51e, Node@54b, Node@578, Node@43d, Node@4a2]
 (2:45)(1:45)(0:45)(0:0)
 2.000
-4
+... (output truncated)
 ---
 
 * COMPARISON TEST - 03_BFS3/prog-run-03_BFS.out : fail
@@ -130,6 +207,31 @@ World: Oedipus 5
 Departure airport -- Start: 2:45
 Destination airport -- Goal: 1:180
 Search algorithm: BFS
+Frontier: []
+Expanding: Node@42c, Successors: [Node@40d, Node@459, Node@486, Node@4b3, Node@4ff, Node@50d, Node@53a, Node@3ff]
+Frontier: [Node@459, Node@486, Node@4b3, Node@4ff, Node@50d, Node@53a, Node@3ff]
+Expanding: Node@40d, Successors: [Node@3ee, Node@43a, Node@467, Node@494, Node@4e0, Node@4ee, Node@51b, Node@3e0]
+Frontier: [Node@486, Node@4b3, Node@4ff, Node@50d, Node@53a, Node@3ff, Node@3ee, Node@43a, Node@467, Node@494, Node@4e0, Node@4ee, Node@51b, Node@3e0]
+Expanding: Node@459, Successors: [Node@43a, Node@486, Node@4b3, Node@4e0, Node@52c, Node@53a, Node@3ff, Node@42c]
+Frontier: [Node@4b3, Node@4ff, Node@50d, Node@53a, Node@3ff, Node@3ee, Node@43a, Node@467, Node@494, Node@4e0, Node@4ee, Node@51b, Node@3e0, Node@52c]
+Expanding: Node@486, Successors: [Node@467, Node@4b3, Node@4e0, Node@50d, Node@559, Node@3ff, Node@42c, Node@459]
+Frontier: [Node@4ff, Node@50d, Node@53a, Node@3ff, Node@3ee, Node@43a, Node@467, Node@494, Node@4e0, Node@4ee, Node@51b, Node@3e0, Node@52c, Node@559]
+Expanding: Node@4b3, Successors: [Node@494, Node@4e0, Node@50d, Node@53a, Node@41e, Node@42c, Node@459, Node@486]
+Frontier: [Node@50d, Node@53a, Node@3ff, Node@3ee, Node@43a, Node@467, Node@494, Node@4e0, Node@4ee, Node@51b, Node@3e0, Node@52c, Node@559, Node@41e]
+Expanding: Node@4ff, Successors: [Node@4e0, Node@52c, Node@559, Node@41e, Node@46a, Node@478, Node@4a5, Node@4d2]
+Frontier: [Node@53a, Node@3ff, Node@3ee, Node@43a, Node@467, Node@494, Node@4e0, Node@4ee, Node@51b, Node@3e0, Node@52c, Node@559, Node@41e, Node@46a, Node@478, Node@4a5, Node@4d2]
+Expanding: Node@50d, Successors: [Node@4ee, Node@53a, Node@3ff, Node@42c, Node@478, Node@486, Node@4b3, Node@4e0]
+Frontier: [Node@3ff, Node@3ee, Node@43a, Node@467, Node@494, Node@4e0, Node@4ee, Node@51b, Node@3e0, Node@52c, Node@559, Node@41e, Node@46a, Node@478, Node@4a5, Node@4d2]
+Expanding: Node@53a, Successors: [Node@51b, Node@3ff, Node@42c, Node@459, Node@4a5, Node@4b3, Node@4e0, Node@50d]
+Frontier: [Node@3ee, Node@43a, Node@467, Node@494, Node@4e0, Node@4ee, Node@51b, Node@3e0, Node@52c, Node@559, Node@41e, Node@46a, Node@478, Node@4a5, Node@4d2]
+Expanding: Node@3ff, Successors: [Node@3e0, Node@42c, Node@459, Node@486, Node@4d2, Node@4e0, Node@50d, Node@53a]
+Frontier: [Node@43a, Node@467, Node@494, Node@4e0, Node@4ee, Node@51b, Node@3e0, Node@52c, Node@559, Node@41e, Node@46a, Node@478, Node@4a5, Node@4d2]
+Expanding: Node@3ee, Successors: [Node@3ee, Node@41b, Node@475, Node@4c1, Node@4cf, Node@3c1]
+Frontier: [Node@467, Node@494, Node@4e0, Node@4ee, Node@51b, Node@3e0, Node@52c, Node@559, Node@41e, Node@46a, Node@478, Node@4a5, Node@4d2, Node@41b, Node@475, Node@4c1, Node@4cf, Node@3c1]
+Expanding: Node@43a, Successors: [Node@41b, Node@467, Node@494, Node@4c1, Node@50d, Node@51b, Node@3e0, Node@40d]
+Frontier: [Node@494, Node@4e0, Node@4ee, Node@51b, Node@3e0, Node@52c, Node@559, Node@41e, Node@46a, Node@478, Node@4a5, Node@4d2, Node@41b, Node@475, Node@4c1, Node@4cf, Node@3c1]
+Expanding: Node@467, Successors: [Node@448, Node@494, Node@4c1, Node@4ee, Node@53a, Node@3e0, Node@40d, Node@43a]
+Frontier: [Node@4e0, Node@4ee, Node@51b, Node@3e0, Node@52c, Node@559, Node@41e, Node@46a, Node@478, Node@4a5, Node@4d2, Node@41b, Node@475, Node@4c1, Node@4cf, Node@3c1, Node@448]
 (2:45)(1:45)(1:180)
 2.848
 3
