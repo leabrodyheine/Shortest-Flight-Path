@@ -18,25 +18,24 @@ public class PartA {
         public List<Node> getSuccessors(int planetSize) {
             List<Node> successors = new ArrayList<>();
             int[] angleChanges = { -45, 45 }; // Allowed angular changes
-            int[] distanceChanges = { -1, 1 }; // Allowed radial changes
 
             // Generate successors for angle changes
             for (int angleChange : angleChanges) {
                 int newAngle = (this.angle + angleChange + 360) % 360; // Correctly handle angle wrapping
-                // Check if the new state is within valid bounds before adding
-                if (this.d > 0 && this.d < planetSize - 1) { // Only allow angular changes if within valid distance
-                                                             // range
-                    successors.add(new Node(this.d, newAngle, this, this.cost + calculateAngularCost(angleChange)));
+                if (this.d > 0) { // Angular change only allowed if not at the pole
+                    successors.add(new Node(this.d, newAngle, this, this.cost + 1));
                 }
             }
 
             // Generate successors for distance changes
+            int[] distanceChanges = { -1, 1 }; // Allowed radial changes
             for (int distanceChange : distanceChanges) {
                 int newD = this.d + distanceChange;
                 if (newD >= 0 && newD < planetSize) { // Check radial boundaries
-                    successors.add(new Node(newD, this.angle, this, this.cost + calculateRadialCost(distanceChange)));
+                    successors.add(new Node(newD, this.angle, this, this.cost + 1));
                 }
             }
+
             return successors;
         }
 
@@ -46,8 +45,8 @@ public class PartA {
                 return true;
             if (obj == null || getClass() != obj.getClass())
                 return false;
-            Node node = (Node) obj;
-            return d == node.d && angle == node.angle;
+            Node other = (Node) obj;
+            return d == other.d && angle == other.angle;
         }
 
         @Override
