@@ -12,33 +12,33 @@ public class NodeUtility {
 
     public List<Node> getSuccessors(Node current, int planetSize, int[] directions) {
         List<Node> successors = new ArrayList<>();
-        for (int direction : directions) {
-            int newD = current.d; // Assuming 'd' represents a distance or a specific grid row.
+        int[] validDirections = { 0, 90, 180, 270 }; // Restricting directions to only cardinal points
+
+        for (int direction : validDirections) {
+            int newD = current.d;
             int newAngle = (current.angle + direction) % 360;
 
-            // Adjust `newD` based on the direction -- assume these are grid directions
-            // Assuming North/South adjusts 'd' and East/West adjusts 'angle'
+            // Direction-based movement adjustments, assuming no diagonals and wrapping is
+            // not allowed
             switch (direction) {
-                case 0: // North
+                case 0: // North, decrement d
                     if (newD > 0)
                         newD--;
                     break;
-                case 180: // South
+                case 180: // South, increment d
                     if (newD < planetSize - 1)
                         newD++;
                     break;
                 case 90: // East
                 case 270: // West
-                    // Typically, East/West would adjust columns in a grid
-                    // Since 'angle' represents some form of direction, it should be checked
-                    // differently
-                    continue; // Assume East/West are not valid for now or need different handling
+                    // Assuming no East/West movements alter 'd', and are valid movements
+                    break;
             }
 
             if (newD >= 0 && newD < planetSize) {
-                double initialCost = calculateCost(current, new Node(newD, newAngle, current, 0)); // Calculate cost
-                                                                                                   // with a dummy node
-                Node newNode = new Node(newD, newAngle, current, current.cost + initialCost);
+                Node newNode = new Node(newD, newAngle, current, 0);
+                double initialCost = calculateCost(current, newNode);
+                newNode.cost = current.cost + initialCost;
                 successors.add(newNode);
             }
         }
