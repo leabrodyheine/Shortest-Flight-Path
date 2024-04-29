@@ -57,6 +57,7 @@ Search algorithm: BFS
 [(0:135),(0:315),(0:225)]
 [(0:315),(0:225)]
 [(0:225)]
+No path found.
 ---
 
 * COMPARISON TEST - 02_BFS2/prog-run-02_BFS2.out : fail
@@ -124,6 +125,7 @@ Search algorithm: BFS
 [(4:225),(4:315),(0:225)]
 [(4:315),(0:225)]
 [(0:225)]
+No path found.
 ---
 
 * COMPARISON TEST - 03_BFS3/prog-run-03_BFS.out : fail
@@ -182,6 +184,7 @@ Search algorithm: BFS
 [(4:225),(4:315),(0:225)]
 [(4:315),(0:225)]
 [(0:225)]
+No path found.
 ---
 
 * COMPARISON TEST - 04_DFS0/prog-run-04_DFS0.out : fail
@@ -200,6 +203,9 @@ World: Oedipus 4
 Departure airport -- Start: 3:45
 Destination airport -- Goal: 2:45
 Search algorithm: DFS
+(3:45)(2:45)
+1.000
+2
 ---
 
 * COMPARISON TEST - 05_DFS1/prog-run-05_DFS1.out : fail
@@ -218,6 +224,7 @@ World: Oedipus 4
 Departure airport -- Start: 1:0
 Destination airport -- Goal: 1:45
 Search algorithm: DFS
+No path found.
 ---
 
 * COMPARISON TEST - 06_DFS2/prog-run-06_DFS2.out : fail
@@ -241,6 +248,7 @@ World: Oedipus 5
 Departure airport -- Start: 2:45
 Destination airport -- Goal: 1:180
 Search algorithm: DFS
+No path found.
 ---
 
 * COMPARISON TEST - 07_BESTF0/prog-run-07_BESTF0.out : fail
@@ -259,6 +267,7 @@ World: Oedipus 3
 Departure airport -- Start: 2:45
 Destination airport -- Goal: 2:0
 Search algorithm: BestF
+Invalid algorithm specified.
 ---
 
 * COMPARISON TEST - 08_ASTAR0/prog-run-08_ASTAR0.out : fail
@@ -277,6 +286,7 @@ World: Oedipus 3
 Departure airport -- Start: 2:45
 Destination airport -- Goal: 2:0
 Search algorithm: AStar
+Invalid algorithm specified.
 ---
 
 * COMPARISON TEST - 09_SMASTAR0/prog-run-09_SMASTAR0.out : fail
@@ -295,6 +305,7 @@ World: Oedipus 3
 Departure airport -- Start: 2:45
 Destination airport -- Goal: 2:0
 Search algorithm: SMAStar
+Invalid algorithm specified.
 ---
 
 * COMPARISON TEST - 10_SMASTAR1/prog-run-10_SMASTAR1.out : fail
@@ -312,6 +323,7 @@ World: Oedipus 2
 Departure airport -- Start: 1:0
 Destination airport -- Goal: 1:90
 Search algorithm: SMAStar
+Invalid algorithm specified.
 ---
 
 1 out of 12 tests passed
