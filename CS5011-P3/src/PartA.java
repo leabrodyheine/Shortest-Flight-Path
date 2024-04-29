@@ -17,31 +17,26 @@ public class PartA {
 
         public List<Node> getSuccessors(int planetSize) {
             List<Node> successors = new ArrayList<>();
-            // Debugging: Output current state before generating successors
-            System.out.println("Generating successors for Node: " + this);
+            int[] angleChanges = { -45, 45 }; // Allowed angular changes
+            int[] distanceChanges = { -1, 1 }; // Allowed radial changes
 
-            int[] angleChanges = { -45, 45 };
-            int[] distanceChanges = { -1, 1 };
-
-            // Generate successors
+            // Generate successors for angle changes
             for (int angleChange : angleChanges) {
-                int newAngle = (this.angle + angleChange + 360) % 360;
-                successors.add(new Node(this.d, newAngle, this, this.cost + calculateAngularCost(angleChange)));
-            }
-
-            for (int distanceChange : distanceChanges) {
-                int newD = this.d + distanceChange;
-                if (newD >= 0 && newD < planetSize) {
-                    successors.add(new Node(newD, this.angle, this, this.cost + calculateRadialCost(distanceChange)));
+                int newAngle = (this.angle + angleChange + 360) % 360; // Correctly handle angle wrapping
+                // Check if the new state is within valid bounds before adding
+                if (this.d > 0 && this.d < planetSize - 1) { // Only allow angular changes if within valid distance
+                                                             // range
+                    successors.add(new Node(this.d, newAngle, this, this.cost + calculateAngularCost(angleChange)));
                 }
             }
 
-            // Debugging: Output generated successors
-            System.out.println("Successors generated: " + successors.size());
-            for (Node s : successors) {
-                System.out.println(" -> Successor: " + s);
+            // Generate successors for distance changes
+            for (int distanceChange : distanceChanges) {
+                int newD = this.d + distanceChange;
+                if (newD >= 0 && newD < planetSize) { // Check radial boundaries
+                    successors.add(new Node(newD, this.angle, this, this.cost + calculateRadialCost(distanceChange)));
+                }
             }
-
             return successors;
         }
 
@@ -63,21 +58,17 @@ public class PartA {
     }
 
     private static double calculateAngularCost(int angleChange) {
-        // Define cost for angular movement
-        return Math.abs(angleChange) / 45.0; // Example: cost per 45-degree turn
+        return Math.abs(angleChange) / 45.0;
     }
 
     private static double calculateRadialCost(int distanceChange) {
-        // Define cost for radial movement
-        return Math.abs(distanceChange); // Example: cost per radial step
+        return Math.abs(distanceChange);
     }
 
     public static List<Node> bfs(Node start, Node goal, int planetSize) {
         Queue<Node> frontier = new LinkedList<>();
-        Map<Node, Double> costMap = new HashMap<>();
         Set<Node> visited = new HashSet<>();
         frontier.add(start);
-        costMap.put(start, 0.0);
         visited.add(start);
 
         while (!frontier.isEmpty()) {
@@ -88,15 +79,8 @@ public class PartA {
 
             for (Node next : current.getSuccessors(planetSize)) {
                 if (!visited.contains(next)) {
-                    double newCost = current.cost
-                            + (next.d != current.d ? calculateRadialCost(Math.abs(next.d - current.d))
-                                    : calculateAngularCost(Math.abs(next.angle - current.angle)));
-                    if (!costMap.containsKey(next) || newCost < costMap.get(next)) {
-                        visited.add(next);
-                        costMap.put(next, newCost);
-                        next.cost = newCost;
-                        frontier.add(next);
-                    }
+                    visited.add(next);
+                    frontier.add(next);
                 }
             }
         }
