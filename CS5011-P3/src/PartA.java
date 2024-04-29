@@ -17,28 +17,33 @@ public class PartA {
 
         public List<Node> getSuccessors(int planetSize) {
             List<Node> successors = new ArrayList<>();
-            int[] directions = { -45, 45};
+            int[] angleChanges = { -45, 45 }; // Allowed angle changes
+            int[] distanceChanges = { -1, 1 }; // Allowed distance changes
 
-            for (int direction : directions) {
-                int newD = this.d;
-                int newAngle = (this.angle + direction + 360) % 360; // Ensure positive angle
-
-                if (direction == 0 && newD > 0) { // North
-                    newD--;
-                } else if (direction == 180 && newD < planetSize - 1) {
-                    newD++;
-                } else if ((direction == 90 || direction == 270) && newD == 0) {
-                    continue;
+            // Handle angular changes
+            for (int angleChange : angleChanges) {
+                int newAngle = (this.angle + angleChange) % 360;
+                if (newAngle < 0)
+                    newAngle += 360; // Correct negative angles
+                if (this.d > 0 && this.d < planetSize - 1) { // Ensure valid distance
+                    successors.add(new Node(this.d, newAngle, this, this.cost + calculateCost(this.d, this.d)));
                 }
-
-                double newCost = this.cost + calculateCost(this.d, newD);
-                successors.add(new Node(newD, newAngle, this, newCost));
             }
+
+            // Handle radial changes
+            for (int distanceChange : distanceChanges) {
+                int newD = this.d + distanceChange;
+                if (newD >= 0 && newD < planetSize) { // Ensure new distance is within bounds
+                    successors.add(new Node(newD, this.angle, this, this.cost + calculateCost(this.d, newD)));
+                }
+            }
+
             return successors;
         }
 
         private double calculateCost(int currentD, int newD) {
-            return currentD == newD ? (2 * Math.PI * currentD) / 8 : 1.0; 
+            // This might be a simplified placeholder for your actual cost calculation logic
+            return currentD == newD ? (2 * Math.PI * currentD) / 360 : 1.0;
         }
 
         @Override
