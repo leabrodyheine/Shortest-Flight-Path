@@ -38,9 +38,9 @@ public class P3main {
 
 		switch (algo) {
 			case "BFS":
-				return new PartA.BFS(util, fullDirections);
+				return new PartA.BFS(util, restrictedDirections);
 			case "DFS":
-				return new PartA.DFS(util, fullDirections);
+				return new PartA.DFS(util, restrictedDirections);
 			case "BestF":
 				// return new PartB.BestFirstSearch(util, restrictedDirections);
 			case "AStar":
