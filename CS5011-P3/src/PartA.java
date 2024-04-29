@@ -70,14 +70,11 @@ public class PartA {
         Set<Node> visited = new HashSet<>();
         frontier.add(start);
         visited.add(start);
-        System.out.println("Starting BFS...");
 
         while (!frontier.isEmpty()) {
             Node current = frontier.poll();
-            System.out.println("Visiting Node: " + nodeToString(current)); // Output current node
 
             if (current.equals(goal)) {
-                System.out.println("Goal reached!");
                 return constructPath(current);
             }
 
@@ -85,16 +82,11 @@ public class PartA {
                 if (!visited.contains(next)) {
                     visited.add(next);
                     frontier.add(next);
-                    System.out.println("Adding to frontier: " + nodeToString(next)); // Show node being added
                 }
             }
         }
         System.out.println("No path found.");
         return null;
-    }
-
-    private static String nodeToString(Node node) {
-        return String.format("Node(d=%d, angle=%d, cost=%.2f)", node.d, node.angle, node.cost);
     }
 
     private static List<Node> constructPath(Node goal) {

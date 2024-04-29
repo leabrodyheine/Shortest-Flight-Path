@@ -49,7 +49,6 @@ public class P3main {
 				break;
 		}
 		if (path != null && !path.isEmpty()) {
-			System.out.println("Path found:");
 			PartA.printPath(path);
 		} else {
 			System.out.println("No path found.");
