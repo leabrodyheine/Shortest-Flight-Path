@@ -39,21 +39,24 @@ public class PartA {
             return successors;
         }
     }
-        private static double calculateAngularCost(int angleChange) {
-            // Define cost for angular movement
-            return Math.abs(angleChange) / 45.0; // Example: cost per 45-degree turn
-        }
 
-        private static double calculateRadialCost(int distanceChange) {
-            // Define cost for radial movement
-            return Math.abs(distanceChange); // Example: cost per radial step
-        }
+    private static double calculateAngularCost(int angleChange) {
+        // Define cost for angular movement
+        return Math.abs(angleChange) / 45.0; // Example: cost per 45-degree turn
+    }
+
+    private static double calculateRadialCost(int distanceChange) {
+        // Define cost for radial movement
+        return Math.abs(distanceChange); // Example: cost per radial step
+    }
 
     public static List<Node> bfs(Node start, Node goal, int planetSize) {
         Queue<Node> frontier = new LinkedList<>();
         Map<Node, Double> costMap = new HashMap<>();
+        Set<Node> visited = new HashSet<>();
         frontier.add(start);
         costMap.put(start, 0.0);
+        visited.add(start);
 
         while (!frontier.isEmpty()) {
             Node current = frontier.poll();
@@ -62,11 +65,16 @@ public class PartA {
             }
 
             for (Node next : current.getSuccessors(planetSize)) {
-                double newCost = current.cost + (next.d != current.d ? calculateRadialCost(Math.abs(next.d - current.d)) : calculateAngularCost(Math.abs(next.angle - current.angle)));
-                if (!costMap.containsKey(next) || newCost < costMap.get(next)) {
-                    costMap.put(next, newCost);
-                    next.cost = newCost;
-                    frontier.add(next);
+                if (!visited.contains(next)) {
+                    double newCost = current.cost
+                            + (next.d != current.d ? calculateRadialCost(Math.abs(next.d - current.d))
+                                    : calculateAngularCost(Math.abs(next.angle - current.angle)));
+                    if (!costMap.containsKey(next) || newCost < costMap.get(next)) {
+                        visited.add(next);
+                        costMap.put(next, newCost);
+                        next.cost = newCost;
+                        frontier.add(next);
+                    }
                 }
             }
         }
