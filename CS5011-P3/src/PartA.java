@@ -18,23 +18,24 @@ public class PartA {
 
         public List<Node> getSuccessors(int planetSize) {
             List<Node> successors = new ArrayList<>();
-            int[] angleChanges = { -45, 45 }; 
+            int[] angleChanges = { -45, 45 };
 
             for (int angleChange : angleChanges) {
                 if (this.d > 0) {
                     int newAngle = (this.angle + angleChange + 360) % 360;
-                    successors.add(new Node(this.d, newAngle, this, this.cost + 1));
+                    double additionalCost = calculateAngularCost(angleChange);
+                    successors.add(new Node(this.d, newAngle, this, this.cost + additionalCost));
                 }
             }
 
-            int[] distanceChanges = { -1, 1 }; 
+            int[] distanceChanges = { -1, 1 };
             for (int distanceChange : distanceChanges) {
                 int newD = this.d + distanceChange;
                 if (newD > 0 && newD < planetSize) {
-                    successors.add(new Node(newD, this.angle, this, this.cost + 1));
+                    double additionalCost = calculateRadialCost(distanceChange);
+                    successors.add(new Node(newD, this.angle, this, this.cost + additionalCost));
                 }
             }
-
             return successors;
         }
 
@@ -67,13 +68,13 @@ public class PartA {
         }
     }
 
-    // private static double calculateAngularCost(int angleChange) {
-    //     return Math.abs(angleChange) / 45.0;
-    // }
+    private static double calculateAngularCost(int angleChange) {
+        return Math.abs(angleChange) / 45.0;
+    }
 
-    // private static double calculateRadialCost(int distanceChange) {
-    //     return Math.abs(distanceChange);
-    // }
+    private static double calculateRadialCost(int distanceChange) {
+        return Math.abs(distanceChange);
+    }
 
     public static List<Node> bfs(Node start, Node goal, int planetSize) {
         Queue<Node> frontier = new LinkedList<>();
@@ -104,7 +105,7 @@ public class PartA {
             }
             printFrontier(frontier);
         }
-        System.out.println("No path found.");
+        System.out.println("fail");
         return null;
     }
 
