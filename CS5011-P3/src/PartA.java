@@ -19,11 +19,15 @@ public class PartA {
 
             while (!frontier.isEmpty()) {
                 Node current = frontier.poll();
+                System.out.println("Frontier: " + frontier); // Add this line to print the state of the frontier
                 if (current.equals(goal)) {
                     return util.constructPath(current);
                 }
                 explored.add(current);
-                for (Node next : util.getSuccessors(current, planetSize, directions)) {
+                List<Node> successors = util.getSuccessors(current, planetSize, directions);
+                System.out.println("Expanding: " + current + ", Successors: " + successors); // Add this to show node
+                                                                                             // expansion
+                for (Node next : successors) {
                     if (!explored.contains(next) && !frontier.contains(next)) {
                         frontier.add(next);
                     }
@@ -36,7 +40,6 @@ public class PartA {
     public static class DFS implements SearchStrategy {
         private NodeUtility util;
         private int[] directions;
-
 
         public DFS(NodeUtility utility, int[] directions) {
             this.util = utility;
