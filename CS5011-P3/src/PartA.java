@@ -2,7 +2,7 @@ import java.util.*;
 
 public class PartA {
 
-    public static class Node {
+    public static class Node implements Comparable<Node> {
         int d; // Distance from the pole
         int angle; // Angle in degrees
         Node parent; // Parent node in the path
@@ -40,6 +40,14 @@ public class PartA {
         }
 
         @Override
+        public int compareTo(Node other) {
+            if (this.d != other.d) {
+                return Integer.compare(this.d, other.d);
+            }
+            return Integer.compare(this.angle, other.angle);
+        }
+        
+        @Override
         public boolean equals(Object obj) {
             if (this == obj)
                 return true;
@@ -70,11 +78,11 @@ public class PartA {
 
     public static List<Node> bfs(Node start, Node goal, int planetSize) {
         Queue<Node> frontier = new LinkedList<>();
-        Map<Node, Boolean> visited = new HashMap<>(); // Use a map to store nodes and their visited status
+        Map<Node, Boolean> visited = new HashMap<>();
         frontier.add(start);
         visited.put(start, true);
 
-        System.out.println("[" + start + "]"); // Print the initial state with the start node
+        printFrontier(frontier);
 
         while (!frontier.isEmpty()) {
             Node current = frontier.poll();
@@ -86,28 +94,25 @@ public class PartA {
             }
 
             List<Node> successors = current.getSuccessors(planetSize);
-            StringBuilder sb = new StringBuilder();
-            boolean first = true;
+            // Sort successors before adding to the queue
+            Collections.sort(successors);
+
             for (Node next : successors) {
-                if (visited.getOrDefault(next, false) == false) { // Check if not visited
+                if (!visited.getOrDefault(next, false)) {
                     visited.put(next, true);
                     frontier.add(next);
-                    if (first) {
-                        first = false;
-                        sb.append("[");
-                    } else {
-                        sb.append(",");
-                    }
-                    sb.append(next);
                 }
             }
-            if (!first) { // Close the bracket if any node was added to the string
-                sb.append("]");
-                System.out.println(sb.toString());
-            }
+            printFrontier(frontier);
         }
         System.out.println("No path found.");
         return null;
+    }
+
+    private static void printFrontier(Collection<Node> frontier) {
+        System.out.print("Frontier: [");
+        frontier.forEach(node -> System.out.print(node + " "));
+        System.out.println("]");
     }
 
     private static List<Node> constructPath(Node goal) {
