@@ -1,92 +1,146 @@
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class PartA {
 
-    public static class BFS implements SearchStrategy {
-        private NodeUtility util;
-        private int[] directions;
+    private static final int[] DIRECTIONS = { 0, 45, 90, 135, 180, 225, 270, 315 };
 
-        public BFS(NodeUtility utility, int[] directions) {
-            this.util = utility;
-            this.directions = directions;
+    public static class Node {
+        int d; // Distance from the pole
+        int angle; // Angle in degrees
+        Node parent; // Parent node in the path
+        double cost; // Cost to reach this node
+
+        public Node(int d, int angle, Node parent, double cost) {
+            this.d = d;
+            this.angle = angle;
+            this.parent = parent;
+            this.cost = cost;
+        }
+
+        public List<Node> getSuccessors(int planetSize) {
+            List<Node> successors = new ArrayList<>();
+            int[] directions = {0, 90, 180, 270}; // Valid directions
+        
+            for (int direction : directions) {
+                int newD = this.d;
+                int newAngle = (this.angle + direction) % 360;
+        
+                if (direction == 0 && newD > 0) { // North
+                    newD--;
+                } else if (direction == 180 && newD < planetSize - 1) { // South
+                    newD++;
+                } else if ((direction == 90 || direction == 270) && newD == 0) { // Invalid East/West at pole
+                    continue;
+                }
+        
+                // Assuming the coordinate is valid based on other rules
+                double newCost = this.cost + calculateCost(this.d, newD);
+                successors.add(new Node(newD, newAngle, this, newCost));
+            }
+            return successors;
+        }        
+
+        private boolean isValidCoordinate(int d, int angle, int planetSize) {
+            return d >= 0 && d < planetSize; // Ensure within bounds
+        }
+
+        private double calculateCost(int currentD, int newD) {
+            return currentD == newD ? (2 * Math.PI * currentD) / 8 : 1.0; // Cost logic
         }
 
         @Override
-        public List<Node> search(Node start, Node goal, int planetSize) {
-            Queue<Node> frontier = new LinkedList<>();
-            frontier.add(start);
-            Set<Node> explored = new HashSet<>();
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null || getClass() != obj.getClass())
+                return false;
+            Node node = (Node) obj;
+            return d == node.d && angle == node.angle;
+        }
 
-            // Initial frontier state for debugging
+        @Override
+        public int hashCode() {
+            return Objects.hash(d, angle);
+        }
+    }
+
+    public static List<Node> bfs(Node start, Node goal, int planetSize) {
+        Queue<Node> frontier = new LinkedList<>();
+        Set<Node> explored = new HashSet<>();
+        frontier.add(start);
+        printFrontier(frontier); // Initial print
+
+        while (!frontier.isEmpty()) {
+            Node current = frontier.poll();
+            if (current.equals(goal)) {
+                List<Node> path = constructPath(current);
+                printPath(path);
+                return path;
+            }
+            explored.add(current);
+            for (Node child : current.getSuccessors(planetSize)) {
+                if (!explored.contains(child) && !frontier.contains(child)) {
+                    frontier.add(child);
+                }
+            }
             printFrontier(frontier);
-
-            while (!frontier.isEmpty()) {
-                Node current = frontier.poll();
-
-                // Check goal before expanding
-                if (current.equals(goal)) {
-                    System.out.println(); // Ensures new line before final path print
-                    return util.constructPath(current);
-                }
-
-                explored.add(current);
-                List<Node> successors = util.getSuccessors(current, planetSize, directions);
-
-                // Collect names for debugging before adding to frontier
-                List<String> debugNodes = new ArrayList<>();
-                for (Node next : successors) {
-                    if (!explored.contains(next) && !frontier.contains(next)) {
-                        frontier.add(next);
-                        debugNodes.add(next.toString());
-                    }
-                }
-
-                // Print newly added nodes to frontier for next loop
-                if (!debugNodes.isEmpty()) {
-                    System.out.print("[" + String.join(",", debugNodes) + "]");
-                }
-            }
-            return null;
         }
+        return null; // Path not found
+    }
 
-        public void printFrontier(Collection<Node> frontier) {
-            if (frontier.isEmpty()) {
-                System.out.print("[]");
-            } else {
-                System.out.print("[" + frontier.stream().map(Node::toString).collect(Collectors.joining(",")) + "]");
+    public static List<Node> dfs(Node start, Node goal, int planetSize) {
+        Stack<Node> frontier = new Stack<>();
+        Set<Node> explored = new HashSet<>();
+        frontier.push(start);
+
+        while (!frontier.isEmpty()) {
+            Node current = frontier.pop();
+            if (current.equals(goal)) {
+                return constructPath(current);
             }
+            explored.add(current);
+            for (Node child : current.getSuccessors(planetSize)) {
+                if (!explored.contains(child) && !frontier.contains(child)) {
+                    frontier.push(child);
+                }
+            }
+        }
+        return null; // No path found
+    }
+
+    private static void printFrontier(Collection<Node> frontier) {
+        if (frontier.isEmpty())
+            return;
+        System.out.print("[");
+        Iterator<Node> it = frontier.iterator();
+        while (it.hasNext()) {
+            Node node = it.next();
+            System.out.print(String.format("(%d:%d)", node.d, node.angle));
+            if (it.hasNext())
+                System.out.print(",");
+        }
+        System.out.println("]");
+    }
+
+    private static List<Node> constructPath(Node goal) {
+        LinkedList<Node> path = new LinkedList<>();
+        Node current = goal;
+        while (current != null) {
+            path.addFirst(current);
+            current = current.parent;
+        }
+        return path;
+    }
+
+    public static void printPath(List<Node> path) {
+        if (path == null || path.isEmpty()) {
+            System.out.println("fail");
+        } else {
+            path.forEach(node -> System.out.print(String.format("(%d:%d)", node.d, node.angle)));
+            Node lastNode = path.get(path.size() - 1);
+            System.out.println();
+            System.out.printf("%.3f\n%d\n", lastNode.cost, path.size());
         }
     }
 
-    public static class DFS implements SearchStrategy {
-        private NodeUtility util;
-        private int[] directions;
-
-        public DFS(NodeUtility utility, int[] directions) {
-            this.util = utility;
-            this.directions = directions;
-        }
-
-        @Override
-        public List<Node> search(Node start, Node goal, int planetSize) {
-            Stack<Node> frontier = new Stack<>();
-            Set<Node> explored = new HashSet<>();
-            frontier.push(start);
-
-            while (!frontier.isEmpty()) {
-                Node current = frontier.pop();
-                if (current.equals(goal)) {
-                    return util.constructPath(current);
-                }
-                explored.add(current);
-                for (Node child : util.getSuccessors(current, planetSize, directions)) {
-                    if (!explored.contains(child) && !frontier.contains(child)) {
-                        frontier.push(child);
-                    }
-                }
-            }
-            return null;
-        }
-    }
 }
