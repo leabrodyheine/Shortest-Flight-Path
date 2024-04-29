@@ -48,10 +48,5 @@ public class P3main {
 				System.out.println("Invalid algorithm specified.");
 				break;
 		}
-		if (path != null && !path.isEmpty()) {
-			PartA.printPath(path);
-		} else {
-			System.out.println("No path found.");
-		}
 	}
 }
