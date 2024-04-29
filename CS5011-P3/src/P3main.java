@@ -26,8 +26,7 @@ public class P3main {
 	}
 
 	private static void runSearch(String algo, int size, PartA.Node startNode, PartA.Node goalNode) {
-		List<PartA.Node> path;
-		boolean isFinalPath = true;
+		List<PartA.Node> path = null;
 
 		switch (algo) {
 			case "BFS":
@@ -48,6 +47,12 @@ public class P3main {
 			default:
 				System.out.println("Invalid algorithm specified.");
 				break;
+		}
+		if (path != null && !path.isEmpty()) {
+			System.out.println("Path found:");
+			PartA.printPath(path);
+		} else {
+			System.out.println("No path found.");
 		}
 	}
 }
