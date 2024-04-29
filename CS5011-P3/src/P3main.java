@@ -33,7 +33,7 @@ public class P3main {
 	}
 
 	private static SearchStrategy getSearchStrategy(String algo, NodeUtility util) {
-		int[] fullDirections = { 0, 45, 90, 135, 180, 225, 270, 315 };
+		// int[] fullDirections = { 0, 45, 90, 135, 180, 225, 270, 315 };
 		int[] restrictedDirections = { 0, 90, 180, 270 };
 
 		switch (algo) {

@@ -12,27 +12,22 @@ public class NodeUtility {
 
     public List<Node> getSuccessors(Node current, int planetSize, int[] directions) {
         List<Node> successors = new ArrayList<>();
-        int[] validDirections = { 0, 90, 180, 270 }; // Restricting directions to only cardinal points
-
-        for (int direction : validDirections) {
+        for (int direction : directions) {
             int newD = current.d;
             int newAngle = (current.angle + direction) % 360;
 
-            // Direction-based movement adjustments, assuming no diagonals and wrapping is
-            // not allowed
             switch (direction) {
-                case 0: // North, decrement d
+                case 0: // North
                     if (newD > 0)
                         newD--;
                     break;
-                case 180: // South, increment d
+                case 180: // South
                     if (newD < planetSize - 1)
                         newD++;
                     break;
                 case 90: // East
                 case 270: // West
-                    // Assuming no East/West movements alter 'd', and are valid movements
-                    break;
+                    continue; // Assuming these directions don't change 'd'
             }
 
             if (newD >= 0 && newD < planetSize) {
