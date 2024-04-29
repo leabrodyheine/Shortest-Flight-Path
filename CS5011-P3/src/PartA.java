@@ -112,10 +112,12 @@ public class PartA {
     }
 
     private static void printFrontier(Collection<Node> frontier) {
-        String result = frontier.stream()
-                .map(Node::toString)
-                .collect(Collectors.joining(","));
-        System.out.println("[" + result + "]");
+        if (!frontier.isEmpty()) {
+            String result = frontier.stream()
+                    .map(Node::toString)
+                    .collect(Collectors.joining(","));
+            System.out.println("[" + result + "]");
+        }
     }
 
     private static List<Node> constructPath(Node goal) {
