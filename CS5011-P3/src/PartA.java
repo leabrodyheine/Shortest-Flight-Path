@@ -41,13 +41,7 @@ public class PartA {
 
         @Override
         public int compareTo(Node other) {
-            if (Double.compare(this.cost, other.cost) != 0) {
-                return Double.compare(this.cost, other.cost);
-            }
-            if (this.d != other.d) {
-                return Integer.compare(this.d, other.d);
-            }
-            return Integer.compare(this.angle, other.angle);
+            return Double.compare(this.cost, other.cost); // Prioritize by cost primarily
         }
 
         @Override
