@@ -17,17 +17,21 @@ public class PartA {
 
         public List<Node> getSuccessors(int planetSize) {
             List<Node> successors = new ArrayList<>();
+            // Handling angular changes of +/- 45 degrees
             int[] angleChanges = { -45, 45 };
+            // Handling radial changes of +/- 1
             int[] distanceChanges = { -1, 1 };
 
             for (int angleChange : angleChanges) {
-                int newAngle = (this.angle + angleChange + 360) % 360;
+                int newAngle = (this.angle + angleChange + 360) % 360; // Ensure correct angle wrapping
+                // Assume angular cost does not depend on radial position
                 successors.add(new Node(this.d, newAngle, this, this.cost + calculateAngularCost(angleChange)));
             }
 
             for (int distanceChange : distanceChanges) {
                 int newD = this.d + distanceChange;
-                if (newD >= 0 && newD < planetSize) {
+                if (newD >= 0 && newD < planetSize) { // Check for valid radial positions
+                    // Assume radial cost may depend on the specific movement
                     successors.add(new Node(newD, this.angle, this, this.cost + calculateRadialCost(distanceChange)));
                 }
             }
@@ -35,15 +39,15 @@ public class PartA {
             return successors;
         }
     }
+        private static double calculateAngularCost(int angleChange) {
+            // Define cost for angular movement
+            return Math.abs(angleChange) / 45.0; // Example: cost per 45-degree turn
+        }
 
-    // Cost calculation methods moved to class level and made static
-    public static double calculateAngularCost(int angleChange) {
-        return Math.abs(angleChange) / 45.0;
-    }
-
-    public static double calculateRadialCost(int distanceChange) {
-        return Math.abs(distanceChange);
-    }
+        private static double calculateRadialCost(int distanceChange) {
+            // Define cost for radial movement
+            return Math.abs(distanceChange); // Example: cost per radial step
+        }
 
     public static List<Node> bfs(Node start, Node goal, int planetSize) {
         Queue<Node> frontier = new LinkedList<>();
