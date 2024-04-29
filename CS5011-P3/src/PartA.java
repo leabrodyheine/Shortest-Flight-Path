@@ -75,38 +75,40 @@ public class PartA {
         frontier.add(start);
         visited.add(start);
 
+        // Print initial state of the frontier
+        System.out.println("[" + start + "]");
+
         while (!frontier.isEmpty()) {
-            System.out.println(frontierToString(frontier)); // Print the current state of the frontier
             Node current = frontier.poll();
 
             if (current.equals(goal)) {
-                return constructPath(current);
+                List<Node> path = constructPath(current);
+                printPath(path);
+                return path;
             }
 
-            for (Node next : current.getSuccessors(planetSize)) {
+            List<Node> successors = current.getSuccessors(planetSize);
+            StringBuilder sb = new StringBuilder("[");
+            boolean first = true;
+            for (Node next : successors) {
                 if (!visited.contains(next)) {
                     visited.add(next);
                     frontier.add(next);
+                    if (first) {
+                        first = false;
+                    } else {
+                        sb.append(",");
+                    }
+                    sb.append(next);
                 }
+            }
+            sb.append("]");
+            if (!first) { // Only print the frontier if new nodes were added
+                System.out.println(sb.toString());
             }
         }
         System.out.println("No path found.");
         return null;
-    }
-
-    private static String frontierToString(Queue<Node> frontier) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("[");
-        Iterator<Node> it = frontier.iterator();
-        while (it.hasNext()) {
-            Node node = it.next();
-            sb.append(String.format("(%d:%d)", node.d, node.angle));
-            if (it.hasNext()) {
-                sb.append(",");
-            }
-        }
-        sb.append("]");
-        return sb.toString();
     }
 
     private static List<Node> constructPath(Node goal) {
@@ -123,7 +125,9 @@ public class PartA {
         if (path == null || path.isEmpty()) {
             System.out.println("fail");
         } else {
-            path.forEach(node -> System.out.print(String.format("(%d:%d)", node.d, node.angle)));
+            for (Node node : path) {
+                System.out.print(node + "");
+            }
             Node lastNode = path.get(path.size() - 1);
             System.out.println();
             System.out.printf("%.3f\n%d\n", lastNode.cost, path.size());
