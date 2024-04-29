@@ -17,6 +17,15 @@ World: Oedipus 4
 Departure airport -- Start: 3:45
 Destination airport -- Goal: 2:45
 Search algorithm: BFS
+Starting BFS...
+Visiting Node: Node(d=3, angle=45, cost=0.00)
+Adding to frontier: Node(d=2, angle=45, cost=1.00)
+Visiting Node: Node(d=2, angle=45, cost=1.00)
+Goal reached!
+Path found:
+(3:45)(2:45)
+1.000
+2
 ---
 
 * COMPARISON TEST - 01_BFS1/prog-run-01_BFS1.out : fail
@@ -36,6 +45,18 @@ World: Oedipus 4
 Departure airport -- Start: 2:45
 Destination airport -- Goal: 2:0
 Search algorithm: BFS
+Starting BFS...
+Visiting Node: Node(d=2, angle=45, cost=0.00)
+Adding to frontier: Node(d=2, angle=0, cost=1.00)
+Adding to frontier: Node(d=2, angle=90, cost=1.00)
+Adding to frontier: Node(d=1, angle=45, cost=1.00)
+Adding to frontier: Node(d=3, angle=45, cost=1.00)
+Visiting Node: Node(d=2, angle=0, cost=1.00)
+Goal reached!
+Path found:
+(2:45)(2:0)
+1.000
+2
 ---
 
 * COMPARISON TEST - 02_BFS2/prog-run-02_BFS2.out : fail
@@ -83,6 +104,56 @@ World: Oedipus 5
 Departure airport -- Start: 2:45
 Destination airport -- Goal: 0:0
 Search algorithm: BFS
+Starting BFS...
+Visiting Node: Node(d=2, angle=45, cost=0.00)
+Adding to frontier: Node(d=2, angle=0, cost=1.00)
+Adding to frontier: Node(d=2, angle=90, cost=1.00)
+Adding to frontier: Node(d=1, angle=45, cost=1.00)
+Adding to frontier: Node(d=3, angle=45, cost=1.00)
+Visiting Node: Node(d=2, angle=0, cost=1.00)
+Adding to frontier: Node(d=2, angle=315, cost=2.00)
+Adding to frontier: Node(d=1, angle=0, cost=2.00)
+Adding to frontier: Node(d=3, angle=0, cost=2.00)
+Visiting Node: Node(d=2, angle=90, cost=1.00)
+Adding to frontier: Node(d=2, angle=135, cost=2.00)
+Adding to frontier: Node(d=1, angle=90, cost=2.00)
+Adding to frontier: Node(d=3, angle=90, cost=2.00)
+Visiting Node: Node(d=1, angle=45, cost=1.00)
+Adding to frontier: Node(d=0, angle=45, cost=2.00)
+Visiting Node: Node(d=3, angle=45, cost=1.00)
+Adding to frontier: Node(d=4, angle=45, cost=2.00)
+Visiting Node: Node(d=2, angle=315, cost=2.00)
+Adding to frontier: Node(d=2, angle=270, cost=3.00)
+Adding to frontier: Node(d=1, angle=315, cost=3.00)
+Adding to frontier: Node(d=3, angle=315, cost=3.00)
+Visiting Node: Node(d=1, angle=0, cost=2.00)
+Adding to frontier: Node(d=0, angle=0, cost=3.00)
+Visiting Node: Node(d=3, angle=0, cost=2.00)
+Adding to frontier: Node(d=4, angle=0, cost=3.00)
+Visiting Node: Node(d=2, angle=135, cost=2.00)
+Adding to frontier: Node(d=2, angle=180, cost=3.00)
+Adding to frontier: Node(d=1, angle=135, cost=3.00)
+Adding to frontier: Node(d=3, angle=135, cost=3.00)
+Visiting Node: Node(d=1, angle=90, cost=2.00)
+Adding to frontier: Node(d=0, angle=90, cost=3.00)
+Visiting Node: Node(d=3, angle=90, cost=2.00)
+Adding to frontier: Node(d=4, angle=90, cost=3.00)
+Visiting Node: Node(d=0, angle=45, cost=2.00)
+Visiting Node: Node(d=4, angle=45, cost=2.00)
+Visiting Node: Node(d=2, angle=270, cost=3.00)
+Adding to frontier: Node(d=2, angle=225, cost=4.00)
+Adding to frontier: Node(d=1, angle=270, cost=4.00)
+Adding to frontier: Node(d=3, angle=270, cost=4.00)
+Visiting Node: Node(d=1, angle=315, cost=3.00)
+Adding to frontier: Node(d=0, angle=315, cost=4.00)
+Visiting Node: Node(d=3, angle=315, cost=3.00)
+Adding to frontier: Node(d=4, angle=315, cost=4.00)
+Visiting Node: Node(d=0, angle=0, cost=3.00)
+Goal reached!
+Path found:
+(2:45)(2:0)(1:0)(0:0)
+3.000
+4
 ---
 
 * COMPARISON TEST - 03_BFS3/prog-run-03_BFS.out : fail
@@ -121,6 +192,57 @@ World: Oedipus 5
 Departure airport -- Start: 2:45
 Destination airport -- Goal: 1:180
 Search algorithm: BFS
+Starting BFS...
+Visiting Node: Node(d=2, angle=45, cost=0.00)
+Adding to frontier: Node(d=2, angle=0, cost=1.00)
+Adding to frontier: Node(d=2, angle=90, cost=1.00)
+Adding to frontier: Node(d=1, angle=45, cost=1.00)
+Adding to frontier: Node(d=3, angle=45, cost=1.00)
+Visiting Node: Node(d=2, angle=0, cost=1.00)
+Adding to frontier: Node(d=2, angle=315, cost=2.00)
+Adding to frontier: Node(d=1, angle=0, cost=2.00)
+Adding to frontier: Node(d=3, angle=0, cost=2.00)
+Visiting Node: Node(d=2, angle=90, cost=1.00)
+Adding to frontier: Node(d=2, angle=135, cost=2.00)
+Adding to frontier: Node(d=1, angle=90, cost=2.00)
+Adding to frontier: Node(d=3, angle=90, cost=2.00)
+Visiting Node: Node(d=1, angle=45, cost=1.00)
+Adding to frontier: Node(d=0, angle=45, cost=2.00)
+Visiting Node: Node(d=3, angle=45, cost=1.00)
+Adding to frontier: Node(d=4, angle=45, cost=2.00)
+Visiting Node: Node(d=2, angle=315, cost=2.00)
+Adding to frontier: Node(d=2, angle=270, cost=3.00)
+Adding to frontier: Node(d=1, angle=315, cost=3.00)
+Adding to frontier: Node(d=3, angle=315, cost=3.00)
+Visiting Node: Node(d=1, angle=0, cost=2.00)
+Adding to frontier: Node(d=0, angle=0, cost=3.00)
+Visiting Node: Node(d=3, angle=0, cost=2.00)
+Adding to frontier: Node(d=4, angle=0, cost=3.00)
+Visiting Node: Node(d=2, angle=135, cost=2.00)
+Adding to frontier: Node(d=2, angle=180, cost=3.00)
+Adding to frontier: Node(d=1, angle=135, cost=3.00)
+Adding to frontier: Node(d=3, angle=135, cost=3.00)
+Visiting Node: Node(d=1, angle=90, cost=2.00)
+Adding to frontier: Node(d=0, angle=90, cost=3.00)
+Visiting Node: Node(d=3, angle=90, cost=2.00)
+Adding to frontier: Node(d=4, angle=90, cost=3.00)
+Visiting Node: Node(d=0, angle=45, cost=2.00)
+Visiting Node: Node(d=4, angle=45, cost=2.00)
+Visiting Node: Node(d=2, angle=270, cost=3.00)
+Adding to frontier: Node(d=2, angle=225, cost=4.00)
+Adding to frontier: Node(d=1, angle=270, cost=4.00)
+Adding to frontier: Node(d=3, angle=270, cost=4.00)
+Visiting Node: Node(d=1, angle=315, cost=3.00)
+Adding to frontier: Node(d=0, angle=315, cost=4.00)
+Visiting Node: Node(d=3, angle=315, cost=3.00)
+Adding to frontier: Node(d=4, angle=315, cost=4.00)
+Visiting Node: Node(d=0, angle=0, cost=3.00)
+Visiting Node: Node(d=4, angle=0, cost=3.00)
+Visiting Node: Node(d=2, angle=180, cost=3.00)
+Adding to frontier: Node(d=1, angle=180, cost=4.00)
+Adding to frontier: Node(d=3, angle=180, cost=4.00)
+Visiting Node: Node(d=1, angle=135, cost=3.00)
+... (output truncated)
 ---
 
 * COMPARISON TEST - 04_DFS0/prog-run-04_DFS0.out : fail
@@ -139,6 +261,7 @@ World: Oedipus 4
 Departure airport -- Start: 3:45
 Destination airport -- Goal: 2:45
 Search algorithm: DFS
+No path found.
 ---
 
 * COMPARISON TEST - 05_DFS1/prog-run-05_DFS1.out : fail
@@ -157,6 +280,7 @@ World: Oedipus 4
 Departure airport -- Start: 1:0
 Destination airport -- Goal: 1:45
 Search algorithm: DFS
+No path found.
 ---
 
 * COMPARISON TEST - 06_DFS2/prog-run-06_DFS2.out : fail
@@ -180,6 +304,7 @@ World: Oedipus 5
 Departure airport -- Start: 2:45
 Destination airport -- Goal: 1:180
 Search algorithm: DFS
+No path found.
 ---
 
 * COMPARISON TEST - 07_BESTF0/prog-run-07_BESTF0.out : fail
@@ -198,6 +323,7 @@ World: Oedipus 3
 Departure airport -- Start: 2:45
 Destination airport -- Goal: 2:0
 Search algorithm: BestF
+No path found.
 ---
 
 * COMPARISON TEST - 08_ASTAR0/prog-run-08_ASTAR0.out : fail
@@ -216,6 +342,7 @@ World: Oedipus 3
 Departure airport -- Start: 2:45
 Destination airport -- Goal: 2:0
 Search algorithm: AStar
+No path found.
 ---
 
 * COMPARISON TEST - 09_SMASTAR0/prog-run-09_SMASTAR0.out : fail
@@ -234,6 +361,7 @@ World: Oedipus 3
 Departure airport -- Start: 2:45
 Destination airport -- Goal: 2:0
 Search algorithm: SMAStar
+No path found.
 ---
 
 * COMPARISON TEST - 10_SMASTAR1/prog-run-10_SMASTAR1.out : fail
@@ -251,6 +379,7 @@ World: Oedipus 2
 Departure airport -- Start: 1:0
 Destination airport -- Goal: 1:90
 Search algorithm: SMAStar
+No path found.
 ---
 
 1 out of 12 tests passed
