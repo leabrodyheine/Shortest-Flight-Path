@@ -82,41 +82,38 @@ public class PartA {
     public static List<Node> bfs(Node start, Node goal, int planetSize) {
         Queue<Node> frontier = new LinkedList<>();
         Map<Node, Boolean> visited = new HashMap<>();
-        int visitedCount = 0;
+        int visitedCount = 0; // Counter for visited nodes
 
-        // Initialize the frontier with the start node
         frontier.add(start);
         visited.put(start, true);
-        visitedCount++;
+        visitedCount++; // Count the start node as visited
 
         printFrontier(frontier);
 
         while (!frontier.isEmpty()) {
             Node current = frontier.poll();
 
-            // Goal check moved here to ensure accurate cost and path length
             if (current.equals(goal)) {
                 List<Node> path = constructPath(current);
                 printPath(path);
-                System.out.println(visitedCount);
                 return path;
             }
 
             List<Node> successors = current.getSuccessors(planetSize);
-            Collections.sort(successors); // Sort based on cost primarily
+            Collections.sort(successors);
 
             for (Node next : successors) {
-                if (!visited.containsKey(next)) {
+                if (!visited.getOrDefault(next, false)) {
                     visited.put(next, true);
                     frontier.add(next);
-                    visitedCount++;
+                    visitedCount++; // Increment count for each unique visit
                 }
             }
             printFrontier(frontier);
         }
 
         System.out.println("fail");
-        System.out.println(visitedCount); // Print the total number of visited nodes on failure
+        System.out.println(visitedCount); // Print the count of visited nodes if no path is found
         return null;
     }
 
