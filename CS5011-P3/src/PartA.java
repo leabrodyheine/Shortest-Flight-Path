@@ -46,7 +46,7 @@ public class PartA {
             }
             return Integer.compare(this.angle, other.angle);
         }
-        
+
         @Override
         public boolean equals(Object obj) {
             if (this == obj)
@@ -110,8 +110,8 @@ public class PartA {
     }
 
     private static void printFrontier(Collection<Node> frontier) {
-        System.out.print("Frontier: [");
-        frontier.forEach(node -> System.out.print(node + " "));
+        System.out.print("[");
+        frontier.forEach(node -> System.out.print(node ));
         System.out.println("]");
     }
 
