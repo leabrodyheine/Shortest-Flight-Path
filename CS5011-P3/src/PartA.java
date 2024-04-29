@@ -21,14 +21,19 @@ public class PartA {
             int[] distanceChanges = { -1, 1 }; // Allowed radial changes
 
             // Generate successors for angle changes
-            for (int angleChange : angleChanges) {
-                int newAngle = (this.angle + angleChange + 360) % 360; // Correctly handle angle wrapping
+            // for (int angleChange : angleChanges) {
+            //     int newAngle = (this.angle + angleChange + 360) % 360; // Correctly handle angle wrapping
                 // Check if the new state is within valid bounds before adding
-                if (this.d > 0 && this.d < planetSize - 1) { // Only allow angular changes if within valid distance
-                                                             // range
+                // if (this.d > 0 && this.d < planetSize - 1) { // Only allow angular changes if
+                // within valid distance
+                // // range
+                // successors.add(new Node(this.d, newAngle, this, this.cost +
+                // calculateAngularCost(angleChange)));
+                // }
+                for (int angleChange : angleChanges) {
+                    int newAngle = (this.angle + angleChange + 360) % 360; // Correctly handle angle wrapping
                     successors.add(new Node(this.d, newAngle, this, this.cost + calculateAngularCost(angleChange)));
                 }
-            }
 
             // Generate successors for distance changes
             for (int distanceChange : distanceChanges) {
