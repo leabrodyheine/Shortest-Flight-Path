@@ -71,12 +71,11 @@ public class PartA {
 
     public static List<Node> bfs(Node start, Node goal, int planetSize) {
         Queue<Node> frontier = new LinkedList<>();
-        Set<Node> visited = new HashSet<>();
+        Map<Node, Boolean> visited = new HashMap<>(); // Use a map to store nodes and their visited status
         frontier.add(start);
-        visited.add(start);
+        visited.put(start, true);
 
-        // Print initial state of the frontier
-        System.out.println("[" + start + "]");
+        System.out.println("[" + start + "]"); // Print the initial state with the start node
 
         while (!frontier.isEmpty()) {
             Node current = frontier.poll();
@@ -88,22 +87,23 @@ public class PartA {
             }
 
             List<Node> successors = current.getSuccessors(planetSize);
-            StringBuilder sb = new StringBuilder("[");
+            StringBuilder sb = new StringBuilder();
             boolean first = true;
             for (Node next : successors) {
-                if (!visited.contains(next)) {
-                    visited.add(next);
+                if (visited.getOrDefault(next, false) == false) { // Check if not visited
+                    visited.put(next, true);
                     frontier.add(next);
                     if (first) {
                         first = false;
+                        sb.append("[");
                     } else {
                         sb.append(",");
                     }
                     sb.append(next);
                 }
             }
-            sb.append("]");
-            if (!first) { // Only print the frontier if new nodes were added
+            if (!first) { // Close the bracket if any node was added to the string
+                sb.append("]");
                 System.out.println(sb.toString());
             }
         }
