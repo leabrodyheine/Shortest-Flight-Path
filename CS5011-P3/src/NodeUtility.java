@@ -25,15 +25,16 @@ public class NodeUtility {
                     if (newD < planetSize - 1)
                         newD++;
                     break;
-                case 90: // East
-                case 270: // West
-                    continue; // Assuming these directions don't change 'd'
+                case 90: // East and 270 West: these do not affect 'd', only 'angle'
+                    break;
+                default:
+                    continue; // Skip any other directions that might have sneaked in
             }
 
             if (newD >= 0 && newD < planetSize) {
-                Node newNode = new Node(newD, newAngle, current, 0);
-                double initialCost = calculateCost(current, newNode);
-                newNode.cost = current.cost + initialCost;
+                Node newNode = new Node(newD, newAngle, current, current.cost);
+                double additionalCost = calculateCost(current, newNode);
+                newNode.cost += additionalCost;
                 successors.add(newNode);
             }
         }
