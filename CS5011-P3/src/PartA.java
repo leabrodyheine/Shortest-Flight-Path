@@ -55,6 +55,10 @@ public class PartA {
             return Objects.hash(d, angle);
         }
 
+        @Override
+        public String toString() {
+            return String.format("(%d:%d)", d, angle);
+        }
     }
 
     private static double calculateAngularCost(int angleChange) {
@@ -72,6 +76,7 @@ public class PartA {
         visited.add(start);
 
         while (!frontier.isEmpty()) {
+            System.out.println(frontierToString(frontier)); // Print the current state of the frontier
             Node current = frontier.poll();
 
             if (current.equals(goal)) {
@@ -87,6 +92,21 @@ public class PartA {
         }
         System.out.println("No path found.");
         return null;
+    }
+
+    private static String frontierToString(Queue<Node> frontier) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        Iterator<Node> it = frontier.iterator();
+        while (it.hasNext()) {
+            Node node = it.next();
+            sb.append(String.format("(%d:%d)", node.d, node.angle));
+            if (it.hasNext()) {
+                sb.append(",");
+            }
+        }
+        sb.append("]");
+        return sb.toString();
     }
 
     private static List<Node> constructPath(Node goal) {
