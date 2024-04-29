@@ -14,29 +14,30 @@ public class NodeUtility {
         List<Node> successors = new ArrayList<>();
         for (int direction : directions) {
             int newD = current.d;
-            int newAngle = (current.angle + direction) % 360;
+            int newAngle = (current.angle + direction) % 360; // Ensure angles wrap around at 360
 
-            // Handle movements, adjust for specific directions
+            // Adjust `newD` based on the direction
             switch (direction) {
-                case 0: // North
+                case 0: // North towards the pole
                     if (newD > 0)
                         newD--;
                     break;
-                case 180: // South
+                case 180: // South away from the pole
                     if (newD < planetSize - 1)
                         newD++;
                     break;
                 case 90: // East
                 case 270: // West
                     if (newD == 0)
-                        continue; // Skip invalid east/west at the pole
+                        continue; // Invalid movements at the pole
                     break;
             }
 
-            if (newD >= 0 && newD < planetSize) { // Ensure valid grid position
-                Node newNode = new Node(newD, newAngle, current, current.cost);
+            // Ensure the new position is within grid limits
+            if (newD >= 0 && newD < planetSize) {
+                Node newNode = new Node(newD, newAngle, current, 0); // Temporarily set cost to 0
                 double additionalCost = calculateCost(current, newNode);
-                newNode.cost += additionalCost;
+                newNode.cost = current.cost + additionalCost; // Now set the correct cost
                 successors.add(newNode);
             }
         }

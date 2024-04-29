@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class PartA {
 
@@ -16,17 +17,23 @@ public class PartA {
             Queue<Node> frontier = new LinkedList<>();
             frontier.add(start);
             Set<Node> explored = new HashSet<>();
+            System.out.print("[" + start + "]"); // Initial frontier state
 
             while (!frontier.isEmpty()) {
                 Node current = frontier.poll();
-                System.out.println("Frontier: " + frontier); // Add this line to print the state of the frontier
                 if (current.equals(goal)) {
+                    System.out.println(); // Ensures new line before final path print
                     return util.constructPath(current);
                 }
                 explored.add(current);
                 List<Node> successors = util.getSuccessors(current, planetSize, directions);
-                System.out.println("Expanding: " + current + ", Successors: " + successors); // Add this to show node
-                                                                                             // expansion
+
+                // Debugging output for interim frontier states
+                if (!frontier.isEmpty()) {
+                    System.out
+                            .print("[" + frontier.stream().map(Node::toString).collect(Collectors.joining(",")) + "]");
+                }
+
                 for (Node next : successors) {
                     if (!explored.contains(next) && !frontier.contains(next)) {
                         frontier.add(next);
