@@ -23,15 +23,17 @@ public class PartA {
             for (int angleChange : angleChanges) {
                 if (this.d > 0) {
                     int newAngle = (this.angle + angleChange + 360) % 360;
-                    successors.add(new Node(this.d, newAngle, this, this.cost + 1));
+                    double additionalCost = calculateAngularCost(angleChange);
+                    successors.add(new Node(this.d, newAngle, this, this.cost + additionalCost));
                 }
             }
 
             int[] distanceChanges = { -1, 1 };
             for (int distanceChange : distanceChanges) {
                 int newD = this.d + distanceChange;
-                if (newD >= 0 && newD < planetSize) {
-                    successors.add(new Node(newD, this.angle, this, this.cost + 1));
+                if (newD > 0 && newD < planetSize) {
+                    double additionalCost = calculateRadialCost(distanceChange);
+                    successors.add(new Node(newD, this.angle, this, this.cost + additionalCost));
                 }
             }
             return successors;
@@ -78,10 +80,10 @@ public class PartA {
     }
 
     public static List<Node> bfs(Node start, Node goal, int planetSize) {
-        PriorityQueue<Node> frontier = new PriorityQueue<>();
-        Map<Node, Node> visited = new HashMap<>();
+        Queue<Node> frontier = new LinkedList<>();
+        Map<Node, Boolean> visited = new HashMap<>();
         frontier.add(start);
-        visited.put(start, start);
+        visited.put(start, true);
 
         printFrontier(frontier);
 
@@ -95,9 +97,11 @@ public class PartA {
             }
 
             List<Node> successors = current.getSuccessors(planetSize);
+            Collections.sort(successors);
+
             for (Node next : successors) {
-                if (!visited.containsKey(next) || visited.get(next).cost > next.cost) {
-                    visited.put(next, next);
+                if (!visited.getOrDefault(next, false)) {
+                    visited.put(next, true);
                     frontier.add(next);
                 }
             }
@@ -106,38 +110,6 @@ public class PartA {
         System.out.println("fail");
         return null;
     }
-
-    // public static List<Node> bfs(Node start, Node goal, int planetSize) {
-    // Queue<Node> frontier = new LinkedList<>();
-    // Map<Node, Boolean> visited = new HashMap<>();
-    // frontier.add(start);
-    // visited.put(start, true);
-
-    // printFrontier(frontier);
-
-    // while (!frontier.isEmpty()) {
-    // Node current = frontier.poll();
-
-    // if (current.equals(goal)) {
-    // List<Node> path = constructPath(current);
-    // printPath(path);
-    // return path;
-    // }
-
-    // List<Node> successors = current.getSuccessors(planetSize);
-    // Collections.sort(successors);
-
-    // for (Node next : successors) {
-    // if (!visited.getOrDefault(next, false)) {
-    // visited.put(next, true);
-    // frontier.add(next);
-    // }
-    // }
-    // printFrontier(frontier);
-    // }
-    // System.out.println("fail");
-    // return null;
-    // }
 
     private static void printFrontier(Collection<Node> frontier) {
         String result = frontier.stream()
