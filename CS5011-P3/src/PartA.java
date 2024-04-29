@@ -82,8 +82,11 @@ public class PartA {
     public static List<Node> bfs(Node start, Node goal, int planetSize) {
         Queue<Node> frontier = new LinkedList<>();
         Map<Node, Boolean> visited = new HashMap<>();
+        int visitedCount = 0; // Counter for visited nodes
+
         frontier.add(start);
         visited.put(start, true);
+        visitedCount++; // Count the start node as visited
 
         printFrontier(frontier);
 
@@ -103,11 +106,14 @@ public class PartA {
                 if (!visited.getOrDefault(next, false)) {
                     visited.put(next, true);
                     frontier.add(next);
+                    visitedCount++; // Increment count for each unique visit
                 }
             }
             printFrontier(frontier);
         }
+
         System.out.println("fail");
+        System.out.println(visitedCount); // Print the count of visited nodes if no path is found
         return null;
     }
 
