@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class PartA {
 
@@ -110,9 +111,10 @@ public class PartA {
     }
 
     private static void printFrontier(Collection<Node> frontier) {
-        System.out.print("[");
-        frontier.forEach(node -> System.out.print(node + ","));
-        System.out.println("]");
+        String result = frontier.stream()
+                .map(Node::toString)
+                .collect(Collectors.joining(","));
+        System.out.println("[" + result + "]");
     }
 
     private static List<Node> constructPath(Node goal) {
