@@ -17,21 +17,6 @@ World: Oedipus 4
 Departure airport -- Start: 3:45
 Destination airport -- Goal: 2:45
 Search algorithm: BFS
-Generating successors for Node: PartA$Node@44b
-Successors generated: 3
- -> Successor: PartA$Node@41e
- -> Successor: PartA$Node@478
- -> Successor: PartA$Node@42c
-Generating successors for Node: PartA$Node@41e
-Successors generated: 3
- -> Successor: PartA$Node@559
- -> Successor: PartA$Node@44b
- -> Successor: PartA$Node@3ff
-Generating successors for Node: PartA$Node@478
-Successors generated: 3
- -> Successor: PartA$Node@44b
- -> Successor: PartA$Node@4a5
- -> Successor: PartA$Node@459
 ---
 
 * COMPARISON TEST - 01_BFS1/prog-run-01_BFS1.out : fail
@@ -51,12 +36,6 @@ World: Oedipus 4
 Departure airport -- Start: 2:45
 Destination airport -- Goal: 2:0
 Search algorithm: BFS
-Generating successors for Node: PartA$Node@42c
-Successors generated: 4
- -> Successor: PartA$Node@3ff
- -> Successor: PartA$Node@459
- -> Successor: PartA$Node@40d
- -> Successor: PartA$Node@44b
 ---
 
 * COMPARISON TEST - 02_BFS2/prog-run-02_BFS2.out : fail
@@ -104,66 +83,6 @@ World: Oedipus 5
 Departure airport -- Start: 2:45
 Destination airport -- Goal: 0:0
 Search algorithm: BFS
-Generating successors for Node: PartA$Node@42c
-Successors generated: 4
- -> Successor: PartA$Node@3ff
- -> Successor: PartA$Node@459
- -> Successor: PartA$Node@40d
- -> Successor: PartA$Node@44b
-Generating successors for Node: PartA$Node@3ff
-Successors generated: 4
- -> Successor: PartA$Node@53a
- -> Successor: PartA$Node@42c
- -> Successor: PartA$Node@3e0
- -> Successor: PartA$Node@41e
-Generating successors for Node: PartA$Node@459
-Successors generated: 4
- -> Successor: PartA$Node@42c
- -> Successor: PartA$Node@486
- -> Successor: PartA$Node@43a
- -> Successor: PartA$Node@478
-Generating successors for Node: PartA$Node@40d
-Successors generated: 4
- -> Successor: PartA$Node@3e0
- -> Successor: PartA$Node@43a
- -> Successor: PartA$Node@3ee
- -> Successor: PartA$Node@42c
-Generating successors for Node: PartA$Node@44b
-Successors generated: 4
- -> Successor: PartA$Node@41e
- -> Successor: PartA$Node@478
- -> Successor: PartA$Node@42c
- -> Successor: PartA$Node@46a
-Generating successors for Node: PartA$Node@53a
-Successors generated: 4
- -> Successor: PartA$Node@50d
- -> Successor: PartA$Node@3ff
- -> Successor: PartA$Node@51b
- -> Successor: PartA$Node@559
-Generating successors for Node: PartA$Node@3e0
-Successors generated: 4
- -> Successor: PartA$Node@51b
- -> Successor: PartA$Node@40d
- -> Successor: PartA$Node@3c1
- -> Successor: PartA$Node@3ff
-Generating successors for Node: PartA$Node@41e
-Successors generated: 4
- -> Successor: PartA$Node@559
- -> Successor: PartA$Node@44b
- -> Successor: PartA$Node@3ff
- -> Successor: PartA$Node@43d
-Generating successors for Node: PartA$Node@486
-Successors generated: 4
- -> Successor: PartA$Node@459
- -> Successor: PartA$Node@4b3
- -> Successor: PartA$Node@467
- -> Successor: PartA$Node@4a5
-Generating successors for Node: PartA$Node@43a
-Successors generated: 4
- -> Successor: PartA$Node@40d
- -> Successor: PartA$Node@467
- -> Successor: PartA$Node@41b
-... (output truncated)
 ---
 
 * COMPARISON TEST - 03_BFS3/prog-run-03_BFS.out : fail
@@ -202,57 +121,6 @@ World: Oedipus 5
 Departure airport -- Start: 2:45
 Destination airport -- Goal: 1:180
 Search algorithm: BFS
-Generating successors for Node: PartA$Node@42c
-Successors generated: 4
- -> Successor: PartA$Node@3ff
- -> Successor: PartA$Node@459
- -> Successor: PartA$Node@40d
- -> Successor: PartA$Node@44b
-Generating successors for Node: PartA$Node@3ff
-Successors generated: 4
- -> Successor: PartA$Node@53a
- -> Successor: PartA$Node@42c
- -> Successor: PartA$Node@3e0
- -> Successor: PartA$Node@41e
-Generating successors for Node: PartA$Node@459
-Successors generated: 4
- -> Successor: PartA$Node@42c
- -> Successor: PartA$Node@486
- -> Successor: PartA$Node@43a
- -> Successor: PartA$Node@478
-Generating successors for Node: PartA$Node@40d
-Successors generated: 4
- -> Successor: PartA$Node@3e0
- -> Successor: PartA$Node@43a
- -> Successor: PartA$Node@3ee
- -> Successor: PartA$Node@42c
-Generating successors for Node: PartA$Node@44b
-Successors generated: 4
- -> Successor: PartA$Node@41e
- -> Successor: PartA$Node@478
- -> Successor: PartA$Node@42c
- -> Successor: PartA$Node@46a
-Generating successors for Node: PartA$Node@53a
-Successors generated: 4
- -> Successor: PartA$Node@50d
- -> Successor: PartA$Node@3ff
- -> Successor: PartA$Node@51b
- -> Successor: PartA$Node@559
-Generating successors for Node: PartA$Node@3e0
-Successors generated: 4
- -> Successor: PartA$Node@51b
- -> Successor: PartA$Node@40d
- -> Successor: PartA$Node@3c1
- -> Successor: PartA$Node@3ff
-Generating successors for Node: PartA$Node@41e
-Successors generated: 4
- -> Successor: PartA$Node@559
- -> Successor: PartA$Node@44b
- -> Successor: PartA$Node@3ff
- -> Successor: PartA$Node@43d
-Generating successors for Node: PartA$Node@486
-Successors generated: 4
-... (output truncated)
 ---
 
 * COMPARISON TEST - 04_DFS0/prog-run-04_DFS0.out : fail
