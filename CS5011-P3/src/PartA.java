@@ -96,6 +96,7 @@ public class PartA {
             if (current.equals(goal)) {
                 List<Node> path = constructPath(current);
                 printPath(path);
+                System.out.println(visitedCount); // Print the count of visited nodes upon success
                 return path;
             }
 
@@ -103,7 +104,7 @@ public class PartA {
             Collections.sort(successors);
 
             for (Node next : successors) {
-                if (!visited.getOrDefault(next, false)) {
+                if (!visited.containsKey(next)) { // Check if not visited
                     visited.put(next, true);
                     frontier.add(next);
                     visitedCount++; // Increment count for each unique visit
