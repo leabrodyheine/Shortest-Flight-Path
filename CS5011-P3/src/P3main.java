@@ -45,7 +45,7 @@ public class P3main {
 				// Implement SMA* search when PartB is ready
 				break;
 			default:
-				System.out.println("Invalid algorithm specified.");
+				System.out.println("fail");
 				break;
 		}
 	}

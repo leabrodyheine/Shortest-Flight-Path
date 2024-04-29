@@ -18,21 +18,19 @@ public class PartA {
 
         public List<Node> getSuccessors(int planetSize) {
             List<Node> successors = new ArrayList<>();
-            int[] angleChanges = { -45, 45 }; // Allowed angular changes
+            int[] angleChanges = { -45, 45 }; 
 
-            // Generate successors for angle changes
             for (int angleChange : angleChanges) {
-                if (this.d > 0) { // Angular change only allowed if not at the pole
-                    int newAngle = (this.angle + angleChange + 360) % 360; // Correctly handle angle wrapping
+                if (this.d > 0) {
+                    int newAngle = (this.angle + angleChange + 360) % 360;
                     successors.add(new Node(this.d, newAngle, this, this.cost + 1));
                 }
             }
 
-            // Generate successors for distance changes
-            int[] distanceChanges = { -1, 1 }; // Allowed radial changes
+            int[] distanceChanges = { -1, 1 }; 
             for (int distanceChange : distanceChanges) {
                 int newD = this.d + distanceChange;
-                if (newD >= 0 && newD < planetSize) { // Check radial boundaries
+                if (newD > 0 && newD < planetSize) {
                     successors.add(new Node(newD, this.angle, this, this.cost + 1));
                 }
             }
