@@ -111,7 +111,7 @@ public class PartA {
 
     private static void printFrontier(Collection<Node> frontier) {
         System.out.print("[");
-        frontier.forEach(node -> System.out.print(node ));
+        frontier.forEach(node -> System.out.print(node + ","));
         System.out.println("]");
     }
 
