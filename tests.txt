@@ -105,7 +105,7 @@ Search algorithm: BFS
 [(4:180),(4:225)]
 [(4:225)]
 []
-No path found.
+fail
 ---
 
 * COMPARISON TEST - 03_BFS3/prog-run-03_BFS.out : fail
