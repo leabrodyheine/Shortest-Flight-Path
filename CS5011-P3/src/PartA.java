@@ -22,8 +22,8 @@ public class PartA {
 
             // Generate successors for angle changes
             for (int angleChange : angleChanges) {
-                int newAngle = (this.angle + angleChange + 360) % 360; // Correctly handle angle wrapping
                 if (this.d > 0) { // Angular change only allowed if not at the pole
+                    int newAngle = (this.angle + angleChange + 360) % 360; // Correctly handle angle wrapping
                     successors.add(new Node(this.d, newAngle, this, this.cost + 1));
                 }
             }
@@ -69,13 +69,13 @@ public class PartA {
         }
     }
 
-    private static double calculateAngularCost(int angleChange) {
-        return Math.abs(angleChange) / 45.0;
-    }
+    // private static double calculateAngularCost(int angleChange) {
+    //     return Math.abs(angleChange) / 45.0;
+    // }
 
-    private static double calculateRadialCost(int distanceChange) {
-        return Math.abs(distanceChange);
-    }
+    // private static double calculateRadialCost(int distanceChange) {
+    //     return Math.abs(distanceChange);
+    // }
 
     public static List<Node> bfs(Node start, Node goal, int planetSize) {
         Queue<Node> frontier = new LinkedList<>();
