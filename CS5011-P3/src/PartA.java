@@ -16,38 +16,17 @@ public class PartA {
             this.cost = cost;
         }
 
-        public List<Node> getSuccessors(int planetSize) {
-            List<Node> successors = new ArrayList<>();
-            int[] angleChanges = { -45, 45 };
-
-            for (int angleChange : angleChanges) {
-                if (this.d > 0) {
-                    int newAngle = (this.angle + angleChange + 360) % 360;
-                    double additionalCost = calculateAngularCost(this.d, angleChange);
-                    successors.add(new Node(this.d, newAngle, this, this.cost + additionalCost));
-                }
+        @Override
+        public int compareTo(Node other) {
+            if (this.d != other.d) {
+                return Integer.compare(this.d, other.d); // Prioritize lower distance
             }
-
-            int[] distanceChanges = { -1, 1 };
-            for (int distanceChange : distanceChanges) {
-                int newD = this.d + distanceChange;
-                if (newD > 0 && newD < planetSize) {
-                    double additionalCost = calculateRadialCost(distanceChange);
-                    successors.add(new Node(newD, this.angle, this, this.cost + additionalCost));
-                }
-            }
-            return successors;
+            return Integer.compare(this.angle, other.angle); // Then by angle
         }
 
         @Override
-        public int compareTo(Node other) {
-            if (Double.compare(this.cost, other.cost) != 0) {
-                return Double.compare(this.cost, other.cost);
-            }
-            if (this.d != other.d) {
-                return Integer.compare(this.d, other.d);
-            }
-            return Integer.compare(this.angle, other.angle);
+        public String toString() {
+            return String.format("(%d:%d)", d, angle);
         }
 
         @Override
@@ -65,10 +44,28 @@ public class PartA {
             return Objects.hash(d, angle);
         }
 
-        @Override
-        public String toString() {
-            return String.format("(%d:%d)", d, angle);
-        }
+        // public List<Node> getSuccessors(int planetSize) {
+        // List<Node> successors = new ArrayList<>();
+        // int[] angleChanges = { -45, 45 };
+
+        // for (int angleChange : angleChanges) {
+        // if (this.d > 0) {
+        // int newAngle = (this.angle + angleChange + 360) % 360;
+        // double additionalCost = calculateAngularCost(this.d, angleChange);
+        // successors.add(new Node(this.d, newAngle, this, this.cost + additionalCost));
+        // }
+        // }
+
+        // int[] distanceChanges = { -1, 1 };
+        // for (int distanceChange : distanceChanges) {
+        // int newD = this.d + distanceChange;
+        // if (newD > 0 && newD < planetSize) {
+        // double additionalCost = calculateRadialCost(distanceChange);
+        // successors.add(new Node(newD, this.angle, this, this.cost + additionalCost));
+        // }
+        // }
+        // return successors;
+        // }
     }
 
     private static double calculateAngularCost(int radius, int angleChange) {
@@ -80,38 +77,33 @@ public class PartA {
     }
 
     public static List<Node> bfs(Node start, Node goal, int planetSize) {
-        PriorityQueue<Node> frontier = new PriorityQueue<>();
-        Map<Node, Node> parentMap = new HashMap<>();
-        Set<Node> visited = new HashSet<>(); // Explicitly track visited nodes
+        Queue<Node> frontier = new LinkedList<>();
+        Set<Node> visited = new HashSet<>(); // Use a set to track visited nodes
 
         frontier.add(start);
-        parentMap.put(start, null);
+        visited.add(start);
 
         while (!frontier.isEmpty()) {
             printFrontier(frontier);
             Node current = frontier.poll();
 
-            // Proceed only if current has not been visited or is being visited with a
-            // cheaper cost path
             if (visited.contains(current)) {
                 continue;
             }
-            
+
             visited.add(current);
             if (current.equals(goal)) {
-                List<Node> path = constructPath(current, parentMap);
-                printPath(path, visited.size());
-                return path;
+                return constructPath(current);
             }
 
-            List<Node> successors = current.getSuccessors(planetSize);
+            List<Node> successors = getSuccessors(current, planetSize);
 
             Collections.sort(successors);
-
-            for (Node next : successors) {
-                if (!visited.contains(next) && !frontier.contains(next)) {
-                    frontier.add(next);
-                    parentMap.put(next, current); // Track the parent of each node
+            for (Node successor : getSuccessors(current, planetSize)) {
+                if (!visited.contains(successor)) {
+                    visited.add(successor);
+                    frontier.add(successor);
+                    System.out.println("Adding to frontier: " + successor);
                 }
             }
         }
@@ -119,6 +111,27 @@ public class PartA {
         System.out.println("fail");
         System.out.println(visited.size()); // Print the number of unique nodes processed
         return null;
+    }
+
+    private static List<Node> getSuccessors(Node node, int planetSize) {
+        List<Node> successors = new ArrayList<>();
+        int[] angleChanges = { -45, 45 };
+
+        for (int angleChange : angleChanges) {
+            int newAngle = (node.angle + angleChange + 360) % 360;
+            if (node.d > 0) {
+                successors.add(new Node(node.d, newAngle, node, node.cost + 1)); // Assume cost of 1 per move
+            }
+        }
+
+        int[] distanceChanges = { -1, 1 };
+        for (int distanceChange : distanceChanges) {
+            int newD = node.d + distanceChange;
+            if (newD > 0 && newD < planetSize) {
+                successors.add(new Node(newD, node.angle, node, node.cost + 1));
+            }
+        }
+        return successors;
     }
 
     private static void printFrontier(Collection<Node> frontier) {
@@ -130,12 +143,12 @@ public class PartA {
         }
     }
 
-    private static List<Node> constructPath(Node goal, Map<Node, Node> parentMap) {
+    private static List<Node> constructPath(Node goal) {
         LinkedList<Node> path = new LinkedList<>();
         Node current = goal;
         while (current != null) {
             path.addFirst(current);
-            current = parentMap.get(current); // Retrieve the parent from the map
+            current = current.parent;
         }
         return path;
     }
