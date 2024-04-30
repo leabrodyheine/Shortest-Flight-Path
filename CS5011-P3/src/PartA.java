@@ -148,6 +148,8 @@ public class PartA {
             }
 
             List<Node> successors = current.getSuccessors(planetSize);
+            Collections.sort(successors);
+            
             for (Node next : successors) {
                 if (!visited.contains(next) && !frontier.contains(next)) {
                     frontier.add(next);
