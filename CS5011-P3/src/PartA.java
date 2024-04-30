@@ -1,6 +1,8 @@
 import java.util.*;
 import java.util.stream.Collectors;
 
+import org.w3c.dom.Node;
+
 public class PartA {
 
     public static class Node implements Comparable<Node> {
@@ -31,7 +33,7 @@ public class PartA {
             int[] distanceChanges = { -1, 1 };
             for (int distanceChange : distanceChanges) {
                 int newD = this.d + distanceChange;
-                if (newD > 0 && newD < planetSize) {
+                if (newD >= 0 && newD < planetSize) {
                     double additionalCost = calculateRadialCost(distanceChange);
                     successors.add(new Node(newD, this.angle, this, this.cost + additionalCost));
                 }
@@ -41,13 +43,7 @@ public class PartA {
 
         @Override
         public int compareTo(Node other) {
-            if (Double.compare(this.cost, other.cost) != 0) {
-                return Double.compare(this.cost, other.cost);
-            }
-            if (this.d != other.d) {
-                return Integer.compare(this.d, other.d);
-            }
-            return Integer.compare(this.angle, other.angle);
+            return Double.compare(this.cost, other.cost);
         }
 
         @Override
@@ -71,34 +67,33 @@ public class PartA {
         }
     }
 
-    // private static double calculateAngularCost(int angleChange) {
-    //     return Math.abs(angleChange) / 45.0;
-    // }
     private static double calculateAngularCost(int radius, int angleChange) {
         return Math.abs(angleChange) * (Math.PI * radius / 4) / 45;
     }
-    
+
     private static double calculateRadialCost(int distanceChange) {
         return Math.abs(distanceChange);
     }
 
+    // private static double calculateAngularCost(int angleChange) {
+    // return Math.abs(angleChange) / 45.0;
+    // }
+
     public static List<Node> bfs(Node start, Node goal, int planetSize) {
         Queue<Node> frontier = new LinkedList<>();
         Map<Node, Boolean> visited = new HashMap<>();
-        int visitedCount = 0; // Counter for visited nodes
+        int visitedCount = 0;
 
         frontier.add(start);
         visited.put(start, true);
-        visitedCount++; // Count the start node as visited
-
-        printFrontier(frontier);
+        visitedCount++;
 
         while (!frontier.isEmpty()) {
             Node current = frontier.poll();
 
             if (current.equals(goal)) {
                 List<Node> path = constructPath(current);
-                printPath(path);
+                printPath(path, visitedCount);
                 return path;
             }
 
@@ -106,17 +101,16 @@ public class PartA {
             Collections.sort(successors);
 
             for (Node next : successors) {
-                if (!visited.getOrDefault(next, false)) {
+                if (!visited.containsKey(next)) {
                     visited.put(next, true);
                     frontier.add(next);
-                    visitedCount++; // Increment count for each unique visit
+                    visitedCount++;
                 }
             }
-            printFrontier(frontier);
         }
 
         System.out.println("fail");
-        System.out.println(visitedCount); 
+        System.out.println(visitedCount);
         return null;
     }
 
@@ -139,7 +133,7 @@ public class PartA {
         return path;
     }
 
-    public static void printPath(List<Node> path) {
+    public static void printPath(List<Node> path, int visitedCount) {
         if (path == null || path.isEmpty()) {
             System.out.println("fail");
         } else {
@@ -148,7 +142,7 @@ public class PartA {
             }
             Node lastNode = path.get(path.size() - 1);
             System.out.println();
-            System.out.printf("%.3f\n%d\n", lastNode.cost, path.size());
+            System.out.printf("%.3f\n%d\n%d\n", lastNode.cost, path.size(), visitedCount);
         }
     }
 }
