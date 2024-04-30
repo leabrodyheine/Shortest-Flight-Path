@@ -19,16 +19,16 @@ public class PartA {
         public List<Node> getSuccessors(int planetSize) {
             List<Node> successors = new ArrayList<>();
             int[] angleChanges = { -45, 45 };
+            int[] distanceChanges = { -1, 1 };
 
             for (int angleChange : angleChanges) {
+                int newAngle = (this.angle + angleChange + 360) % 360;
                 if (this.d > 0) {
-                    int newAngle = (this.angle + angleChange + 360) % 360;
                     double additionalCost = calculateAngularCost(this.d, angleChange);
                     successors.add(new Node(this.d, newAngle, this, this.cost + additionalCost));
                 }
             }
 
-            int[] distanceChanges = { -1, 1 };
             for (int distanceChange : distanceChanges) {
                 int newD = this.d + distanceChange;
                 if (newD > 0 && newD < planetSize) {
@@ -106,10 +106,11 @@ public class PartA {
 
             Collections.sort(successors);
 
-            for (Node next : successors) {
-                if (!visited.contains(next) && !frontier.contains(next)) {
-                    frontier.add(next);
-                    parentMap.put(next, current);
+            for (Node successor : successors) {
+                if (!visited.contains(successor)) {
+                    visited.add(successor);
+                    frontier.add(successor);
+                    parentMap.put(successor, current);
                 }
             }
         }
