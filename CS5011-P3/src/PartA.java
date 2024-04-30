@@ -94,9 +94,10 @@ public class PartA {
             // Proceed only if current has not been visited or is being visited with a
             // cheaper cost path
             if (visited.contains(current)) {
-                visited.add(current);
+                continue;
             }
-
+            
+            visited.add(current);
             if (current.equals(goal)) {
                 List<Node> path = constructPath(current, parentMap);
                 printPath(path, visited.size());
