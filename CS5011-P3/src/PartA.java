@@ -131,6 +131,8 @@ public class PartA {
         frontier.add(start);
         parentMap.put(start, null); // Start node has no parent, initialize parent mapping
 
+        printFrontier(frontier);
+        
         while (!frontier.isEmpty()) {
             Node current = frontier.poll();
 
