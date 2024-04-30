@@ -51,7 +51,16 @@ public class PartA {
         // }
         @Override
         public int compareTo(Node other) {
-            return Double.compare(this.cost, other.cost);
+            int costCompare = Double.compare(this.cost, other.cost);
+            if (costCompare != 0) {
+                return costCompare;
+            }
+            // Secondary criteria to ensure consistent ordering among nodes with same cost
+            int distanceCompare = Integer.compare(this.d, other.d);
+            if (distanceCompare != 0) {
+                return distanceCompare;
+            }
+            return Integer.compare(this.angle, other.angle);
         }
 
         @Override
@@ -129,17 +138,17 @@ public class PartA {
         Map<Node, Node> parentMap = new HashMap<>();
 
         frontier.add(start);
-        parentMap.put(start, null); // Start node has no parent
+        parentMap.put(start, null);
 
         while (!frontier.isEmpty()) {
-            printFrontier(frontier); // Move the print statement here to correctly display before polling
+            printFrontier(frontier);
             Node current = frontier.poll();
 
             if (visited.contains(current)) {
-                continue; // Skip processing if already visited
+                continue;
             }
-            
-            visited.add(current); // Mark the node as visited when it is actually processed
+
+            visited.add(current);
 
             if (current.equals(goal)) {
                 List<Node> path = constructPath(current, parentMap);
