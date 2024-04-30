@@ -138,7 +138,7 @@ public class PartA {
             if (visited.contains(current)) {
                 continue; // Skip processing if already visited
             }
-
+            
             visited.add(current); // Mark the node as visited when it is actually processed
 
             if (current.equals(goal)) {
