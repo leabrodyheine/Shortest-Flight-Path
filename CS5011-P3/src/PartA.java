@@ -90,7 +90,7 @@ public class PartA {
         parentMap.put(start, null);
 
         while (!frontier.isEmpty()) {
-            //printFrontier(frontier);
+            printFrontier(frontier);
             Node current = frontier.poll();
 
             // Proceed only if current has not been visited or is being visited with a
@@ -98,6 +98,7 @@ public class PartA {
             if (visited.contains(current)) {
                 continue;
             }
+            
             visited.add(current);
 
             if (current.equals(goal)) {
