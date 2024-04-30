@@ -10,23 +10,31 @@ public class PartA_DFS {
 
         while (!frontier.isEmpty()) {
             printFrontier(frontier);
-
             Node current = frontier.pop();
+
             if (!visited.add(current)) { // Check if node is already visited
                 continue;
             }
 
+            visited.add(current);
+
             if (current.equals(goal)) {
                 return constructPath(current);
             }
+            
+            List<Node> successors = current.getSuccessors(planetSize);
 
-            for (Node successor : current.getSuccessors(planetSize)) {
-                if (!visited.contains(successor)) {
-                    frontier.push(successor);
+            Collections.sort(successors);
+
+            for (Node next : successors) {
+                if (!visited.contains(next)) {
+                    frontier.push(next);
                 }
             }
         }
-        return null; // Return null if no path is found
+        System.out.println("fail");
+        System.out.println(visited.size()); // Print the number of unique nodes processed
+        return null;
     }
 
     private static void printFrontier(Collection<Node> frontier) {
