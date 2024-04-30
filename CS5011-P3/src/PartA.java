@@ -79,83 +79,51 @@ public class PartA {
         return Math.abs(distanceChange);
     }
 
-    // public static List<Node> bfs(Node start, Node goal, int planetSize) {
-    // PriorityQueue<Node> frontier = new PriorityQueue<>();
-    // Map<Node, Double> costSoFar = new HashMap<>(); // Tracks cost to reach each
-    // node
-    // Map<Node, Node> parentMap = new HashMap<>();
-    // Set<Node> visited = new HashSet<>(); // Explicitly track visited nodes
-
-    // frontier.add(start);
-    // costSoFar.put(start, 0.0);
-    // parentMap.put(start, null);
-
-    // while (!frontier.isEmpty()) {
-    // printFrontier(frontier);
-    // Node current = frontier.poll();
-
-    // // Proceed only if current has not been visited or is being visited with a
-    // // cheaper cost path
-    // if (visited.contains(current)) {
-    // continue;
-    // }
-
-    // visited.add(current);
-
-    // if (current.equals(goal)) {
-    // List<Node> path = constructPath(current, parentMap);
-    // printPath(path, visited.size());
-    // return path;
-    // }
-
-    // List<Node> successors = current.getSuccessors(planetSize);
-
-    // Collections.sort(successors);
-
-    // for (Node next : successors) {
-    // double newCost = costSoFar.get(current) + next.cost - current.cost; //
-    // Calculate the cumulative cost to
-    // // reach 'next'
-    // if (!costSoFar.containsKey(next) || newCost < costSoFar.get(next)) {
-    // costSoFar.put(next, newCost);
-    // frontier.add(next);
-    // parentMap.put(next, current);
-    // }
-    // }
-    // }
-
-    // System.out.println("fail");
-    // System.out.println(visited.size()); // Print the number of unique nodes
-    // processed
-    // return null;
-    // }
     public static List<Node> bfs(Node start, Node goal, int planetSize) {
         PriorityQueue<Node> frontier = new PriorityQueue<>();
-        Map<Node, Node> cameFrom = new HashMap<>();
-        Map<Node, Double> costSoFar = new HashMap<>();
+        Map<Node, Double> costSoFar = new HashMap<>(); // Tracks cost to reach each node
+        Map<Node, Node> parentMap = new HashMap<>();
+        Set<Node> visited = new HashSet<>(); // Explicitly track visited nodes
 
         frontier.add(start);
-        cameFrom.put(start, null);
         costSoFar.put(start, 0.0);
+        parentMap.put(start, null);
 
         while (!frontier.isEmpty()) {
+            printFrontier(frontier);
             Node current = frontier.poll();
 
+            // Proceed only if current has not been visited or is being visited with a
+            // cheaper cost path
+            if (visited.contains(current)) {
+                continue;
+            }
+            
+            visited.add(current);
+
             if (current.equals(goal)) {
-                return constructPath(current, cameFrom);
+                List<Node> path = constructPath(current, parentMap);
+                printPath(path, visited.size());
+                return path;
             }
 
-            for (Node next : current.getSuccessors(planetSize)) {
-                double newCost = costSoFar.get(current) + (next.cost - current.cost);
+            List<Node> successors = current.getSuccessors(planetSize);
+
+            Collections.sort(successors);
+
+            for (Node next : successors) {
+                double newCost = costSoFar.get(current) + next.cost - current.cost; // Calculate the cumulative cost to
+                                                                                    // reach 'next'
                 if (!costSoFar.containsKey(next) || newCost < costSoFar.get(next)) {
                     costSoFar.put(next, newCost);
-                    next.cost = newCost; // Update the cost of reaching 'next'
                     frontier.add(next);
-                    cameFrom.put(next, current);
+                    parentMap.put(next, current);
                 }
             }
         }
-        System.out.println("No path found");
+
+        System.out.println("fail");
+        System.out.println(visited.size()); // Print the number of unique nodes processed
         return null;
     }
 
