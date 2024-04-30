@@ -23,7 +23,7 @@ public class PartA {
             for (int angleChange : angleChanges) {
                 if (this.d > 0) {
                     int newAngle = (this.angle + angleChange + 360) % 360;
-                    double additionalCost = calculateAngularCost(angleChange);
+                    double additionalCost = calculateAngularCost(this.d, angleChange);
                     successors.add(new Node(this.d, newAngle, this, this.cost + additionalCost));
                 }
             }
@@ -71,10 +71,13 @@ public class PartA {
         }
     }
 
-    private static double calculateAngularCost(int angleChange) {
-        return Math.abs(angleChange) / 45.0;
+    // private static double calculateAngularCost(int angleChange) {
+    //     return Math.abs(angleChange) / 45.0;
+    // }
+    private static double calculateAngularCost(int radius, int angleChange) {
+        return Math.abs(angleChange) * (Math.PI * radius / 4) / 45;
     }
-
+    
     private static double calculateRadialCost(int distanceChange) {
         return Math.abs(distanceChange);
     }
@@ -113,7 +116,7 @@ public class PartA {
         }
 
         System.out.println("fail");
-        System.out.println(visitedCount); // Print the count of visited nodes if no path is found
+        System.out.println(visitedCount); 
         return null;
     }
 
