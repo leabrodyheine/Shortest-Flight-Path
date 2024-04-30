@@ -128,41 +128,36 @@ public class PartA {
         Set<Node> visited = new HashSet<>();
         Map<Node, Node> parentMap = new HashMap<>();
 
-        frontier.offer(start);
+        frontier.add(start);
         parentMap.put(start, null); // Start node has no parent
 
         while (!frontier.isEmpty()) {
+            printFrontier(frontier); // Move the print statement here to correctly display before polling
             Node current = frontier.poll();
 
-            // Mark as visited when actually processing the node
             if (visited.contains(current)) {
-                continue;
+                continue; // Skip processing if already visited
             }
-            visited.add(current);
+            visited.add(current); // Mark the node as visited when it is actually processed
 
             if (current.equals(goal)) {
                 List<Node> path = constructPath(current, parentMap);
-                printPath(path, visited.size());
+                printPath(path, visited.size()); // Print visited count only here within path print
                 return path;
             }
 
             List<Node> successors = current.getSuccessors(planetSize);
             for (Node next : successors) {
-                if (!visited.contains(next) && !containsBetter(frontier, next)) {
-                    frontier.offer(next);
+                if (!visited.contains(next) && !frontier.contains(next)) {
+                    frontier.add(next);
                     parentMap.put(next, current); // Track the parent of each node
                 }
             }
-            printFrontier(frontier); // Debugging: print frontier status after each expansion
         }
 
         System.out.println("fail");
-        System.out.println(visited.size()); // Print the count of visited nodes if no path is found
+        System.out.println(visited.size()); // Ensure visited count is printed only once if failed
         return null;
-    }
-
-    private static boolean containsBetter(PriorityQueue<Node> frontier, Node node) {
-        return frontier.stream().anyMatch(n -> n.equals(node) && n.cost <= node.cost);
     }
 
     private static void printFrontier(Collection<Node> frontier) {
