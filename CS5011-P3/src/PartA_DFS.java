@@ -13,15 +13,15 @@ public class PartA_DFS {
             Node current = frontier.pop();
 
             if (!visited.add(current)) { // Check if node is already visited
+                visited.add(current);
                 continue;
             }
 
-            visited.add(current);
 
             if (current.equals(goal)) {
                 return constructPath(current);
             }
-            
+
             List<Node> successors = current.getSuccessors(planetSize);
 
             Collections.sort(successors);
