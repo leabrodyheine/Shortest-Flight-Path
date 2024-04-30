@@ -17,23 +17,23 @@ public class P3main {
 		// Parse start and goal from args
 		String[] startParams = args[2].split(":");
 		String[] goalParams = args[3].split(":");
-		PartA.Node startNode = new PartA.Node(Integer.parseInt(startParams[0]), Integer.parseInt(startParams[1]), null,
+		Node startNode = new Node(Integer.parseInt(startParams[0]), Integer.parseInt(startParams[1]), null,
 				0);
-		PartA.Node goalNode = new PartA.Node(Integer.parseInt(goalParams[0]), Integer.parseInt(goalParams[1]), null, 0);
+		Node goalNode = new Node(Integer.parseInt(goalParams[0]), Integer.parseInt(goalParams[1]), null, 0);
 
 		// Run the search algorithm
 		runSearch(args[0], Integer.parseInt(args[1]), startNode, goalNode);
 	}
 
-	private static void runSearch(String algo, int size, PartA.Node startNode, PartA.Node goalNode) {
-		List<PartA.Node> path = null;
+	private static void runSearch(String algo, int size, Node startNode, Node goalNode) {
+		List<Node> path = null;
 
 		switch (algo) {
 			case "BFS":
-				path = PartA.bfs(startNode, goalNode, size);
+				path = PartA_BFS.bfs(startNode, goalNode, size);
 				break;
 			case "DFS":
-				// path = PartA.dfs(startNode, goalNode, size);
+				 path = PartA_DFS.dfs(startNode, goalNode, size);
 				break;
 			case "BestF": // Placeholder for future implementation
 				// Implement Best-first search when PartB is ready
