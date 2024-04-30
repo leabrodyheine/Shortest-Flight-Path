@@ -106,11 +106,10 @@ public class PartA {
 
             Collections.sort(successors);
 
-            for (Node successor : successors) {
-                if (!visited.contains(successor)) {
-                    visited.add(successor);
-                    frontier.add(successor);
-                    parentMap.put(successor, current);
+            for (Node next : successors) {
+                if (!visited.contains(next) && !frontier.contains(next)) {
+                    frontier.add(next);
+                    parentMap.put(next, current);
                 }
             }
         }
