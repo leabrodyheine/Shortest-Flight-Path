@@ -81,12 +81,10 @@ public class PartA {
 
     public static List<Node> bfs(Node start, Node goal, int planetSize) {
         PriorityQueue<Node> frontier = new PriorityQueue<>();
-        Map<Node, Double> costSoFar = new HashMap<>(); // Tracks cost to reach each node
         Map<Node, Node> parentMap = new HashMap<>();
         Set<Node> visited = new HashSet<>(); // Explicitly track visited nodes
 
         frontier.add(start);
-        costSoFar.put(start, 0.0);
         parentMap.put(start, null);
 
         while (!frontier.isEmpty()) {
@@ -96,10 +94,8 @@ public class PartA {
             // Proceed only if current has not been visited or is being visited with a
             // cheaper cost path
             if (visited.contains(current)) {
-                continue;
+                visited.add(current);
             }
-            
-            visited.add(current);
 
             if (current.equals(goal)) {
                 List<Node> path = constructPath(current, parentMap);
@@ -112,12 +108,9 @@ public class PartA {
             Collections.sort(successors);
 
             for (Node next : successors) {
-                double newCost = costSoFar.get(current) + next.cost - current.cost; // Calculate the cumulative cost to
-                                                                                    // reach 'next'
-                if (!costSoFar.containsKey(next) || newCost < costSoFar.get(next)) {
-                    costSoFar.put(next, newCost);
+                if (!visited.contains(next) && !frontier.contains(next)) {
                     frontier.add(next);
-                    parentMap.put(next, current);
+                    parentMap.put(next, current); // Track the parent of each node
                 }
             }
         }
