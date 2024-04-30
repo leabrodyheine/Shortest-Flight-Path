@@ -1,3 +1,4 @@
+package General;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -76,5 +77,13 @@ public class Node implements Comparable<Node> {
     @Override
     public String toString() {
         return String.format("(%d:%d)", d, angle);
+    }
+
+    public double getCost() {
+        return cost;
+    }
+
+    public Node getParent() {
+        return parent;
     }
 }

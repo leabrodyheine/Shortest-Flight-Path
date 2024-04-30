@@ -1,46 +1,36 @@
+package Algorithms;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
+import General.Node;
 
-public class PartA_BFS {
+public class PartA_DFS {
 
-    public static List<Node> bfs(Node start, Node goal, int planetSize) {
-        Queue<Node> frontier = new LinkedList<>();
-        Map<Node, Node> parentMap = new HashMap<>();
-        Set<Node> visited = new HashSet<>(); // Explicitly track visited nodes
-
-        frontier.add(start);
-        parentMap.put(start, null);
+    public static List<Node> dfs(Node start, Node goal, int planetSize) {
+        Stack<Node> frontier = new Stack<>();
+        Set<Node> visited = new HashSet<>();
+        frontier.push(start);
 
         while (!frontier.isEmpty()) {
             printFrontier(frontier);
-            Node current = frontier.poll();
-
-            if (visited.contains(current)) {
+            Node current = frontier.pop();
+            if (!visited.add(current)) {
                 continue;
             }
 
-            visited.add(current);
             if (current.equals(goal)) {
-                List<Node> path = constructPath(current, parentMap);
-                printPath(path, visited.size());
-                return path;
+                return constructPath(current);
             }
 
             List<Node> successors = current.getSuccessors(planetSize);
-
-            Collections.sort(successors);
-
             for (Node next : successors) {
-                if (!visited.contains(next) && !frontier.contains(next)) {
-                    frontier.add(next);
-                    parentMap.put(next, current);
+                if (!visited.contains(next)) {
+                    frontier.push(next);
                 }
             }
         }
-
         System.out.println("fail");
-        System.out.println(visited.size()); // Print the number of unique nodes processed
         return null;
     }
 
@@ -53,12 +43,13 @@ public class PartA_BFS {
         }
     }
 
-    private static List<Node> constructPath(Node goal, Map<Node, Node> parentMap) {
+    private static List<Node> constructPath(Node goal) {
         LinkedList<Node> path = new LinkedList<>();
         Node current = goal;
         while (current != null) {
             path.addFirst(current);
-            current = parentMap.get(current); // Retrieve the parent from the map
+            Node parent = current.getParent(); // Corrected to call the instance method on an object
+            current = parent; // Update current to its parent
         }
         return path;
     }
@@ -71,8 +62,9 @@ public class PartA_BFS {
                 System.out.print(node + "");
             }
             Node lastNode = path.get(path.size() - 1);
+            double cost = lastNode.getCost();
             System.out.println();
-            System.out.printf("%.3f\n%d\n", lastNode.cost, path.size());
+            System.out.printf("%.3f\n%d\n", cost, path.size());
         }
     }
 }

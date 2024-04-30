@@ -1,4 +1,8 @@
+package General;
 import java.util.List;
+
+import Algorithms.PartA_BFS;
+import Algorithms.PartA_DFS;
 
 public class P3main {
 
