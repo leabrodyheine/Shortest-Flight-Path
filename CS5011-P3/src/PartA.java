@@ -149,7 +149,7 @@ public class PartA {
 
             List<Node> successors = current.getSuccessors(planetSize);
             Collections.sort(successors);
-            
+
             for (Node next : successors) {
                 if (!visited.contains(next) && !frontier.contains(next)) {
                     frontier.add(next);
@@ -159,7 +159,7 @@ public class PartA {
         }
 
         System.out.println("fail");
-        //System.out.println(visited.size()); // Ensure visited count is printed only once if failed
+        System.out.println(visited.size()); // Ensure visited count is printed only once if failed
         return null;
     }
 
