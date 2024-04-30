@@ -156,7 +156,7 @@ public class PartA {
         }
 
         System.out.println("fail");
-        System.out.println(visited.size()); // Ensure visited count is printed only once if failed
+        //System.out.println(visited.size()); // Ensure visited count is printed only once if failed
         return null;
     }
 
