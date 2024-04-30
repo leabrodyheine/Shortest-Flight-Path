@@ -41,13 +41,13 @@ public class PartA {
 
         // @Override
         // public int compareTo(Node other) {
-        //     if (Double.compare(this.cost, other.cost) != 0) {
-        //         return Double.compare(this.cost, other.cost);
-        //     }
-        //     if (this.d != other.d) {
-        //         return Integer.compare(this.d, other.d);
-        //     }
-        //     return Integer.compare(this.angle, other.angle);
+        // if (Double.compare(this.cost, other.cost) != 0) {
+        // return Double.compare(this.cost, other.cost);
+        // }
+        // if (this.d != other.d) {
+        // return Integer.compare(this.d, other.d);
+        // }
+        // return Integer.compare(this.angle, other.angle);
         // }
         @Override
         public int compareTo(Node other) {
@@ -76,62 +76,64 @@ public class PartA {
     }
 
     // private static double calculateAngularCost(int angleChange) {
-    //     return Math.abs(angleChange) / 45.0;
+    // return Math.abs(angleChange) / 45.0;
     // }
     private static double calculateAngularCost(int radius, int angleChange) {
         return Math.abs(angleChange) * (Math.PI * radius / 4) / 45;
     }
-    
+
     private static double calculateRadialCost(int distanceChange) {
         return Math.abs(distanceChange);
     }
 
     // public static List<Node> bfs(Node start, Node goal, int planetSize) {
-    //     Queue<Node> frontier = new LinkedList<>();
-    //     Map<Node, Boolean> visited = new HashMap<>();
-    //     int visitedCount = 0; // Counter for visited nodes
+    // Queue<Node> frontier = new LinkedList<>();
+    // Map<Node, Boolean> visited = new HashMap<>();
+    // int visitedCount = 0; // Counter for visited nodes
 
-    //     frontier.add(start);
-    //     visited.put(start, true);
-    //     visitedCount++; // Count the start node as visited
+    // frontier.add(start);
+    // visited.put(start, true);
+    // visitedCount++; // Count the start node as visited
 
-    //     printFrontier(frontier);
+    // printFrontier(frontier);
 
-    //     while (!frontier.isEmpty()) {
-    //         Node current = frontier.poll();
+    // while (!frontier.isEmpty()) {
+    // Node current = frontier.poll();
 
-    //         if (current.equals(goal)) {
-    //             List<Node> path = constructPath(current);
-    //             printPath(path);
-    //             return path;
-    //         }
+    // if (current.equals(goal)) {
+    // List<Node> path = constructPath(current);
+    // printPath(path);
+    // return path;
+    // }
 
-    //         List<Node> successors = current.getSuccessors(planetSize);
-    //         Collections.sort(successors);
+    // List<Node> successors = current.getSuccessors(planetSize);
+    // Collections.sort(successors);
 
-    //         for (Node next : successors) {
-    //             if (!visited.getOrDefault(next, false)) {
-    //                 visited.put(next, true);
-    //                 frontier.add(next);
-    //                 visitedCount++; // Increment count for each unique visit
-    //             }
-    //         }
-    //         printFrontier(frontier);
-    //     }
+    // for (Node next : successors) {
+    // if (!visited.getOrDefault(next, false)) {
+    // visited.put(next, true);
+    // frontier.add(next);
+    // visitedCount++; // Increment count for each unique visit
+    // }
+    // }
+    // printFrontier(frontier);
+    // }
 
-    //     System.out.println("fail");
-    //     System.out.println(visitedCount); 
-    //     return null;
+    // System.out.println("fail");
+    // System.out.println(visitedCount);
+    // return null;
     // }
     public static List<Node> bfs(Node start, Node goal, int planetSize) {
-        Queue<Node> frontier = new LinkedList<>();
-        Set<Node> visited = new HashSet<>();
+        PriorityQueue<Node> frontier = new PriorityQueue<>(); // Use priority queue based on cost
+        Map<Node, Node> visited = new HashMap<>(); // Maps Node to its parent
 
-        frontier.add(start);
+        frontier.offer(start);
+        visited.put(start, null); // Start node has no parent
+
+        printFrontier(frontier); // Initial print
 
         while (!frontier.isEmpty()) {
             Node current = frontier.poll();
-            visited.add(current); // Mark as visited when dequeued
 
             if (current.equals(goal)) {
                 List<Node> path = constructPath(current);
@@ -143,14 +145,16 @@ public class PartA {
             Collections.sort(successors);
 
             for (Node next : successors) {
-                if (!visited.contains(next)) {
-                    frontier.add(next);
+                if (!visited.containsKey(next)) {
+                    visited.put(next, current);
+                    frontier.offer(next);
                 }
             }
+            printFrontier(frontier); // Print after each expansion
         }
 
         System.out.println("fail");
-        System.out.println(visited.size()); // Print the size of visited set if no path is found
+        System.out.println(visited.size()); // Print the count of visited nodes
         return null;
     }
 
