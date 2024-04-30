@@ -124,37 +124,37 @@ public class PartA {
     // return null;
     // }
     public static List<Node> bfs(Node start, Node goal, int planetSize) {
-        PriorityQueue<Node> frontier = new PriorityQueue<>(); // Use priority queue based on cost
-        Map<Node, Node> visited = new HashMap<>(); // Maps Node to its parent
+        PriorityQueue<Node> frontier = new PriorityQueue<>();
+        Set<Node> visited = new HashSet<>();
+        Map<Node, Node> parentMap = new HashMap<>();
 
-        frontier.offer(start);
-        visited.put(start, null); // Start node has no parent
-
-        printFrontier(frontier); // Initial print
+        frontier.add(start);
+        parentMap.put(start, null); // Start node has no parent, initialize parent mapping
 
         while (!frontier.isEmpty()) {
             Node current = frontier.poll();
 
-            if (current.equals(goal)) {
-                List<Node> path = constructPath(current);
-                printPath(path, visited.size());
-                return path;
-            }
+            if (!visited.contains(current)) {
+                visited.add(current); // Mark the node as visited when it is actually processed
 
-            List<Node> successors = current.getSuccessors(planetSize);
-            Collections.sort(successors);
+                if (current.equals(goal)) {
+                    List<Node> path = constructPath(current, parentMap);
+                    printPath(path, visited.size());
+                    return path;
+                }
 
-            for (Node next : successors) {
-                if (!visited.containsKey(next)) {
-                    visited.put(next, current);
-                    frontier.offer(next);
+                List<Node> successors = current.getSuccessors(planetSize);
+                for (Node next : successors) {
+                    if (!visited.contains(next) && !frontier.contains(next)) {
+                        frontier.add(next);
+                        parentMap.put(next, current); // Track the parent of each node
+                    }
                 }
             }
-            printFrontier(frontier); // Print after each expansion
         }
 
         System.out.println("fail");
-        System.out.println(visited.size()); // Print the count of visited nodes
+        System.out.println(visited.size()); // Print the total number of visited nodes
         return null;
     }
 
@@ -167,12 +167,12 @@ public class PartA {
         }
     }
 
-    private static List<Node> constructPath(Node goal) {
+    private static List<Node> constructPath(Node goal, Map<Node, Node> parentMap) {
         LinkedList<Node> path = new LinkedList<>();
         Node current = goal;
         while (current != null) {
             path.addFirst(current);
-            current = current.parent;
+            current = parentMap.get(current); // Retrieve the parent from the map
         }
         return path;
     }
