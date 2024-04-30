@@ -39,15 +39,19 @@ public class PartA {
             return successors;
         }
 
+        // @Override
+        // public int compareTo(Node other) {
+        //     if (Double.compare(this.cost, other.cost) != 0) {
+        //         return Double.compare(this.cost, other.cost);
+        //     }
+        //     if (this.d != other.d) {
+        //         return Integer.compare(this.d, other.d);
+        //     }
+        //     return Integer.compare(this.angle, other.angle);
+        // }
         @Override
         public int compareTo(Node other) {
-            if (Double.compare(this.cost, other.cost) != 0) {
-                return Double.compare(this.cost, other.cost);
-            }
-            if (this.d != other.d) {
-                return Integer.compare(this.d, other.d);
-            }
-            return Integer.compare(this.angle, other.angle);
+            return Double.compare(this.cost, other.cost);
         }
 
         @Override
@@ -82,23 +86,56 @@ public class PartA {
         return Math.abs(distanceChange);
     }
 
+    // public static List<Node> bfs(Node start, Node goal, int planetSize) {
+    //     Queue<Node> frontier = new LinkedList<>();
+    //     Map<Node, Boolean> visited = new HashMap<>();
+    //     int visitedCount = 0; // Counter for visited nodes
+
+    //     frontier.add(start);
+    //     visited.put(start, true);
+    //     visitedCount++; // Count the start node as visited
+
+    //     printFrontier(frontier);
+
+    //     while (!frontier.isEmpty()) {
+    //         Node current = frontier.poll();
+
+    //         if (current.equals(goal)) {
+    //             List<Node> path = constructPath(current);
+    //             printPath(path);
+    //             return path;
+    //         }
+
+    //         List<Node> successors = current.getSuccessors(planetSize);
+    //         Collections.sort(successors);
+
+    //         for (Node next : successors) {
+    //             if (!visited.getOrDefault(next, false)) {
+    //                 visited.put(next, true);
+    //                 frontier.add(next);
+    //                 visitedCount++; // Increment count for each unique visit
+    //             }
+    //         }
+    //         printFrontier(frontier);
+    //     }
+
+    //     System.out.println("fail");
+    //     System.out.println(visitedCount); 
+    //     return null;
+    // }
     public static List<Node> bfs(Node start, Node goal, int planetSize) {
         Queue<Node> frontier = new LinkedList<>();
-        Map<Node, Boolean> visited = new HashMap<>();
-        int visitedCount = 0; // Counter for visited nodes
+        Set<Node> visited = new HashSet<>();
 
         frontier.add(start);
-        visited.put(start, true);
-        visitedCount++; // Count the start node as visited
-
-        printFrontier(frontier);
 
         while (!frontier.isEmpty()) {
             Node current = frontier.poll();
+            visited.add(current); // Mark as visited when dequeued
 
             if (current.equals(goal)) {
                 List<Node> path = constructPath(current);
-                printPath(path);
+                printPath(path, visited.size());
                 return path;
             }
 
@@ -106,17 +143,14 @@ public class PartA {
             Collections.sort(successors);
 
             for (Node next : successors) {
-                if (!visited.getOrDefault(next, false)) {
-                    visited.put(next, true);
+                if (!visited.contains(next)) {
                     frontier.add(next);
-                    visitedCount++; // Increment count for each unique visit
                 }
             }
-            printFrontier(frontier);
         }
 
         System.out.println("fail");
-        System.out.println(visitedCount); 
+        System.out.println(visited.size()); // Print the size of visited set if no path is found
         return null;
     }
 
@@ -139,7 +173,7 @@ public class PartA {
         return path;
     }
 
-    public static void printPath(List<Node> path) {
+    public static void printPath(List<Node> path, int visitedCount) {
         if (path == null || path.isEmpty()) {
             System.out.println("fail");
         } else {
@@ -148,7 +182,7 @@ public class PartA {
             }
             Node lastNode = path.get(path.size() - 1);
             System.out.println();
-            System.out.printf("%.3f\n%d\n", lastNode.cost, path.size());
+            System.out.printf("%.3f\n%d\n%d\n", lastNode.cost, path.size(), visitedCount);
         }
     }
 }
