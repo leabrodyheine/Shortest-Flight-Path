@@ -80,7 +80,7 @@ public class PartA {
     }
 
     public static List<Node> bfs(Node start, Node goal, int planetSize) {
-        PriorityQueue<Node> frontier = new PriorityQueue<>();
+        Queue<Node> frontier = new LinkedList<>();
         Map<Node, Node> parentMap = new HashMap<>();
         Set<Node> visited = new HashSet<>(); // Explicitly track visited nodes
 
@@ -91,8 +91,6 @@ public class PartA {
             printFrontier(frontier);
             Node current = frontier.poll();
 
-            // Proceed only if current has not been visited or is being visited with a
-            // cheaper cost path
             if (visited.contains(current)) {
                 continue;
             }
@@ -111,7 +109,7 @@ public class PartA {
             for (Node next : successors) {
                 if (!visited.contains(next) && !frontier.contains(next)) {
                     frontier.add(next);
-                    parentMap.put(next, current); // Track the parent of each node
+                    parentMap.put(next, current);
                 }
             }
         }
