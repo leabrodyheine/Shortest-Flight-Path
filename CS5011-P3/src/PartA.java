@@ -189,7 +189,7 @@ public class PartA {
             }
             Node lastNode = path.get(path.size() - 1);
             System.out.println();
-            System.out.printf("%.3f\n%d\n%d\n", lastNode.cost, visitedCount);
+            System.out.printf("%.3f\n%d\n", lastNode.cost, path.size());
         }
     }
 }
