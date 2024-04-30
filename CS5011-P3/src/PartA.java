@@ -128,35 +128,41 @@ public class PartA {
         Set<Node> visited = new HashSet<>();
         Map<Node, Node> parentMap = new HashMap<>();
 
-        frontier.add(start);
-        parentMap.put(start, null); // Start node has no parent, initialize parent mapping
+        frontier.offer(start);
+        parentMap.put(start, null); // Start node has no parent
 
-        printFrontier(frontier);
         while (!frontier.isEmpty()) {
             Node current = frontier.poll();
 
-            if (!visited.contains(current)) {
-                visited.add(current); // Mark the node as visited when it is actually processed
+            // Mark as visited when actually processing the node
+            if (visited.contains(current)) {
+                continue;
+            }
+            visited.add(current);
 
-                if (current.equals(goal)) {
-                    List<Node> path = constructPath(current, parentMap);
-                    printPath(path, visited.size());
-                    return path;
-                }
+            if (current.equals(goal)) {
+                List<Node> path = constructPath(current, parentMap);
+                printPath(path, visited.size());
+                return path;
+            }
 
-                List<Node> successors = current.getSuccessors(planetSize);
-                for (Node next : successors) {
-                    if (!visited.contains(next) && !frontier.contains(next)) {
-                        frontier.add(next);
-                        parentMap.put(next, current); // Track the parent of each node
-                    }
+            List<Node> successors = current.getSuccessors(planetSize);
+            for (Node next : successors) {
+                if (!visited.contains(next) && !containsBetter(frontier, next)) {
+                    frontier.offer(next);
+                    parentMap.put(next, current); // Track the parent of each node
                 }
             }
+            printFrontier(frontier); // Debugging: print frontier status after each expansion
         }
 
         System.out.println("fail");
-        System.out.println(visited.size()); // Print the total number of visited nodes
+        System.out.println(visited.size()); // Print the count of visited nodes if no path is found
         return null;
+    }
+
+    private static boolean containsBetter(PriorityQueue<Node> frontier, Node node) {
+        return frontier.stream().anyMatch(n -> n.equals(node) && n.cost <= node.cost);
     }
 
     private static void printFrontier(Collection<Node> frontier) {
