@@ -1,15 +1,18 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class PartA_DFS {
-    
-    public static List<Node> dfs(Node start, Node goal, int planetSize) {
-        Stack<Node> stack = new Stack<>();
-        Set<Node> visited = new HashSet<>();
-        stack.push(start);
 
-        while (!stack.isEmpty()) {
-            Node current = stack.pop();
-            if (!visited.add(current)) {  // Check if node is already visited
+    public static List<Node> dfs(Node start, Node goal, int planetSize) {
+        Stack<Node> frontier = new Stack<>();
+        Set<Node> visited = new HashSet<>();
+        frontier.push(start);
+
+        while (!frontier.isEmpty()) {
+            printFrontier(frontier);
+
+            Node current = frontier.pop();
+            if (!visited.add(current)) { // Check if node is already visited
                 continue;
             }
 
@@ -19,11 +22,20 @@ public class PartA_DFS {
 
             for (Node successor : current.getSuccessors(planetSize)) {
                 if (!visited.contains(successor)) {
-                    stack.push(successor);
+                    frontier.push(successor);
                 }
             }
         }
-        return null;  // Return null if no path is found
+        return null; // Return null if no path is found
+    }
+
+    private static void printFrontier(Collection<Node> frontier) {
+        if (!frontier.isEmpty()) {
+            String result = frontier.stream()
+                    .map(Node::toString)
+                    .collect(Collectors.joining(","));
+            System.out.println("[" + result + "]");
+        }
     }
 
     private static List<Node> constructPath(Node goal) {
@@ -31,10 +43,20 @@ public class PartA_DFS {
         Node current = goal;
         while (current != null) {
             path.addFirst(current);
-            current = current.parent;
         }
         return path;
     }
-}
 
-// Main class to run DFS might be similar to your BFS setup, adapting command line inputs as necessary.
+    public static void printPath(List<Node> path, int visitedCount) {
+        if (path == null || path.isEmpty()) {
+            System.out.println("fail");
+        } else {
+            for (Node node : path) {
+                System.out.print(node + "");
+            }
+            Node lastNode = path.get(path.size() - 1);
+            System.out.println();
+            System.out.printf("%.3f\n%d\n", lastNode.cost, path.size());
+        }
+    }
+}
