@@ -39,26 +39,13 @@ public class PartA {
             return successors;
         }
 
-        // @Override
-        // public int compareTo(Node other) {
-        // if (Double.compare(this.cost, other.cost) != 0) {
-        // return Double.compare(this.cost, other.cost);
-        // }
-        // if (this.d != other.d) {
-        // return Integer.compare(this.d, other.d);
-        // }
-        // return Integer.compare(this.angle, other.angle);
-        // }
         @Override
         public int compareTo(Node other) {
-            int costCompare = Double.compare(this.cost, other.cost);
-            if (costCompare != 0) {
-                return costCompare;
+            if (Double.compare(this.cost, other.cost) != 0) {
+                return Double.compare(this.cost, other.cost);
             }
-            // Secondary criteria to ensure consistent ordering among nodes with same cost
-            int distanceCompare = Integer.compare(this.d, other.d);
-            if (distanceCompare != 0) {
-                return distanceCompare;
+            if (this.d != other.d) {
+                return Integer.compare(this.d, other.d);
             }
             return Integer.compare(this.angle, other.angle);
         }
