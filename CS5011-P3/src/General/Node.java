@@ -58,12 +58,11 @@ public class Node implements Comparable<Node> {
 
     @Override
     public int compareTo(Node other) {
-        if (Double.compare(this.cost, other.cost) != 0) {
-            return Double.compare(this.cost, other.cost);
-        }
+        // First compare by distance
         if (this.d != other.d) {
             return Integer.compare(this.d, other.d);
         }
+        // If distances are the same, compare by angle
         return Integer.compare(this.angle, other.angle);
     }
 
