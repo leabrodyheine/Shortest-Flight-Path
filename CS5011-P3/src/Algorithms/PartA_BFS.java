@@ -27,7 +27,7 @@ public class PartA_BFS {
             visited.add(current);
             if (current.equals(goal)) {
                 List<Node> path = constructPath(current, parentMap);
-                System.out.println("path" + path);
+                // System.out.println("path" + path);
                 printPath(path, visited.size());
                 return path;
             }
@@ -78,7 +78,7 @@ public class PartA_BFS {
             Node lastNode = path.get(path.size() - 1);
             double cost = lastNode.getCost();
             System.out.println();
-            System.out.printf("%.3f\n%d\n", cost, path.size());
+            System.out.printf("%.3f\n%d\n", cost, visitedCount);
         }
     }
 }
