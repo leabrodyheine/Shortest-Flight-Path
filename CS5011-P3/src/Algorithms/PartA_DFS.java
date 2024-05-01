@@ -36,7 +36,7 @@ public class PartA_DFS {
 
             // Since we're using a stack, we must add successors in reverse order after
             // sorting
-            Collections.reverse(successors);
+            // Collections.reverse(successors);
 
             for (Node next : successors) {
                 if (!visited.contains(next) && !frontier.contains(next)) {
