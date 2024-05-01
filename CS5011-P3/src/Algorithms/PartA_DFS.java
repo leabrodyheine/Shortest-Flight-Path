@@ -9,28 +9,41 @@ public class PartA_DFS {
 
     public static List<Node> dfs(Node start, Node goal, int planetSize) {
         Stack<Node> frontier = new Stack<>();
+        Map<Node, Node> parentMap = new HashMap<>();
         Set<Node> visited = new HashSet<>();
+
         frontier.push(start);
+        parentMap.put(start, null);
 
         while (!frontier.isEmpty()) {
             printFrontier(frontier);
             Node current = frontier.pop();
+
             if (!visited.add(current)) {
                 continue;
             }
 
+            visited.add(current);
+
             if (current.equals(goal)) {
-                return constructPath(current);
+                List<Node> path = constructPath(current, parentMap);
+                printPath(path, visited.size());
+                return path;
             }
 
             List<Node> successors = current.getSuccessors(planetSize);
+           
+            Collections.sort(successors);
+
             for (Node next : successors) {
-                if (!visited.contains(next)) {
+                if (!visited.contains(next) && !frontier.contains(next)) {
                     frontier.push(next);
+                    parentMap.put(next, current);
                 }
             }
         }
         System.out.println("fail");
+        System.out.println(visited.size()); // Print the number of unique nodes processed
         return null;
     }
 
@@ -43,13 +56,12 @@ public class PartA_DFS {
         }
     }
 
-    private static List<Node> constructPath(Node goal) {
+    private static List<Node> constructPath(Node goal, Map<Node, Node> parentMap) {
         LinkedList<Node> path = new LinkedList<>();
         Node current = goal;
         while (current != null) {
             path.addFirst(current);
-            Node parent = current.getParent(); // Corrected to call the instance method on an object
-            current = parent; // Update current to its parent
+            current = parentMap.get(current); // Retrieve the parent from the map
         }
         return path;
     }
