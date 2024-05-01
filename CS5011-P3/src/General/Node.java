@@ -106,4 +106,8 @@ public class Node implements Comparable<Node> {
     public int getAngle() {
         return angle;
     }
+
+    public double getHeuristic() {
+        return this.heuristic;
+    }
 }

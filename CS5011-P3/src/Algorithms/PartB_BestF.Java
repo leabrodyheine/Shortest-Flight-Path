@@ -1,10 +1,12 @@
+package Algorithms;
+
 import General.Node;
 import java.util.*;
-package Algorithms;
+import java.util.stream.Collectors;
 
 public class PartB_BestF {
 
-    public static List<Node> Bestf(Node start, Node goal, int planetSize) {
+    public static List<Node> BestF(Node start, Node goal, int planetSize) {
         PriorityQueue<Node> frontier = new PriorityQueue<>(Comparator.comparingDouble(Node::getHeuristic));
         Set<Node> explored = new HashSet<>();
         Map<Node, Node> parentMap = new HashMap<>();
@@ -24,20 +26,20 @@ public class PartB_BestF {
 
             if (current.equals(goal)) {
                 List<Node> path = constructPath(current, parentMap);
-                printPath(path, visited.size());
+                printPath(path, explored.size());
                 return path;
             }
             List<Node> successors = current.getSuccessors(planetSize, goal);
 
             for (Node next : successors) {
-                if (!explored.contains(neighbor) && !frontier.contains(neighbor)) {
-                    frontier.add(neighbor);
+                if (!explored.contains(next) && !frontier.contains(next)) {
+                    frontier.add(next);
                     parentMap.put(next, current);
                 }
             }
         }
         System.out.println("fail");
-        System.out.println(visited.size());
+        System.out.println(explored.size());
         return null;
     }
     private static void printFrontier(Collection<Node> frontier) {
