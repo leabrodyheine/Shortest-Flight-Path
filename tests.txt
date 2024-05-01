@@ -146,6 +146,17 @@ World: Oedipus 3
 Departure airport -- Start: 2:45
 Destination airport -- Goal: 2:0
 Search algorithm: SMAStar
+[(1:45), (2:90), (2:0)]
+[(2:0),(2:90)]
+[(1:90), (2:90), (2:0)]
+[(2:0),(2:90)]
+[(1:135), (2:90), (2:0)]
+[(2:0),(2:90)]
+[(2:0), (2:90), (2:135)]
+[(2:90),(2:135)]
+(2:0)
+1.571
+5
 ---
 
 * COMPARISON TEST - 10_SMASTAR1/prog-run-10_SMASTAR1.out : fail
@@ -163,6 +174,13 @@ World: Oedipus 2
 Departure airport -- Start: 1:0
 Destination airport -- Goal: 1:90
 Search algorithm: SMAStar
+[(1:45), (1:315)]
+[(1:315)]
+[(1:90), (1:315)]
+[(1:315)]
+(1:90)
+1.571
+3
 ---
 
 5 out of 12 tests passed
