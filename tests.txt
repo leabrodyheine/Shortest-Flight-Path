@@ -100,6 +100,11 @@ World: Oedipus 3
 Departure airport -- Start: 2:45
 Destination airport -- Goal: 2:0
 Search algorithm: BestF
+[(2:45)]
+[(2:0),(2:90),(1:45)]
+(2:45)(2:0)
+1.571
+2
 ---
 
 * COMPARISON TEST - 08_ASTAR0/prog-run-08_ASTAR0.out : fail
@@ -118,6 +123,11 @@ World: Oedipus 3
 Departure airport -- Start: 2:45
 Destination airport -- Goal: 2:0
 Search algorithm: AStar
+[(2:45)]
+[(2:0),(2:90),(1:45)]
+(2:45)(2:0)
+1.571
+2
 ---
 
 * COMPARISON TEST - 09_SMASTAR0/prog-run-09_SMASTAR0.out : fail
