@@ -3,6 +3,7 @@ import java.util.List;
 import Algorithms.PartA_BFS;
 import Algorithms.PartA_DFS;
 import Algorithms.PartB_BestF;
+import Algorithms.PartB_AStar;
 import General.Node;
 
 public class P3main {
@@ -41,12 +42,12 @@ public class P3main {
 			case "DFS":
 				path = PartA_DFS.dfs(startNode, goalNode, size);
 				break;
-			case "BestF": // Placeholder for future implementation
+			case "BestF": 
 				path = PartB_BestF.BestF(startNode, goalNode, size);
 				break;
-			case "AStar": // Placeholder for future implementation
-				// Implement A* search when PartB is ready
-				break;
+			case "AStar": 
+				path = PartB_AStar.AStar(startNode, goalNode, size);
+			break;
 			case "SMAStar": // Placeholder for future implementation
 				// Implement SMA* search when PartB is ready
 				break;

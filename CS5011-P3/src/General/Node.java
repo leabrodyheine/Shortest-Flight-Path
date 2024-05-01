@@ -10,6 +10,7 @@ public class Node implements Comparable<Node> {
     Node parent; // Parent node in the path
     double cost; // Cost to reach this node
     double heuristic; // Heuristic value of the node to the goal
+    private double fCost; // f-cost: total cost of the node
 
     // Unified constructor
     public Node(int d, int angle, Node parent, double cost, Node goal) {
@@ -17,6 +18,7 @@ public class Node implements Comparable<Node> {
         this.angle = angle;
         this.parent = parent;
         this.cost = cost;
+        this.fCost = this.cost + this.heuristic;
         if (goal != null) {
             this.heuristic = calculateHeuristic(goal); // Only calculate if goal is provided
         } else {
@@ -24,7 +26,7 @@ public class Node implements Comparable<Node> {
         }
     }
 
-    private double calculateHeuristic(Node goal) {
+    public double calculateHeuristic(Node goal) {
         double radCurrent = Math.toRadians(this.angle);
         double radGoal = Math.toRadians(goal.angle);
         return Math.sqrt(this.d * this.d + goal.d * goal.d
@@ -109,5 +111,13 @@ public class Node implements Comparable<Node> {
 
     public double getHeuristic() {
         return this.heuristic;
+    }
+
+    public double getfCost() {
+        return this.fCost;
+    }
+
+    public void setfCost(double fCost) {
+        this.fCost = fCost;
     }
 }
