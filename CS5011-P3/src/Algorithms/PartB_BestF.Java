@@ -1,54 +1,45 @@
+import General.Node;
+import java.util.*;
 package Algorithms;
 
-import java.util.*;
-import java.util.stream.Collectors;
+public class PartB_BestF {
 
-import General.Node;
-
-public class PartA_DFS {
-
-    public static List<Node> dfs(Node start, Node goal, int planetSize) {
-        Stack<Node> frontier = new Stack<>();
+    public static List<Node> Bestf(Node start, Node goal, int planetSize) {
+        PriorityQueue<Node> frontier = new PriorityQueue<>(Comparator.comparingDouble(Node::getHeuristic));
+        Set<Node> explored = new HashSet<>();
         Map<Node, Node> parentMap = new HashMap<>();
-        Set<Node> visited = new HashSet<>();
 
-        frontier.push(start);
         parentMap.put(start, null);
+        frontier.add(start);
 
         while (!frontier.isEmpty()) {
             printFrontier(frontier);
-            Node current = frontier.pop();
+            Node current = frontier.poll();
 
-            if (!visited.add(current)) {
+            if (explored.contains(current)) {
                 continue;
             }
 
-            visited.add(current);
+            explored.add(current);
 
             if (current.equals(goal)) {
                 List<Node> path = constructPath(current, parentMap);
                 printPath(path, visited.size());
                 return path;
             }
-
             List<Node> successors = current.getSuccessors(planetSize, goal);
-            Collections.sort(successors, Comparator.comparingInt(Node::getD).thenComparingInt(Node::getAngle));
 
-            // Correctly add sorted successors to the stack so the next one to be popped is
-            // the most preferred
-            for (int i = successors.size() - 1; i >= 0; i--) {
-                Node next = successors.get(i);
-                if (!visited.contains(next) && !frontier.contains(next)) {
-                    frontier.push(next);
+            for (Node next : successors) {
+                if (!explored.contains(neighbor) && !frontier.contains(neighbor)) {
+                    frontier.add(neighbor);
                     parentMap.put(next, current);
                 }
             }
         }
         System.out.println("fail");
-        System.out.println(visited.size()); // Print the number of unique nodes processed
+        System.out.println(visited.size());
         return null;
     }
-
     private static void printFrontier(Collection<Node> frontier) {
         if (!frontier.isEmpty()) {
             String result = frontier.stream()
@@ -63,7 +54,7 @@ public class PartA_DFS {
         Node current = goal;
         while (current != null) {
             path.addFirst(current);
-            current = parentMap.get(current); // Retrieve the parent from the map
+            current = parentMap.get(current);
         }
         return path;
     }

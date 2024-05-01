@@ -1,8 +1,8 @@
-
 import java.util.List;
 
 import Algorithms.PartA_BFS;
 import Algorithms.PartA_DFS;
+import Algorithms.PartB_BestF;
 import General.Node;
 
 public class P3main {
@@ -22,9 +22,10 @@ public class P3main {
 		// Parse start and goal from args
 		String[] startParams = args[2].split(":");
 		String[] goalParams = args[3].split(":");
-		Node startNode = new Node(Integer.parseInt(startParams[0]), Integer.parseInt(startParams[1]), null,
-				0);
-		Node goalNode = new Node(Integer.parseInt(goalParams[0]), Integer.parseInt(goalParams[1]), null, 0);
+
+		Node goalNode = new Node(Integer.parseInt(goalParams[0]), Integer.parseInt(goalParams[1]), null, 0, null);
+		Node startNode = new Node(Integer.parseInt(startParams[0]), Integer.parseInt(startParams[1]), null, 0,
+				goalNode);
 
 		// Run the search algorithm
 		runSearch(args[0], Integer.parseInt(args[1]), startNode, goalNode);
@@ -38,10 +39,10 @@ public class P3main {
 				path = PartA_BFS.bfs(startNode, goalNode, size);
 				break;
 			case "DFS":
-				 path = PartA_DFS.dfs(startNode, goalNode, size);
+				path = PartA_DFS.dfs(startNode, goalNode, size);
 				break;
 			case "BestF": // Placeholder for future implementation
-				// Implement Best-first search when PartB is ready
+				path = PartB_BestF.BestF(startNode, goalNode, size);
 				break;
 			case "AStar": // Placeholder for future implementation
 				// Implement A* search when PartB is ready

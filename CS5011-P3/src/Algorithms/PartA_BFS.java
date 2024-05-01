@@ -27,12 +27,11 @@ public class PartA_BFS {
             visited.add(current);
             if (current.equals(goal)) {
                 List<Node> path = constructPath(current, parentMap);
-                // System.out.println("path" + path);
                 printPath(path, visited.size());
                 return path;
             }
 
-            List<Node> successors = current.getSuccessors(planetSize);
+            List<Node> successors = current.getSuccessors(planetSize, goal);
 
             Collections.sort(successors);
 

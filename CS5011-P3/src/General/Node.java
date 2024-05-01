@@ -9,15 +9,29 @@ public class Node implements Comparable<Node> {
     int angle; // Angle in degrees
     Node parent; // Parent node in the path
     double cost; // Cost to reach this node
+    double heuristic; // Heuristic value of the node to the goal
 
-    public Node(int d, int angle, Node parent, double cost) {
+    // Unified constructor
+    public Node(int d, int angle, Node parent, double cost, Node goal) {
         this.d = d;
         this.angle = angle;
         this.parent = parent;
         this.cost = cost;
+        if (goal != null) {
+            this.heuristic = calculateHeuristic(goal); // Only calculate if goal is provided
+        } else {
+            this.heuristic = 0; // Default to 0 if no goal is provided (e.g., for goal node itself)
+        }
     }
 
-    public List<Node> getSuccessors(int planetSize) {
+    private double calculateHeuristic(Node goal) {
+        double radCurrent = Math.toRadians(this.angle);
+        double radGoal = Math.toRadians(goal.angle);
+        return Math.sqrt(this.d * this.d + goal.d * goal.d
+                - 2 * this.d * goal.d * Math.cos(radGoal - radCurrent));
+    }
+
+    public List<Node> getSuccessors(int planetSize, Node goal) {
         List<Node> successors = new ArrayList<>();
         int[] angleChanges = { -45, 45 };
         int[] distanceChanges = { -1, 1 };
@@ -26,7 +40,7 @@ public class Node implements Comparable<Node> {
             int newAngle = (this.angle + angleChange + 360) % 360;
             if (this.d > 0) {
                 double additionalCost = calculateAngularCost(this.d, angleChange);
-                successors.add(new Node(this.d, newAngle, this, this.cost + additionalCost));
+                successors.add(new Node(this.d, newAngle, this, this.cost + additionalCost, goal));
             }
         }
 
@@ -34,23 +48,16 @@ public class Node implements Comparable<Node> {
             int newD = this.d + distanceChange;
             if (newD > 0 && newD < planetSize) {
                 double additionalCost = calculateRadialCost(distanceChange);
-                successors.add(new Node(newD, this.angle, this, this.cost + additionalCost));
+                successors.add(new Node(newD, this.angle, this, this.cost + additionalCost, goal));
             }
         }
         return successors;
     }
 
     private static double calculateAngularCost(int d, int angleChange) {
-        // Calculate 1/8 of the circumference at the radius d
         double oneEighthCircumference = (2 * Math.PI * d) / 8;
-    
-        // Calculate the proportional distance for the given angleChange
-        // as a fraction of the total 360 degrees
-        // double distanceForAngleChange = oneEighthCircumference * (Math.abs(angleChange) / 360.0);
-    
         return oneEighthCircumference;
     }
-    
 
     private static double calculateRadialCost(int distanceChange) {
         return Math.abs(distanceChange);
@@ -58,11 +65,9 @@ public class Node implements Comparable<Node> {
 
     @Override
     public int compareTo(Node other) {
-        // First compare by distance
         if (this.d != other.d) {
             return Integer.compare(this.d, other.d);
         }
-        // If distances are the same, compare by angle
         return Integer.compare(this.angle, other.angle);
     }
 
