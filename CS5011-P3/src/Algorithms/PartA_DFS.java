@@ -76,7 +76,7 @@ public class PartA_DFS {
             Node lastNode = path.get(path.size() - 1);
             double cost = lastNode.getCost();
             System.out.println();
-            System.out.printf("%.3f\n%d\n", cost, path.size());
+            System.out.printf("%.3f\n%d\n", cost, visitedCount);
         }
     }
 }
