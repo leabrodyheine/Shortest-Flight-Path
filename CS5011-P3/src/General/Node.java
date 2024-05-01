@@ -1,8 +1,8 @@
 package General;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
 
 public class Node implements Comparable<Node> {
     int d; // Distance from the pole
@@ -41,7 +41,18 @@ public class Node implements Comparable<Node> {
     }
 
     private static double calculateAngularCost(int radius, int angleChange) {
-        return Math.abs(angleChange) * (Math.PI * radius / 4) / 45;
+        // Convert angleChange from degrees to radians
+        double angleRadians = Math.toRadians(angleChange);
+
+        // Calculate the full circumference at the radius d
+        double fullCircumference = 2 * Math.PI * radius;
+
+        // Distance for the given angleChange is the fraction of the full circumference
+        double distanceForAngleChange = fullCircumference * (angleRadians / (2 * Math.PI));
+
+        // Return 1/8 of this distance since the distance between two meridians is 1/8
+        // the circumference
+        return distanceForAngleChange / 8;
     }
 
     private static double calculateRadialCost(int distanceChange) {
