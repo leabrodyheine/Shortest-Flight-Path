@@ -34,11 +34,10 @@ public class PartA_DFS {
             List<Node> successors = current.getSuccessors(planetSize);
             Collections.sort(successors, Comparator.comparingInt(Node::getD).thenComparingInt(Node::getAngle));
 
-            // Since we're using a stack, we must add successors in reverse order after
-            // sorting
-            Collections.reverse(successors);
-
-            for (Node next : successors) {
+            // Correctly add sorted successors to the stack so the next one to be popped is
+            // the most preferred
+            for (int i = successors.size() - 1; i >= 0; i--) {
+                Node next = successors.get(i);
                 if (!visited.contains(next) && !frontier.contains(next)) {
                     frontier.push(next);
                     parentMap.put(next, current);
