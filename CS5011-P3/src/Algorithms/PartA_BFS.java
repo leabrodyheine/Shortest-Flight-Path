@@ -15,6 +15,7 @@ public class PartA_BFS {
         frontier.add(start);
         parentMap.put(start, null);
 
+
         while (!frontier.isEmpty()) {
             printFrontier(frontier);
             Node current = frontier.poll();
@@ -26,6 +27,7 @@ public class PartA_BFS {
             visited.add(current);
             if (current.equals(goal)) {
                 List<Node> path = constructPath(current, parentMap);
+                System.out.println("path" + path);
                 printPath(path, visited.size());
                 return path;
             }
@@ -61,7 +63,7 @@ public class PartA_BFS {
         Node current = goal;
         while (current != null) {
             path.addFirst(current);
-            current = parentMap.get(current); // Retrieve the parent from the map
+            current = parentMap.get(current);
         }
         return path;
     }
