@@ -46,9 +46,9 @@ public class Node implements Comparable<Node> {
     
         // Calculate the proportional distance for the given angleChange
         // as a fraction of the total 360 degrees
-        double distanceForAngleChange = oneEighthCircumference * (Math.abs(angleChange) / 360.0);
+        // double distanceForAngleChange = oneEighthCircumference * (Math.abs(angleChange) / 360.0);
     
-        return distanceForAngleChange;
+        return oneEighthCircumference;
     }
     
 
