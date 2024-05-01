@@ -41,18 +41,16 @@ public class Node implements Comparable<Node> {
     }
 
     private static double calculateAngularCost(int d, int angleChange) {
-        // Convert angleChange from degrees to radians
-        double angleRadians = Math.toRadians(angleChange);
-
         // Calculate 1/8 of the circumference at the radius d
         double oneEighthCircumference = (2 * Math.PI * d) / 8;
-
+    
         // Calculate the proportional distance for the given angleChange
         // as a fraction of the total 360 degrees
         double distanceForAngleChange = oneEighthCircumference * (Math.abs(angleChange) / 360.0);
-
+    
         return distanceForAngleChange;
     }
+    
 
     private static double calculateRadialCost(int distanceChange) {
         return Math.abs(distanceChange);
