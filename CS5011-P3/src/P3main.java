@@ -4,6 +4,8 @@ import Algorithms.PartA_BFS;
 import Algorithms.PartA_DFS;
 import Algorithms.PartB_BestF;
 import Algorithms.PartB_AStar;
+import Algorithms.PartB_SMAStar;
+
 import General.Node;
 
 public class P3main {
@@ -20,6 +22,8 @@ public class P3main {
 		System.out.println("Search algorithm: " + args[0]);
 		System.out.println();
 
+		int memorySize = args.length > 4 ? Integer.parseInt(args[4]) : Integer.parseInt(args[1]);  // Default to N if no memory size is provided
+
 		// Parse start and goal from args
 		String[] startParams = args[2].split(":");
 		String[] goalParams = args[3].split(":");
@@ -29,10 +33,10 @@ public class P3main {
 				goalNode);
 
 		// Run the search algorithm
-		runSearch(args[0], Integer.parseInt(args[1]), startNode, goalNode);
+		runSearch(args[0], Integer.parseInt(args[1]), startNode, goalNode, memorySize);
 	}
 
-	private static void runSearch(String algo, int size, Node startNode, Node goalNode) {
+	private static void runSearch(String algo, int size, Node startNode, Node goalNode, int memorySize) {
 		List<Node> path = null;
 
 		switch (algo) {
@@ -42,14 +46,14 @@ public class P3main {
 			case "DFS":
 				path = PartA_DFS.dfs(startNode, goalNode, size);
 				break;
-			case "BestF": 
+			case "BestF":
 				path = PartB_BestF.BestF(startNode, goalNode, size);
 				break;
-			case "AStar": 
+			case "AStar":
 				path = PartB_AStar.AStar(startNode, goalNode, size);
-			break;
-			case "SMAStar": // Placeholder for future implementation
-				// Implement SMA* search when PartB is ready
+				break;
+			case "SMAStar":
+				path = PartB_SMAStar.smaStar(startNode, goalNode, size, memorySize);
 				break;
 			default:
 				System.out.println("fail");
