@@ -32,8 +32,7 @@ public class PartA_DFS {
             }
 
             List<Node> successors = current.getSuccessors(planetSize);
-           
-            Collections.sort(successors);
+            Collections.sort(successors, Collections.reverseOrder()); // Ensure correct exploration order
 
             for (Node next : successors) {
                 if (!visited.contains(next) && !frontier.contains(next)) {
