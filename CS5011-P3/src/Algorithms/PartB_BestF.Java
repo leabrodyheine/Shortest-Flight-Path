@@ -46,7 +46,7 @@ public class PartB_BestF {
         Node[] frontierArray = frontier.toArray(new Node[0]);
         if (frontierArray.length != 0) {
             String result = "";
-            for (int i = frontierArray.length - 1; i >= 0; i--) {
+            for (int i = 0; i < frontierArray.length; i++) {
                 Node node = frontierArray[i];
                 result += node.toString() + node.getHeuristic() + ",";
 
