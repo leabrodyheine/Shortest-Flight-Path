@@ -14,7 +14,6 @@ public class Node implements Comparable<Node> {
     double heuristic; // Heuristic value of the node to the goal
     private double fCost; // f-cost: total cost of the node
 
-    // Unified constructor
     public Node(int d, int angle, Node parent, double cost, Node goal) {
         this.d = d;
         this.angle = angle;

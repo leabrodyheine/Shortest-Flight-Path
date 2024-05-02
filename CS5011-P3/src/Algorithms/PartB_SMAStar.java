@@ -6,7 +6,10 @@ import java.util.stream.Collectors;
 
 public class PartB_SMAStar {
     public static List<Node> smaStar(Node start, Node goal, int planetSize, int memorySize) {
-        PriorityQueue<Node> frontier = new PriorityQueue<>();
+        PriorityQueue<Node> frontier = new PriorityQueue<>(
+                Comparator.comparingDouble(Node::getfCost)
+                        .thenComparingInt(Node::getAngle)
+                        .thenComparingInt(Node::getD));
         Map<Node, Node> parentMap = new HashMap<>();
         Set<Node> visited = new HashSet<>();
 
@@ -34,7 +37,7 @@ public class PartB_SMAStar {
             for (Node next : successors) {
                 if (!visited.contains(next) && !frontier.contains(next)) {
                     if (frontier.size() >= memorySize) {
-                        frontier.remove(); // Remove least promising node if at memory limit
+                        frontier.remove();
                     }
                     frontier.add(next);
                 }
@@ -42,14 +45,19 @@ public class PartB_SMAStar {
             System.out.println(frontier);
         }
         System.out.println("fail");
-        System.out.println(visited.size()); // Print the number of unique nodes processed
+        System.out.println(visited.size());
         return null;
     }
 
-    private static void printFrontier(Collection<Node> frontier) {
-        if (!frontier.isEmpty()) {
-            String result = frontier.stream()
-                    .map(Node::toString)
+    private static void printFrontier(PriorityQueue<Node> frontier) {
+        Node[] frontierArray = frontier.toArray(new Node[0]);
+        Arrays.sort(frontierArray,
+                Comparator.comparingDouble(Node::getfCost)
+                        .thenComparingInt(Node::getAngle)
+                        .thenComparingInt(Node::getD));
+        if (frontierArray.length != 0) {
+            String result = Arrays.stream(frontierArray)
+                    .map(node -> node.toString() + String.format("%.3f", node.getfCost()))
                     .collect(Collectors.joining(","));
             System.out.println("[" + result + "]");
         }
