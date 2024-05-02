@@ -20,12 +20,12 @@ public class Node implements Comparable<Node> {
         this.angle = angle;
         this.parent = parent;
         this.cost = cost;
-        this.fCost = this.cost + this.heuristic;
         if (goal != null) {
-            this.heuristic = calculateHeuristic(goal); // Only calculate if goal is provided
+            this.heuristic = calculateHeuristic(goal);
         } else {
-            this.heuristic = 0; // Default to 0 if no goal is provided (e.g., for goal node itself)
+            this.heuristic = 0;
         }
+        this.fCost = this.cost + this.heuristic;
     }
 
     public double calculateHeuristic(Node goal) {
