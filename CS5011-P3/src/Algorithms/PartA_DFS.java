@@ -48,13 +48,14 @@ public class PartA_DFS {
         return null;
     }
 
-    private static void printFrontier(Collection<Node> frontier) {
+    private static void printFrontier(Stack<Node> frontier) {
         if (!frontier.isEmpty()) {
             // String result = frontier.stream()
             //         .map(Node::toString)
             //         .collect(Collectors.joining(","));
             String result = "";
-            for (Node node : frontier){
+            for (int i = frontier.size() - 1; i >= 0; i--){
+                Node node = frontier.get(i);
                 result += node.toString() + ",";
 
             }
