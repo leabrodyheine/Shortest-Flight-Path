@@ -48,7 +48,7 @@ public class PartB_BestF {
             String result = "";
             for (int i = frontierArray.length - 1; i >= 0; i--) {
                 Node node = frontierArray[i];
-                result += node.toString() + node.getfCost() + ",";
+                result += node.toString() + node.getHeuristic() + ",";
 
             }
             System.out.println("[" + result.substring(0, result.length() - 1) + "]");

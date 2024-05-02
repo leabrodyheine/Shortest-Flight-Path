@@ -1,5 +1,7 @@
 package General;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -110,11 +112,15 @@ public class Node implements Comparable<Node> {
     }
 
     public double getHeuristic() {
-        return this.heuristic;
+        BigDecimal bd = new BigDecimal(this.heuristic);
+        bd = bd.setScale(3, RoundingMode.HALF_UP);  // You can change the rounding mode as needed
+        return bd.doubleValue();
     }
 
     public double getfCost() {
-        return this.fCost;
+        BigDecimal bd = new BigDecimal(this.fCost);
+        bd = bd.setScale(3, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 
     public void setfCost(double fCost) {
