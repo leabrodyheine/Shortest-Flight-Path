@@ -48,10 +48,12 @@ public class PartB_AStar {
         return null;
     }
 
-    private static void printFrontier(Collection<Node> frontier) {
-        if (!frontier.isEmpty()) {
-            String result = frontier.stream()
-                    .map(Node::toString)
+    private static void printFrontier(PriorityQueue<Node> frontier) {
+        Node[] frontierArray = frontier.toArray(new Node[0]);
+        Arrays.sort(frontierArray, Comparator.comparingDouble(Node::getHeuristic)); // Sort by f-cost for consistent output
+        if (frontierArray.length != 0) {
+            String result = Arrays.stream(frontierArray)
+                    .map(node -> node.toString() + String.format("%.3f", node.getHeuristic()))
                     .collect(Collectors.joining(","));
             System.out.println("[" + result + "]");
         }

@@ -7,7 +7,10 @@ import java.util.stream.Collectors;
 public class PartB_BestF {
 
     public static List<Node> BestF(Node start, Node goal, int planetSize) {
-        PriorityQueue<Node> frontier = new PriorityQueue<>(Comparator.comparingDouble(Node::getHeuristic));
+        PriorityQueue<Node> frontier = new PriorityQueue<>(
+                Comparator.comparingDouble(Node::getHeuristic)
+                        .thenComparingInt(Node::getAngle)
+                        .thenComparingInt(Node::getD));
         Set<Node> explored = new HashSet<>();
         Map<Node, Node> parentMap = new HashMap<>();
 
@@ -42,22 +45,13 @@ public class PartB_BestF {
         System.out.println(explored.size());
         return null;
     }
-
-    // private static void printFrontier(PriorityQueue<Node> frontier) {
-    // Node[] frontierArray = frontier.toArray(new Node[0]);
-    // if (frontierArray.length != 0) {
-    // String result = "";
-    // for (int i = 0; i < frontierArray.length; i++) {
-    // Node node = frontierArray[i];
-    // result += node.toString() + node.getHeuristic() + ",";
-
-    // }
-    // System.out.println("[" + result.substring(0, result.length() - 1) + "]");
-    // }
-    // }
+    
     private static void printFrontier(PriorityQueue<Node> frontier) {
         Node[] frontierArray = frontier.toArray(new Node[0]);
-        Arrays.sort(frontierArray, Comparator.comparingDouble(Node::getfCost)); // Sort by f-cost for consistent output
+        Arrays.sort(frontierArray,
+                Comparator.comparingDouble(Node::getHeuristic)
+                        .thenComparingInt(Node::getAngle)
+                        .thenComparingInt(Node::getD));
         if (frontierArray.length != 0) {
             String result = Arrays.stream(frontierArray)
                     .map(node -> node.toString() + String.format("%.3f", node.getHeuristic()))
