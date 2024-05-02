@@ -5,96 +5,9 @@ Testing CS5011 P3 Practical
 * COMPARISON TEST - 01_BFS1/prog-run-01_BFS1.out : pass
 * COMPARISON TEST - 02_BFS2/prog-run-02_BFS2.out : pass
 * COMPARISON TEST - 03_BFS3/prog-run-03_BFS.out : pass
-* COMPARISON TEST - 04_DFS0/prog-run-04_DFS0.out : fail
---- expected output ---
-World: Oedipus 4
-Departure airport -- Start: 3:45
-Destination airport -- Goal: 2:45
-Search algorithm: DFS
-[(3:45)]
-[(2:45),(3:0),(3:90)]
-(3:45)(2:45)
-1.000
-2
---- submission output ---
-World: Oedipus 4
-Departure airport -- Start: 3:45
-Destination airport -- Goal: 2:45
-Search algorithm: DFS
-[(3:45)]
-(3:45)
-[(3:90),(3:0),(2:45)]
-(2:45)
-(3:45)(2:45)
-1.000
-2
----
-
-* COMPARISON TEST - 05_DFS1/prog-run-05_DFS1.out : fail
---- expected output ---
-World: Oedipus 4
-Departure airport -- Start: 1:0
-Destination airport -- Goal: 1:45
-Search algorithm: DFS
-[(1:0)]
-[(1:45),(1:315),(2:0)]
-(1:0)(1:45)
-0.785
-2
---- submission output ---
-World: Oedipus 4
-Departure airport -- Start: 1:0
-Destination airport -- Goal: 1:45
-Search algorithm: DFS
-[(1:0)]
-(1:0)
-[(2:0),(1:315),(1:45)]
-(1:45)
-(1:0)(1:45)
-0.785
-2
----
-
-* COMPARISON TEST - 06_DFS2/prog-run-06_DFS2.out : fail
---- expected output ---
-World: Oedipus 5
-Departure airport -- Start: 2:45
-Destination airport -- Goal: 1:180
-Search algorithm: DFS
-[(2:45)]
-[(1:45),(2:0),(2:90),(3:45)]
-[(1:0),(1:90),(2:0),(2:90),(3:45)]
-[(1:315),(1:90),(2:0),(2:90),(3:45)]
-[(1:270),(2:315),(1:90),(2:0),(2:90),(3:45)]
-[(1:225),(2:270),(2:315),(1:90),(2:0),(2:90),(3:45)]
-[(1:180),(2:225),(2:270),(2:315),(1:90),(2:0),(2:90),(3:45)]
-(2:45)(1:45)(1:0)(1:315)(1:270)(1:225)(1:180)
-4.927
-7
---- submission output ---
-World: Oedipus 5
-Departure airport -- Start: 2:45
-Destination airport -- Goal: 1:180
-Search algorithm: DFS
-[(2:45)]
-(2:45)
-[(3:45),(2:90),(2:0),(1:45)]
-(1:45)
-[(3:45),(2:90),(2:0),(1:90),(1:0)]
-(1:0)
-[(3:45),(2:90),(2:0),(1:90),(1:315)]
-(1:315)
-[(3:45),(2:90),(2:0),(1:90),(2:315),(1:270)]
-(1:270)
-[(3:45),(2:90),(2:0),(1:90),(2:315),(2:270),(1:225)]
-(1:225)
-[(3:45),(2:90),(2:0),(1:90),(2:315),(2:270),(2:225),(1:180)]
-(1:180)
-(2:45)(1:45)(1:0)(1:315)(1:270)(1:225)(1:180)
-4.927
-7
----
-
+* COMPARISON TEST - 04_DFS0/prog-run-04_DFS0.out : pass
+* COMPARISON TEST - 05_DFS1/prog-run-05_DFS1.out : pass
+* COMPARISON TEST - 06_DFS2/prog-run-06_DFS2.out : pass
 * COMPARISON TEST - 07_BESTF0/prog-run-07_BESTF0.out : fail
 --- expected output ---
 World: Oedipus 3
@@ -194,4 +107,4 @@ Search algorithm: SMAStar
 3
 ---
 
-5 out of 12 tests passed
+8 out of 12 tests passed
