@@ -22,8 +22,8 @@ public class PartB_SMAStar {
             if (frontier.size() > memorySize) {
                 removeWorstNode(frontier, parentMap, costSoFar, goal);
             }
-            Node current = frontier.poll();
             printFrontier(frontier);
+            Node current = frontier.poll();
 
             if (visited.contains(current)) {
                 continue;
