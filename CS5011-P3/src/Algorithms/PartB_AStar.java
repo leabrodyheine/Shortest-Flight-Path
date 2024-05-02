@@ -45,7 +45,6 @@ public class PartB_AStar {
                 }
             }
         }
-
         System.out.println("fail");
         System.out.println(visited.size());
         return null;

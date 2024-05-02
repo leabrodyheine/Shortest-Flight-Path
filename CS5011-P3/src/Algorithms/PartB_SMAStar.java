@@ -12,6 +12,7 @@ public class PartB_SMAStar {
                         .thenComparingInt(Node::getD));
         Map<Node, Node> parentMap = new HashMap<>();
         Set<Node> visited = new HashSet<>();
+        Map<Node, Double> costSoFar = new HashMap<>();
 
         frontier.add(start);
         parentMap.put(start, null);
@@ -35,14 +36,26 @@ public class PartB_SMAStar {
             List<Node> successors = current.getSuccessors(planetSize, goal);
 
             for (Node next : successors) {
-                if (!visited.contains(next) && !frontier.contains(next)) {
-                    if (frontier.size() >= memorySize) {
-                        frontier.remove();
+                double newCost = costSoFar.get(current) + next.getCost();
+                if (!visited.contains(next)) {
+                    if (!frontier.contains(next) && newCost < costSoFar.get(next)) {
+                        parentMap.put(next, current);
+                        if (frontier.contains(next)) {
+                            frontier.remove(next); // Remove to update priority
+                        }
+                        if (frontier.size() >= memorySize) {
+                            frontier.remove();
+                        }
+                        frontier.add(next);
                     }
-                    frontier.add(next);
                 }
             }
         }
+        if (frontier.size() >= memorySize) {
+            Node toRemove = frontier.poll(); // or some logic to decide which node to remove
+            System.out.println("Removing node due to memory limit: " + toRemove); // Debug
+        }
+
         System.out.println("fail");
         System.out.println(visited.size());
         return null;
