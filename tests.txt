@@ -24,8 +24,8 @@ World: Oedipus 3
 Departure airport -- Start: 2:45
 Destination airport -- Goal: 2:0
 Search algorithm: BestF
-[(2:45)]
-[(2:0),(2:90),(1:45)]
+[(2:45)0.0]
+[(1:45)1.0,(2:90)1.5707963267948966,(2:0)1.5707963267948966]
 (2:45)(2:0)
 1.571
 2
