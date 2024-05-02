@@ -70,7 +70,7 @@ public class PartB_AStar {
         Node current = goal;
         while (current != null) {
             path.addFirst(current);
-            current = parentMap.get(current);
+            current = parentMap.get(current); 
         }
         return path;
     }
