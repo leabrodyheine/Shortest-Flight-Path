@@ -22,7 +22,7 @@ public class P3main {
 		System.out.println("Search algorithm: " + args[0]);
 		System.out.println();
 
-		int memorySize = args.length > 4 ? Integer.parseInt(args[4]) : Integer.parseInt(args[1]);  // Default to N if no memory size is provided
+		int memorySize = args.length > 4 ? Integer.parseInt(args[4]) : Integer.parseInt(args[1]);
 
 		// Parse start and goal from args
 		String[] startParams = args[2].split(":");

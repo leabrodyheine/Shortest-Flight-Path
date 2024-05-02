@@ -8,8 +8,8 @@ public class PartB_AStar {
     public static List<Node> AStar(Node start, Node goal, int planetSize) {
         PriorityQueue<Node> frontier = new PriorityQueue<>(
                 Comparator.comparingDouble(Node::getfCost)
-                        .thenComparingInt(Node::getAngle)
-                        .thenComparingInt(Node::getD));
+                        .thenComparingInt(Node::getD)
+                        .thenComparingInt(Node::getAngle));
         Map<Node, Node> parentMap = new HashMap<>();
         Map<Node, Double> costSoFar = new HashMap<>();
         Set<Node> visited = new HashSet<>();
@@ -69,7 +69,7 @@ public class PartB_AStar {
         Node current = goal;
         while (current != null) {
             path.addFirst(current);
-            current = parentMap.get(current); 
+            current = parentMap.get(current);
         }
         return path;
     }

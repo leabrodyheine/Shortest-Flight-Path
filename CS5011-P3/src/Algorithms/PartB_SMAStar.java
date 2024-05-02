@@ -8,8 +8,8 @@ public class PartB_SMAStar {
     public static List<Node> smaStar(Node start, Node goal, int planetSize, int memorySize) {
         PriorityQueue<Node> frontier = new PriorityQueue<>(
                 Comparator.comparingDouble(Node::getfCost)
-                        .thenComparingInt(Node::getAngle)
-                        .thenComparingInt(Node::getD));
+                        .thenComparingInt(Node::getD)
+                        .thenComparingInt(Node::getAngle));
         Map<Node, Node> parentMap = new HashMap<>();
         Set<Node> visited = new HashSet<>();
         Map<Node, Double> costSoFar = new HashMap<>();
@@ -39,24 +39,15 @@ public class PartB_SMAStar {
             for (Node next : successors) {
                 double newCost = costSoFar.get(current) + next.getCost();
 
-                if (!visited.contains(next)) {
-                    if (!frontier.contains(next) || newCost < costSoFar.get(next)) {
-                        costSoFar.put(next, newCost);
-                        parentMap.put(next, current);
-                        if (frontier.contains(next)) {
-                            frontier.remove(next); // Remove to update priority
-                        }
-                        if (frontier.size() >= memorySize) {
-                            frontier.remove();
-                        }
-                        frontier.add(next);
+                if (!visited.contains(next) || newCost < costSoFar.get(next)) {
+                    costSoFar.put(next, newCost);
+                    parentMap.put(next, current);
+                    if (frontier.contains(next)) {
+                        frontier.remove(next); // to update with new priority
                     }
+                    frontier.add(next);
                 }
             }
-        }
-        if (frontier.size() >= memorySize) {
-            Node toRemove = frontier.poll(); // or some logic to decide which node to remove
-            System.out.println("Removing node due to memory limit: " + toRemove); // Debug
         }
 
         System.out.println("fail");
