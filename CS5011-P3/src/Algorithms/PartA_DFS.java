@@ -19,7 +19,7 @@ public class PartA_DFS {
             printFrontier(frontier);
             Node current = frontier.pop();
 
-            if (!visited.add(current)) {
+            if (visited.contains(current)) {
                 continue;
             }
 
@@ -34,8 +34,7 @@ public class PartA_DFS {
             List<Node> successors = current.getSuccessors(planetSize, goal);
             Collections.sort(successors, Comparator.comparingInt(Node::getD).thenComparingInt(Node::getAngle));
 
-            // Correctly add sorted successors to the stack so the next one to be popped is
-            // the most preferred
+        
             for (int i = successors.size() - 1; i >= 0; i--) {
                 Node next = successors.get(i);
                 if (!visited.contains(next) && !frontier.contains(next)) {
