@@ -42,12 +42,17 @@ public class PartB_BestF {
         System.out.println(explored.size());
         return null;
     }
-    private static void printFrontier(Collection<Node> frontier) {
-        if (!frontier.isEmpty()) {
-            String result = frontier.stream()
-                    .map(Node::toString)
-                    .collect(Collectors.joining(","));
-            System.out.println("[" + result + "]");
+ 
+    private static void printFrontier(PriorityQueue<Node> frontier) {
+        Node[] frontier_array = (Node[])frontier.toArray();
+        if (frontier_array.length != 0) {
+            String result = "";
+            for (int i = frontier_array.length - 1; i >= 0; i--){
+                Node node = frontier_array[i];
+                result += node.toString() + node.getfCost() + ",";
+
+            }
+            System.out.println("[" + result.substring(0, result.length() - 1) + "]");
         }
     }
 
