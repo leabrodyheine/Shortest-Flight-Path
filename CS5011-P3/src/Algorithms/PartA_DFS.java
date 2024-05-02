@@ -18,13 +18,13 @@ public class PartA_DFS {
         while (!frontier.isEmpty()) {
             printFrontier(frontier);
             Node current = frontier.pop();
+            System.out.println(current);
 
             if (visited.contains(current)) {
                 continue;
             }
 
             visited.add(current);
-
             if (current.equals(goal)) {
                 List<Node> path = constructPath(current, parentMap);
                 printPath(path, visited.size());
@@ -32,12 +32,11 @@ public class PartA_DFS {
             }
 
             List<Node> successors = current.getSuccessors(planetSize, goal);
-            Collections.sort(successors);
-            // Collections.sort(successors, Comparator.comparingInt(Node::getD).thenComparingInt(Node::getAngle));
+            Collections.sort(successors, Comparator.comparingInt(Node::getD).thenComparingInt(Node::getAngle));
 
             // Collections.reverse(successors);
 
-            for (int i = 0; i < successors.size(); i++) {
+            for (int i = successors.size() - 1; i >= 0; i--) {
                 Node next = successors.get(i);
                 if (!visited.contains(next) && !frontier.contains(next)) {
                     frontier.push(next);
