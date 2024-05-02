@@ -17,8 +17,8 @@ public class PartB_SMAStar {
         parentMap.put(start, null);
 
         while (!frontier.isEmpty() && frontier.size() <= memorySize) {
-            Node current = frontier.poll();
             printFrontier(frontier);
+            Node current = frontier.poll();
 
             if (visited.contains(current)) {
                 continue;
