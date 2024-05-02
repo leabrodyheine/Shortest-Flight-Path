@@ -32,9 +32,10 @@ public class PartA_DFS {
             }
 
             List<Node> successors = current.getSuccessors(planetSize, goal);
-            Collections.sort(successors, Comparator.comparingInt(Node::getD).thenComparingInt(Node::getAngle));
+            Collections.sort(successors);
+            // Collections.sort(successors, Comparator.comparingInt(Node::getD).thenComparingInt(Node::getAngle));
 
-            Collections.reverse(successors);
+            // Collections.reverse(successors);
 
             for (int i = 0; i < successors.size(); i++) {
                 Node next = successors.get(i);
