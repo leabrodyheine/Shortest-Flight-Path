@@ -35,8 +35,8 @@ public class PartA_DFS {
             Collections.sort(successors, Comparator.comparingInt(Node::getD).thenComparingInt(Node::getAngle));
 
             Collections.reverse(successors);
-            
-            for (int i = successors.size() - 1; i >= 0; i--) {
+
+            for (int i = 0; i < successors.size(); i++) {
                 Node next = successors.get(i);
                 if (!visited.contains(next) && !frontier.contains(next)) {
                     frontier.push(next);
