@@ -38,8 +38,10 @@ public class PartB_SMAStar {
 
             for (Node next : successors) {
                 double newCost = costSoFar.get(current) + next.getCost();
+
                 if (!visited.contains(next)) {
-                    if (!frontier.contains(next) && newCost < costSoFar.get(next)) {
+                    if (!frontier.contains(next) || newCost < costSoFar.get(next)) {
+                        costSoFar.put(next, newCost);
                         parentMap.put(next, current);
                         if (frontier.contains(next)) {
                             frontier.remove(next); // Remove to update priority
