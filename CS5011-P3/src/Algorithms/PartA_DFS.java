@@ -50,10 +50,15 @@ public class PartA_DFS {
 
     private static void printFrontier(Collection<Node> frontier) {
         if (!frontier.isEmpty()) {
-            String result = frontier.stream()
-                    .map(Node::toString)
-                    .collect(Collectors.joining(","));
-            System.out.println("[" + result + "]");
+            // String result = frontier.stream()
+            //         .map(Node::toString)
+            //         .collect(Collectors.joining(","));
+            String result = "";
+            for (Node node : frontier){
+                result += node.toString() + ",";
+
+            }
+            System.out.println("[" + result.substring(0, result.length() - 1) + "]");
         }
     }
 
