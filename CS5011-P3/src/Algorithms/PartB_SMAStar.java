@@ -42,7 +42,6 @@ public class PartB_SMAStar {
                     frontier.add(next);
                 }
             }
-            System.out.println(frontier);
         }
         System.out.println("fail");
         System.out.println(visited.size());
