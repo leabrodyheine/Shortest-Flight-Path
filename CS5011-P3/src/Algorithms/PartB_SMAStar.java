@@ -13,14 +13,16 @@ public class PartB_SMAStar {
         Map<Node, Node> parentMap = new HashMap<>();
         Set<Node> visited = new HashSet<>();
         Map<Node, Double> costSoFar = new HashMap<>();
+        Map<Node, Integer> depthMap = new HashMap<>();
 
         frontier.add(start);
         parentMap.put(start, null);
         costSoFar.put(start, 0.0);
+        depthMap.put(start, 1);  // Assuming depth starts from 1
 
         while (!frontier.isEmpty()) {
             if (frontier.size() > memorySize) {
-                removeWorstNode(frontier, parentMap, costSoFar, goal);
+                removeWorstNode(frontier, parentMap, costSoFar, goal, depthMap);
             }
             Node current = frontier.poll();
             printFrontier(frontier);
@@ -39,12 +41,20 @@ public class PartB_SMAStar {
 
             List<Node> successors = current.getSuccessors(planetSize, goal);
             for (Node next : successors) {
-                double newCost = costSoFar.getOrDefault(current, Double.POSITIVE_INFINITY) + next.getCost();
-                if (!visited.contains(next) && (newCost < costSoFar.getOrDefault(next, Double.POSITIVE_INFINITY))) {
+                int nextDepth = depthMap.get(current) + 1;
+                double newCost = costSoFar.get(current) + next.getCost();
+                double fCost = newCost + next.calculateHeuristic(goal);
+
+                if (nextDepth > memorySize) {
+                    fCost = Double.POSITIVE_INFINITY;  // Setting infinite cost if depth exceeds memory size
+                }
+
+                if (!visited.contains(next) || newCost < costSoFar.getOrDefault(next, Double.POSITIVE_INFINITY)) {
                     costSoFar.put(next, newCost);
-                    next.setfCost(newCost + next.calculateHeuristic(goal));
-                    parentMap.put(next, current);
+                    depthMap.put(next, nextDepth);
+                    next.setfCost(fCost);
                     frontier.add(next);
+                    parentMap.put(next, current);
                 }
             }
         }
@@ -55,7 +65,7 @@ public class PartB_SMAStar {
     }
 
     private static void removeWorstNode(PriorityQueue<Node> frontier, Map<Node, Node> parentMap,
-            Map<Node, Double> costSoFar, Node goal) {
+            Map<Node, Double> costSoFar, Node goal, Map<Node, Integer> deptMap) {
         if (frontier.isEmpty())
             return;
         Node worstNode = null;
