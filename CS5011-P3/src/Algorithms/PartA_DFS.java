@@ -17,7 +17,6 @@ public class PartA_DFS {
         while (!frontier.isEmpty()) {
             printFrontier(frontier);
             Node current = frontier.pop();
-            System.out.println(current);
 
             if (visited.contains(current)) {
                 continue;
