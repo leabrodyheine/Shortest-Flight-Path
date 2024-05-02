@@ -39,7 +39,7 @@ public class Node implements Comparable<Node> {
         int[] distanceChanges = { -1, 1 };
 
         for (int angleChange : angleChanges) {
-            int newAngle = (this.angle + angleChange) % 360;
+            int newAngle = (this.angle + angleChange + 360) % 360;
             if (this.d > 0) {
                 double additionalCost = calculateAngularCost(this.d, angleChange);
                 successors.add(new Node(this.d, newAngle, this, this.cost + additionalCost, goal));

@@ -34,7 +34,7 @@ public class PartA_DFS {
             List<Node> successors = current.getSuccessors(planetSize, goal);
             Collections.sort(successors, Comparator.comparingInt(Node::getD).thenComparingInt(Node::getAngle));
 
-        
+    
             for (int i = successors.size() - 1; i >= 0; i--) {
                 Node next = successors.get(i);
                 if (!visited.contains(next) && !frontier.contains(next)) {
