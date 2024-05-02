@@ -16,6 +16,7 @@ public class PartB_SMAStar {
 
         frontier.add(start);
         parentMap.put(start, null);
+        costSoFar.put(start, 0.0);
 
         while (!frontier.isEmpty() && frontier.size() <= memorySize) {
             printFrontier(frontier);
