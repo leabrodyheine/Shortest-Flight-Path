@@ -2,7 +2,6 @@ package Algorithms;
 
 import General.Node;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class PartB_BestF {
 
@@ -42,13 +41,13 @@ public class PartB_BestF {
         System.out.println(explored.size());
         return null;
     }
- 
+
     private static void printFrontier(PriorityQueue<Node> frontier) {
-        Node[] frontier_array = (Node[])frontier.toArray();
-        if (frontier_array.length != 0) {
+        Node[] frontierArray = frontier.toArray(new Node[0]);
+        if (frontierArray.length != 0) {
             String result = "";
-            for (int i = frontier_array.length - 1; i >= 0; i--){
-                Node node = frontier_array[i];
+            for (int i = frontierArray.length - 1; i >= 0; i--) {
+                Node node = frontierArray[i];
                 result += node.toString() + node.getfCost() + ",";
 
             }
