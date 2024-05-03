@@ -75,8 +75,8 @@ public class PartB_AStar {
         costSoFar.put(start, 0.0);
 
         while (!frontier.isEmpty()) {
-            Node current = frontier.poll(); // Automatically removes the best node
             printFrontier(frontier);
+            Node current = frontier.poll(); // Automatically removes the best node
 
             if (visited.contains(current)) {
                 continue;
@@ -91,6 +91,7 @@ public class PartB_AStar {
             }
 
             List<Node> successors = current.getSuccessors(planetSize, goal);
+
             for (Node next : successors) {
                 double newCost = costSoFar.get(current) + current.distance(next);
 
@@ -108,19 +109,6 @@ public class PartB_AStar {
         System.out.println(visited.size());
         return null;
     }
-
-    // private static Node removeBestNode(PriorityQueue<Node> frontier) {
-    //     double bestCost = frontier.peek().getfCost();
-    //     Node bestNode = frontier.peek();
-
-    //     for (Node node : frontier) {
-    //         if (node.getfCost() < bestCost) {
-    //             bestCost = node.getfCost();
-    //             bestNode = node;
-    //         }
-    //     }
-    //     return bestNode;
-    // }
 
     private static void printFrontier(PriorityQueue<Node> frontier) {
         Node[] frontierArray = frontier.toArray(new Node[0]);
