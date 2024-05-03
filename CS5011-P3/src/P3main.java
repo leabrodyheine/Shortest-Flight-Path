@@ -53,7 +53,7 @@ public class P3main {
 				path = PartB_AStar.AStar(startNode, goalNode, size);
 				break;
 			case "SMAStar":
-				// path = PartB_SMAStar.smaStar(startNode, goalNode, size, memorySize);
+				path = PartB_SMAStar.smaStar(startNode, goalNode, size, memorySize);
 				break;
 			default:
 				System.out.println("fail");

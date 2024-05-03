@@ -5,6 +5,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class PartB_SMAStar {
+    private static Set<Node> forgotten = new HashSet<>(); // Handling forgotten nodes
+
     public static List<Node> smaStar(Node start, Node goal, int planetSize, int memorySize) {
         PriorityQueue<Node> frontier = new PriorityQueue<>(
                 Comparator.comparingDouble(Node::getfCost)
@@ -20,12 +22,15 @@ public class PartB_SMAStar {
 
         while (!frontier.isEmpty()) {
             if (frontier.size() > memorySize) {
-                removeWorstNode(frontier, parentMap, costSoFar, goal);
+                shrinkFrontier(frontier, parentMap, goal, memorySize);
             }
+
             printFrontier(frontier);
-            Node current = removeBestNode(frontier);
+            Node current = frontier.poll();
 
             if (visited.contains(current)) {
+                continue;
+            } else if (current.getfCost() >= 10000.0) {
                 continue;
             }
 
@@ -37,100 +42,79 @@ public class PartB_SMAStar {
                 return path;
             }
 
-            if (current.getfCost() >= Double.POSITIVE_INFINITY) {
-                break;
-            } else {
-                // List<Node> successors = processExpand(current, frontier, goal, memorySize);
-
-            }
-
-            // for (Node next : successors) {
-            // double newCost = costSoFar.getOrDefault(current, Double.POSITIVE_INFINITY) +
-            // next.getCost();
-            // if (!visited.contains(next) && (newCost < costSoFar.getOrDefault(next,
-            // Double.POSITIVE_INFINITY))) {
-            // costSoFar.put(next, newCost);
-            // next.setfCost(newCost + next.calculateHeuristic(goal));
-            // parentMap.put(next, current);
-            // frontier.add(next);
-            // }
-            // }
+            expand(current, frontier, parentMap, goal, planetSize);
         }
+        // List<Node> successors = current.getSuccessors(planetSize, goal);
+        // for (Node successor : successors) {
+        // if (!frontier.contains(successor) && !forgotten.contains(successor)) {
+        // frontier.add(successor);
+        // parentMap.put(successor, current);
+        // }
+        // }
+        // }
 
         System.out.println("fail");
         System.out.println(visited.size());
         return null;
     }
 
-    // private static List<Node> processExpand(Node current, PriorityQueue<Node> frontier, Node goal, int memorySize){
-
-    // }
-
-    private static void removeWorstNode(PriorityQueue<Node> frontier, Map<Node, Node> parentMap,
-            Map<Node, Double> costSoFar, Node goal) {
-        if (frontier.isEmpty())
-            return;
-        Node worstNode = null;
-        double worstCost = Double.NEGATIVE_INFINITY;
-
-        for (Node node : frontier) {
-            if (node.getfCost() > worstCost && isLeaf(node, frontier, parentMap)) {
-                worstCost = node.getfCost();
-                worstNode = node;
+    private static void expand(Node current, PriorityQueue<Node> frontier, Map<Node, Node> parentMap, Node goal,
+            int planetSize) {
+        List<Node> successors = current.getSuccessors(planetSize, goal);
+        for (Node successor : successors) {
+            double newCost = current.getCost() + current.distance(successor); // Assuming `distance` calculates the
+                                                                              // actual travel cost from current to
+                                                                              // successor
+            double newFcost = newCost + successor.calculateHeuristic(goal);
+            // Check if this new cost is better than the known cost
+            if (newFcost < successor.getfCost() || !frontier.contains(successor)) {
+                successor.setCost(newCost); // Update the cost to this lower cost
+                successor.setfCost(newFcost); // Update f-cost which is used in the priority queue comparison
+                frontier.add(successor); // Add or update the node in the frontier
+                parentMap.put(successor, current); // Record the path
             }
-        }
-        if (worstNode != null) {
-            frontier.remove(worstNode);
-            costSoFar.remove(worstNode);
-            Node parent = parentMap.get(worstNode);
-            if (parent != null) {
-                updateParentCost(parent, parentMap, costSoFar, frontier, goal);
-            }
-            System.out.println("Removed node due to memory limit: " + worstNode);
         }
     }
 
-    private static Node removeBestNode(PriorityQueue<Node> frontier) {
-        double bestCost = frontier.peek().getfCost();
-        Node bestNode = frontier.peek();
-
-        for (Node node : frontier) {
-            if (node.getfCost() < bestCost) {
-                bestCost = node.getfCost();
-                bestNode = node;
+    private static void shrinkFrontier(PriorityQueue<Node> frontier, Map<Node, Node> parentMap, Node goal,
+            int memorySize) {
+        while (frontier.size() > memorySize) {
+            Node worstNode = getWorstLeafNode(frontier, parentMap);
+            if (worstNode != null) {
+                frontier.remove(worstNode);
+                forgotten.add(worstNode);
+                Node parent = parentMap.get(worstNode);
+                if (parent != null) {
+                    updateParentCost(parent, frontier, goal, parentMap);
+                    // Check if parent becomes a leaf and update accordingly
+                    if (isLeaf(parent, frontier, parentMap)) {
+                        parent.setfCost(Double.POSITIVE_INFINITY); // Mark parent as a leaf if it has no more children
+                    }
+                }
+                System.out.println("Removed node due to memory limit: " + worstNode);
             }
         }
-        return bestNode;
+    }
+
+    private static Node getWorstLeafNode(PriorityQueue<Node> frontier, Map<Node, Node> parentMap) {
+        return frontier.stream()
+                .filter(node -> isLeaf(node, frontier, parentMap))
+                .max(Comparator.comparingDouble(Node::getfCost))
+                .orElse(null);
     }
 
     private static boolean isLeaf(Node node, PriorityQueue<Node> frontier, Map<Node, Node> parentMap) {
-        // A node is considered a leaf if it does not have any children in the frontier
-        for (Node n : frontier) {
-            if (parentMap.get(n) == node) {
-                return false;
-            }
-        }
-        return true;
+        return frontier.stream().noneMatch(n -> parentMap.get(n) == node);
     }
 
-    private static void updateParentCost(Node parent, Map<Node, Node> parentMap, Map<Node, Double> costSoFar,
-            PriorityQueue<Node> frontier, Node goal) {
-        double minCost = Double.POSITIVE_INFINITY;
-        boolean hasChildren = false;
-        for (Node n : frontier) {
-            if (parentMap.get(n) == parent) {
-                hasChildren = true;
-                double childCost = costSoFar.getOrDefault(n, Double.POSITIVE_INFINITY) + n.calculateHeuristic(goal);
-                if (childCost < minCost) {
-                    minCost = childCost;
-                }
-            }
-        }
-        if (!hasChildren) {
-            minCost = Double.POSITIVE_INFINITY;
-        }
-        parent.setfCost(minCost);
-        costSoFar.put(parent, minCost);
+    private static void updateParentCost(Node parent, PriorityQueue<Node> frontier, Node goal,
+            Map<Node, Node> parentMap) {
+        OptionalDouble minCost = frontier.stream()
+                .filter(n -> parent.equals(parentMap.get(n)))
+                .mapToDouble(Node::getfCost)
+                .min();
+        parent.setfCost(minCost.isPresent() ? minCost.getAsDouble() + parent.calculateHeuristic(goal)
+                : Double.POSITIVE_INFINITY);
     }
 
     private static void printFrontier(PriorityQueue<Node> frontier) {
