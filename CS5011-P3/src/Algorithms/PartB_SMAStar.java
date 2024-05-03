@@ -42,7 +42,7 @@ public class PartB_SMAStar {
                 return path;
             }
 
-            expand(current, frontier, parentMap, goal, planetSize, visited);
+            expand(current, frontier, parentMap, goal, planetSize, visited, costSoFar);
         }
         System.out.println("fail");
         System.out.println(visited.size());
@@ -50,28 +50,39 @@ public class PartB_SMAStar {
     }
 
     private static void expand(Node current, PriorityQueue<Node> frontier, Map<Node, Node> parentMap, Node goal,
-            int planetSize, Set<Node> visited) {
-        List<Node> successors = current.getSuccessors(planetSize, goal);
-        for (Node successor : successors) {
-            double newCost = current.getCost() + current.distance(successor);
-            System.out.println("newCost: " + newCost);
-            double newHeuristic = successor.calculateHeuristic(goal);
-            System.out.println("newHueristic: " + newHeuristic);
-            double newFcost = newCost + newHeuristic;
-            System.out.println("newFcost: " + newFcost);
+            int planetSize, Set<Node> visited, Map<Node, Double> costSoFar) {
 
-            if (!visited.contains(successor) && (!frontier.contains(successor) || newFcost < successor.getfCost())) {
-                if (frontier.contains(successor)) {
-                    frontier.remove(successor);
+        List<Node> successors = current.getSuccessors(planetSize, goal);
+
+        for (Node successor : successors) {
+            double newCost = costSoFar.getOrDefault(current, Double.POSITIVE_INFINITY) + successor.getCost();
+                if (!visited.contains(successor) && (newCost < costSoFar.getOrDefault(successor, Double.POSITIVE_INFINITY))) {
+                    costSoFar.put(successor, newCost);
+                    successor.setfCost(newCost + successor.calculateHeuristic(goal));
+                    parentMap.put(successor, current);
+                    frontier.add(successor);
                 }
-                visited.add(successor);
-                successor.setCost(newCost);
-                successor.setHeuristic(newHeuristic);
-                successor.setfCost(newFcost);
-                frontier.add(successor);
-                parentMap.put(successor, current);
             }
-        }
+
+        //     double newCost = current.getCost() + current.distance(successor);
+        //     System.out.println("newCost: " + newCost);
+        //     double newHeuristic = successor.calculateHeuristic(goal);
+        //     System.out.println("newHueristic: " + newHeuristic);
+        //     double newFcost = newCost + newHeuristic;
+        //     System.out.println("newFcost: " + newFcost);
+
+        //     if (!visited.contains(successor) && (!frontier.contains(successor) || newFcost < successor.getfCost())) {
+        //         if (frontier.contains(successor)) {
+        //             frontier.remove(successor);
+        //         }
+        //         visited.add(successor);
+        //         successor.setCost(newCost);
+        //         successor.setHeuristic(newHeuristic);
+        //         successor.setfCost(newFcost);
+        //         frontier.add(successor);
+        //         parentMap.put(successor, current);
+        //     }
+        // }
     }
 
     private static void shrinkFrontier(PriorityQueue<Node> frontier, Map<Node, Node> parentMap, Node goal,
