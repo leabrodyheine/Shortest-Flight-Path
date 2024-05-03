@@ -30,10 +30,9 @@ public class PartB_SMAStar {
 
             if (visited.contains(current)) {
                 continue;
-            } 
-            // else if (current.getfCost() >= 10000.0) {
-            //     continue;
-            // }
+            } else if (current.getfCost() >= 10000.0) {
+                continue;
+            }
                 
             visited.add(current);
 
@@ -55,8 +54,11 @@ public class PartB_SMAStar {
         List<Node> successors = current.getSuccessors(planetSize, goal);
         for (Node successor : successors) {
             double newCost = current.getCost() + current.distance(successor);
+            System.out.println("newCost: " + newCost);
             double newHeuristic = successor.calculateHeuristic(goal);
+            System.out.println("newHueristic: " + newHeuristic);
             double newFcost = newCost + newHeuristic;
+            System.out.println("newFcost: " + newFcost);
 
             if (!visited.contains(successor) && (!frontier.contains(successor) || newFcost < successor.getfCost())) {
                 if (frontier.contains(successor)) {
