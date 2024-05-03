@@ -55,22 +55,19 @@ public class PartB_SMAStar {
         for (Node successor : successors) {
             double newCost = current.getCost() + current.distance(successor); // Correct calculation of the cumulative
                                                                               // cost
-            double newFcost = newCost + successor.calculateHeuristic(goal);
+            double newFcost = newCost + (successor.equals(goal) ? 0 : successor.calculateHeuristic(goal));
 
-            boolean shouldUpdate = false;
-            if (!frontier.contains(successor) && !visited.contains(successor)) {
-                shouldUpdate = true;
-            } else if (frontier.contains(successor) && newFcost < successor.getfCost()) {
-                frontier.remove(successor); // Must remove to update correctly
-                shouldUpdate = true;
-            }
-
-            if (shouldUpdate) {
+            if (!visited.contains(successor) && (!frontier.contains(successor) || newFcost < successor.getfCost())) {
+                if (frontier.contains(successor)) {
+                    frontier.remove(successor); // Necessary if the PriorityQueue does not auto-update
+                }
+                visited.add(successor);
                 successor.setCost(newCost);
                 successor.setfCost(newFcost);
-                System.out.println("Adding/Updating node: " + successor + " with newCost: " + newCost + ", newFcost: " + newFcost);
                 frontier.add(successor);
                 parentMap.put(successor, current);
+                System.out.println(
+                        "Adding/Updating node: " + successor + " with newCost: " + newCost + ", newFcost: " + newFcost);
             }
         }
     }
