@@ -68,6 +68,7 @@ public class PartB_SMAStar {
             if (shouldUpdate) {
                 successor.setCost(newCost);
                 successor.setfCost(newFcost);
+                System.out.println("Adding/Updating node: " + successor + " with newCost: " + newCost + ", newFcost: " + newFcost);
                 frontier.add(successor);
                 parentMap.put(successor, current);
             }

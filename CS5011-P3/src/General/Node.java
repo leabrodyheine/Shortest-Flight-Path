@@ -20,7 +20,7 @@ public class Node implements Comparable<Node> {
         this.parent = parent;
         this.cost = cost;
         if (goal != null) {
-            this.heuristic = calculateHeuristic(goal);
+            this.heuristic = calculateHeuristic(goal); // Should be 0 if this node *is* the goal
         } else {
             this.heuristic = 0;
         }
@@ -66,7 +66,7 @@ public class Node implements Comparable<Node> {
         return Math.abs(distanceChange);
     }
 
-    public double distance(Node other){
+    public double distance(Node other) {
         double angleChange = this.angle - other.getAngle();
         int radialChange = this.d - other.d;
         double radialCost = this.calculateRadialCost(radialChange);
@@ -124,7 +124,7 @@ public class Node implements Comparable<Node> {
 
     public double getHeuristic() {
         BigDecimal bd = new BigDecimal(this.heuristic);
-        bd = bd.setScale(3, RoundingMode.HALF_UP);  // You can change the rounding mode as needed
+        bd = bd.setScale(3, RoundingMode.HALF_UP); // You can change the rounding mode as needed
         return bd.doubleValue();
     }
 
