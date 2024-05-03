@@ -42,7 +42,7 @@ public class PartB_SMAStar {
                 return path;
             }
 
-            expand(current, frontier, parentMap, goal, planetSize);
+            expand(current, frontier, parentMap, goal, planetSize, visited);
         }
         System.out.println("fail");
         System.out.println(visited.size());
@@ -50,16 +50,17 @@ public class PartB_SMAStar {
     }
 
     private static void expand(Node current, PriorityQueue<Node> frontier, Map<Node, Node> parentMap, Node goal,
-            int planetSize) {
+            int planetSize, Set<Node> visited) {
         List<Node> successors = current.getSuccessors(planetSize, goal);
         for (Node successor : successors) {
             double newCost = current.getCost() + current.distance(successor);
             double newFcost = newCost + successor.calculateHeuristic(goal);
 
-            if (!frontier.contains(successor) || newFcost < successor.getfCost()) {
+            if (!visited.contains(successor) && (!frontier.contains(successor) || newFcost < successor.getfCost())) {
                 if (frontier.contains(successor)) {
-                    frontier.remove(successor); // Remove old entry from the frontier
+                    frontier.remove(successor); // Necessary if the PriorityQueue does not auto-update
                 }
+                visited.add(successor);
                 successor.setCost(newCost);
                 successor.setfCost(newFcost);
                 frontier.add(successor);
