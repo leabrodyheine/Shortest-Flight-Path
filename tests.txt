@@ -10,35 +10,7 @@ Testing CS5011 P3 Practical
 * COMPARISON TEST - 06_DFS2/prog-run-06_DFS2.out : pass
 * COMPARISON TEST - 07_BESTF0/prog-run-07_BESTF0.out : pass
 * COMPARISON TEST - 08_ASTAR0/prog-run-08_ASTAR0.out : pass
-* COMPARISON TEST - 09_SMASTAR0/prog-run-09_SMASTAR0.out : fail
---- expected output ---
-World: Oedipus 3
-Departure airport -- Start: 2:45
-Destination airport -- Goal: 2:0
-Search algorithm: SMAStar
-[(2:45)1.531]
-[(2:0)1.571,(1:45)2.474,(2:90)4.399]
-(2:45)(2:0)
-1.571
-2
---- submission output ---
-World: Oedipus 3
-Departure airport -- Start: 2:45
-Destination airport -- Goal: 2:0
-Search algorithm: SMAStar
-[(1:45), (2:90), (2:0)]
-[(2:0),(2:90)]
-[(1:90), (2:90), (2:0)]
-[(2:0),(2:90)]
-[(1:135), (2:90), (2:0)]
-[(2:0),(2:90)]
-[(2:0), (2:90), (2:135)]
-[(2:90),(2:135)]
-(2:0)
-1.571
-5
----
-
+* COMPARISON TEST - 09_SMASTAR0/prog-run-09_SMASTAR0.out : pass
 * COMPARISON TEST - 10_SMASTAR1/prog-run-10_SMASTAR1.out : fail
 --- expected output ---
 World: Oedipus 2
@@ -54,13 +26,12 @@ World: Oedipus 2
 Departure airport -- Start: 1:0
 Destination airport -- Goal: 1:90
 Search algorithm: SMAStar
-[(1:45), (1:315)]
-[(1:315)]
-[(1:90), (1:315)]
-[(1:315)]
-(1:90)
+[(1:0)1.414]
+[(1:45)1.551,(1:315)2.633]
+[(1:90)2.356,(1:315)2.633]
+(1:0)(1:45)(1:90)
 1.571
 3
 ---
 
-10 out of 12 tests passed
+11 out of 12 tests passed
