@@ -44,15 +44,6 @@ public class PartB_SMAStar {
 
             expand(current, frontier, parentMap, goal, planetSize);
         }
-        // List<Node> successors = current.getSuccessors(planetSize, goal);
-        // for (Node successor : successors) {
-        // if (!frontier.contains(successor) && !forgotten.contains(successor)) {
-        // frontier.add(successor);
-        // parentMap.put(successor, current);
-        // }
-        // }
-        // }
-
         System.out.println("fail");
         System.out.println(visited.size());
         return null;
@@ -62,16 +53,17 @@ public class PartB_SMAStar {
             int planetSize) {
         List<Node> successors = current.getSuccessors(planetSize, goal);
         for (Node successor : successors) {
-            double newCost = current.getCost() + current.distance(successor); // Assuming `distance` calculates the
-                                                                              // actual travel cost from current to
-                                                                              // successor
+            double newCost = current.getCost() + current.distance(successor);
             double newFcost = newCost + successor.calculateHeuristic(goal);
-            // Check if this new cost is better than the known cost
-            if (newFcost < successor.getfCost() || !frontier.contains(successor)) {
-                successor.setCost(newCost); // Update the cost to this lower cost
-                successor.setfCost(newFcost); // Update f-cost which is used in the priority queue comparison
-                frontier.add(successor); // Add or update the node in the frontier
-                parentMap.put(successor, current); // Record the path
+
+            if (!frontier.contains(successor) || newFcost < successor.getfCost()) {
+                if (frontier.contains(successor)) {
+                    frontier.remove(successor); // Remove old entry from the frontier
+                }
+                successor.setCost(newCost);
+                successor.setfCost(newFcost);
+                frontier.add(successor);
+                parentMap.put(successor, current);
             }
         }
     }
@@ -133,11 +125,12 @@ public class PartB_SMAStar {
 
     private static List<Node> constructPath(Node goal, Map<Node, Node> parentMap) {
         List<Node> path = new ArrayList<>();
-        while (goal != null) {
-            path.add(goal);
-            goal = parentMap.get(goal);
+        Node current = goal;
+        while (current != null) {
+            path.add(current);
+            current = parentMap.get(current); // Follow the chain of parents
         }
-        Collections.reverse(path);
+        Collections.reverse(path); // Reverse to start from the beginning
         return path;
     }
 
