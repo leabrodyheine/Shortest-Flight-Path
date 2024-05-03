@@ -139,7 +139,7 @@ public class PartB_SMAStar {
 
     public static void printPath(List<Node> path, int visitedCount) {
         if (path == null || path.isEmpty()) {
-            System.out.println("fail");
+            System.out.println("failed to find path");
         } else {
             for (Node node : path) {
                 System.out.print(node + "");
