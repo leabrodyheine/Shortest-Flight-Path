@@ -144,14 +144,13 @@ public class PartB_SMAStar {
         if (path == null || path.isEmpty()) {
             System.out.println("fail");
         } else {
-            double totalCost = 0;
             for (Node node : path) {
-                System.out.print(node + " ");
-                totalCost += node.getCost();  // Accumulate the cost along the path
+                System.out.print(node + "");
             }
+            Node lastNode = path.get(path.size() - 1);
+            double cost = lastNode.getCost();
             System.out.println();
-            System.out.printf("Total Path Cost: %.3f\nVisited Nodes: %d\n", totalCost, visitedCount);
+            System.out.printf("%.3f\n%d\n", cost, visitedCount);
         }
     }
-    
 }
