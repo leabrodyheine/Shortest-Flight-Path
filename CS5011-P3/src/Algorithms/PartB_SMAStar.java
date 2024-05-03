@@ -30,10 +30,11 @@ public class PartB_SMAStar {
 
             if (visited.contains(current)) {
                 continue;
-            } else if (current.getfCost() >= 10000.0) {
-                continue;
-            }
-
+            } 
+            // else if (current.getfCost() >= 10000.0) {
+            //     continue;
+            // }
+                
             visited.add(current);
 
             if (current.equals(goal)) {
