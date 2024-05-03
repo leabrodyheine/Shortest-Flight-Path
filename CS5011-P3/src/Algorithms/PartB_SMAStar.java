@@ -53,14 +53,19 @@ public class PartB_SMAStar {
             int planetSize, Set<Node> visited) {
         List<Node> successors = current.getSuccessors(planetSize, goal);
         for (Node successor : successors) {
-            double newCost = current.getCost() + current.distance(successor);
+            double newCost = current.getCost() + current.distance(successor); // Correct calculation of the cumulative
+                                                                              // cost
             double newFcost = newCost + successor.calculateHeuristic(goal);
 
-            if (!visited.contains(successor) && (!frontier.contains(successor) || newFcost < successor.getfCost())) {
-                if (frontier.contains(successor)) {
-                    frontier.remove(successor); // Necessary if the PriorityQueue does not auto-update
-                }
-                visited.add(successor);
+            boolean shouldUpdate = false;
+            if (!frontier.contains(successor) && !visited.contains(successor)) {
+                shouldUpdate = true;
+            } else if (frontier.contains(successor) && newFcost < successor.getfCost()) {
+                frontier.remove(successor); // Must remove to update correctly
+                shouldUpdate = true;
+            }
+
+            if (shouldUpdate) {
                 successor.setCost(newCost);
                 successor.setfCost(newFcost);
                 frontier.add(successor);
@@ -139,11 +144,12 @@ public class PartB_SMAStar {
         if (path == null || path.isEmpty()) {
             System.out.println("fail");
         } else {
-            for (Node node : path) {
-                System.out.print(node + "");
-            }
             Node lastNode = path.get(path.size() - 1);
             double cost = lastNode.getCost();
+            for (Node node : path) {
+                System.out.print(node + "");
+                cost += node.getCost();
+            }
             System.out.println();
             System.out.printf("%.3f\n%d\n", cost, visitedCount);
         }
