@@ -53,17 +53,17 @@ public class PartB_SMAStar {
             int planetSize, Set<Node> visited) {
         List<Node> successors = current.getSuccessors(planetSize, goal);
         for (Node successor : successors) {
+            double newCost = current.getCost() + current.distance(successor);
             double newHeuristic = successor.calculateHeuristic(goal);
-            double newCost = current.getCost() + current.distance(successor); // Correct calculation of the cumulative
-                                                                              // cost
             double newFcost = newCost + newHeuristic;
 
             if (!visited.contains(successor) && (!frontier.contains(successor) || newFcost < successor.getfCost())) {
                 if (frontier.contains(successor)) {
-                    frontier.remove(successor); // Necessary if the PriorityQueue does not auto-update
+                    frontier.remove(successor);
                 }
                 visited.add(successor);
                 successor.setCost(newCost);
+                successor.setHeuristic(newHeuristic);
                 successor.setfCost(newFcost);
                 frontier.add(successor);
                 parentMap.put(successor, current);

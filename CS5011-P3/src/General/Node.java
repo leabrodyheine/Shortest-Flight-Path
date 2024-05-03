@@ -128,6 +128,10 @@ public class Node implements Comparable<Node> {
         return bd.doubleValue();
     }
 
+    public void setHeuristic(double heuristic) {
+        this.heuristic = heuristic;
+    }
+
     public double getfCost() {
         BigDecimal bd = new BigDecimal(this.fCost);
         bd = bd.setScale(3, RoundingMode.HALF_UP);
