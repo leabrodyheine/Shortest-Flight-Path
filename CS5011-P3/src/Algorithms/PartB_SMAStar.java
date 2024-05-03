@@ -23,7 +23,7 @@ public class PartB_SMAStar {
                 removeWorstNode(frontier, parentMap, costSoFar, goal);
             }
             printFrontier(frontier);
-            Node current = frontier.poll();
+            Node current = removeBestNode(frontier);
 
             if (visited.contains(current)) {
                 continue;
@@ -37,22 +37,34 @@ public class PartB_SMAStar {
                 return path;
             }
 
-            List<Node> successors = current.getSuccessors(planetSize, goal);
-            for (Node next : successors) {
-                double newCost = costSoFar.getOrDefault(current, Double.POSITIVE_INFINITY) + next.getCost();
-                if (!visited.contains(next) && (newCost < costSoFar.getOrDefault(next, Double.POSITIVE_INFINITY))) {
-                    costSoFar.put(next, newCost);
-                    next.setfCost(newCost + next.calculateHeuristic(goal));
-                    parentMap.put(next, current);
-                    frontier.add(next);
-                }
+            if (current.getfCost() >= Double.POSITIVE_INFINITY) {
+                break;
+            } else {
+                // List<Node> successors = processExpand(current, frontier, goal, memorySize);
+
             }
+
+            // for (Node next : successors) {
+            // double newCost = costSoFar.getOrDefault(current, Double.POSITIVE_INFINITY) +
+            // next.getCost();
+            // if (!visited.contains(next) && (newCost < costSoFar.getOrDefault(next,
+            // Double.POSITIVE_INFINITY))) {
+            // costSoFar.put(next, newCost);
+            // next.setfCost(newCost + next.calculateHeuristic(goal));
+            // parentMap.put(next, current);
+            // frontier.add(next);
+            // }
+            // }
         }
 
         System.out.println("fail");
         System.out.println(visited.size());
         return null;
     }
+
+    // private static List<Node> processExpand(Node current, PriorityQueue<Node> frontier, Node goal, int memorySize){
+
+    // }
 
     private static void removeWorstNode(PriorityQueue<Node> frontier, Map<Node, Node> parentMap,
             Map<Node, Double> costSoFar, Node goal) {
@@ -76,6 +88,19 @@ public class PartB_SMAStar {
             }
             System.out.println("Removed node due to memory limit: " + worstNode);
         }
+    }
+
+    private static Node removeBestNode(PriorityQueue<Node> frontier) {
+        double bestCost = frontier.peek().getfCost();
+        Node bestNode = frontier.peek();
+
+        for (Node node : frontier) {
+            if (node.getfCost() < bestCost) {
+                bestCost = node.getfCost();
+                bestNode = node;
+            }
+        }
+        return bestNode;
     }
 
     private static boolean isLeaf(Node node, PriorityQueue<Node> frontier, Map<Node, Node> parentMap) {

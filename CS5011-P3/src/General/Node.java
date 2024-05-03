@@ -57,13 +57,21 @@ public class Node implements Comparable<Node> {
         return successors;
     }
 
-    private static double calculateAngularCost(int d, int angleChange) {
+    private double calculateAngularCost(int d, double angleChange) {
         double oneEighthCircumference = (2 * Math.PI * d) / 8;
         return oneEighthCircumference;
     }
 
-    private static double calculateRadialCost(int distanceChange) {
+    private double calculateRadialCost(int distanceChange) {
         return Math.abs(distanceChange);
+    }
+
+    public double distance(Node other){
+        double angleChange = this.angle - other.getAngle();
+        int radialChange = this.d - other.d;
+        double radialCost = this.calculateRadialCost(radialChange);
+        double angleCost = this.calculateAngularCost(radialChange, angleChange);
+        return Math.max(radialCost, angleCost);
     }
 
     @Override
@@ -96,6 +104,10 @@ public class Node implements Comparable<Node> {
 
     public double getCost() {
         return cost;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
     }
 
     public Node getParent() {
