@@ -5,6 +5,62 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class PartB_AStar {
+    // public static List<Node> AStar(Node start, Node goal, int planetSize) {
+    //     PriorityQueue<Node> frontier = new PriorityQueue<>(
+    //             Comparator.comparingDouble(Node::getfCost)
+    //                     .thenComparingInt(Node::getD)
+    //                     .thenComparingInt(Node::getAngle));
+    //     Map<Node, Node> parentMap = new HashMap<>();
+    //     Map<Node, Double> costSoFar = new HashMap<>();
+    //     Set<Node> visited = new HashSet<>();
+
+    //     frontier.add(start);
+    //     parentMap.put(start, null);
+    //     costSoFar.put(start, 0.0);
+
+    //     while (!frontier.isEmpty()) {
+    //         printFrontier(frontier);
+    //         Node current = frontier.poll(); // Automatically removes the best node
+
+    //         if (visited.contains(current)) {
+    //             continue;
+    //         }
+
+    //         visited.add(current);
+
+    //         if (current.equals(goal)) {
+    //             List<Node> path = constructPath(current, parentMap);
+    //             printPath(path, visited.size());
+    //             return path;
+    //         } else {
+    //             frontier.addAll(expand(current, frontier, visited, goal, planetSize));
+    //         }
+    //     }
+    //     System.out.println("fail");
+    //     System.out.println(visited.size());
+    //     return null;
+    // }
+
+    // private static List<Node> expand(Node current, PriorityQueue<Node> frontier, Set<Node> visited, Node goal,
+    //         int planetSize) {
+    //     List<Node> nextStates = current.getSuccessors(planetSize, goal);
+    //     List<Node> successors = new ArrayList<Node>();
+    //     double cost = 0;
+    //     for (Node state : nextStates) {
+    //         if (!visited.contains(state) || !frontier.contains(state)) {
+    //             successors.add(state);
+    //             cost = current.getCost() + current.distance(state);
+    //             state.setCost(cost);
+    //         } else if (frontier.contains(state)) {
+    //             cost = current.getCost() + current.distance(state);
+    //             if (cost < state.getCost()) {
+    //                 state.setCost(cost);
+    //             }
+    //         }
+    //     }
+    //     return successors;
+    // }
+
     public static List<Node> AStar(Node start, Node goal, int planetSize) {
         PriorityQueue<Node> frontier = new PriorityQueue<>(
                 Comparator.comparingDouble(Node::getfCost)
@@ -19,8 +75,8 @@ public class PartB_AStar {
         costSoFar.put(start, 0.0);
 
         while (!frontier.isEmpty()) {
+            Node current = frontier.poll(); // Automatically removes the best node
             printFrontier(frontier);
-            Node current = removeBestNode(frontier);
 
             if (visited.contains(current)) {
                 continue;
@@ -32,47 +88,39 @@ public class PartB_AStar {
                 List<Node> path = constructPath(current, parentMap);
                 printPath(path, visited.size());
                 return path;
-            } else {
-                frontier.addAll(expand(current, frontier, visited, goal, planetSize));
+            }
+
+            List<Node> successors = current.getSuccessors(planetSize, goal);
+            for (Node next : successors) {
+                double newCost = costSoFar.get(current) + current.distance(next);
+
+                if (!costSoFar.containsKey(next) || newCost < costSoFar.get(next)) {
+                    costSoFar.put(next, newCost);
+                    double priority = newCost + next.calculateHeuristic(goal);
+                    next.setfCost(priority);
+                    frontier.add(next);
+                    parentMap.put(next, current);
+                }
             }
         }
+
         System.out.println("fail");
         System.out.println(visited.size());
         return null;
     }
 
-    private static List<Node> expand(Node current, PriorityQueue<Node> frontier, Set<Node> visited, Node goal,
-            int planetSize) {
-        List<Node> nextStates = current.getSuccessors(planetSize, goal);
-        List<Node> successors = new ArrayList<Node>();
-        double cost = 0;
-        for (Node state : nextStates) {
-            if (!visited.contains(state) || !frontier.contains(state)) {
-                successors.add(state);
-                cost = current.getCost() + current.distance(state);
-                state.setCost(cost);
-            } else if (frontier.contains(state)) {
-                cost = current.getCost() + current.distance(state);
-                if (cost < state.getCost()) {
-                    state.setCost(cost);
-                }
-            }
-        }
-        return successors;
-    }
+    // private static Node removeBestNode(PriorityQueue<Node> frontier) {
+    //     double bestCost = frontier.peek().getfCost();
+    //     Node bestNode = frontier.peek();
 
-    private static Node removeBestNode(PriorityQueue<Node> frontier) {
-        double bestCost = frontier.peek().getfCost();
-        Node bestNode = frontier.peek();
-
-        for (Node node : frontier) {
-            if (node.getfCost() < bestCost) {
-                bestCost = node.getfCost();
-                bestNode = node;
-            }
-        }
-        return bestNode;
-    }
+    //     for (Node node : frontier) {
+    //         if (node.getfCost() < bestCost) {
+    //             bestCost = node.getfCost();
+    //             bestNode = node;
+    //         }
+    //     }
+    //     return bestNode;
+    // }
 
     private static void printFrontier(PriorityQueue<Node> frontier) {
         Node[] frontierArray = frontier.toArray(new Node[0]);
