@@ -93,8 +93,7 @@ public class PartB_AStar {
             List<Node> successors = current.getSuccessors(planetSize, goal);
 
             for (Node next : successors) {
-                double newCost = costSoFar.get(current) + current.distance(next);
-
+                double newCost = costSoFar.get(current) + next.getCost();
                 if (!costSoFar.containsKey(next) || newCost < costSoFar.get(next)) {
                     costSoFar.put(next, newCost);
                     double priority = newCost + next.calculateHeuristic(goal);
