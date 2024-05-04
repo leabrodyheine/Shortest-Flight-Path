@@ -155,9 +155,10 @@ public class Node implements Comparable<Node> {
     }
 
     public double getfCost() {
-        BigDecimal bd = new BigDecimal(this.fCost);
-        bd = bd.setScale(3, RoundingMode.HALF_UP);
-        return bd.doubleValue();
+        // BigDecimal bd = new BigDecimal(this.fCost);
+        // bd = bd.setScale(3, RoundingMode.HALF_UP);
+        // return bd.doubleValue();
+        return fCost;
     }
 
     public void setfCost(double fCost) {

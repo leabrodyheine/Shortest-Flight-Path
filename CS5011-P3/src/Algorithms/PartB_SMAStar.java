@@ -55,7 +55,7 @@ public class PartB_SMAStar {
                 current.getForgotten().remove(successor);
             } else {
                 if (!successor.equals(goal) && successor.getDepth() == memorySize) {
-                    successor.setfCost(Double.POSITIVE_INFINITY);
+                    successor.setfCost(10000);
                 }
             }
             successor.setLeaf(true);
@@ -81,7 +81,7 @@ public class PartB_SMAStar {
                     updateParentCost(parent, frontier, goal, parentMap);
                     // Check if parent becomes a leaf and update accordingly
                     if (isLeaf(parent, frontier, parentMap)) {
-                        parent.setfCost(Double.POSITIVE_INFINITY); // Mark parent as a leaf if it has no more children
+                        parent.setfCost(10000); // Mark parent as a leaf if it has no more children
                     }
                 }
                 System.out.println("Removed node due to memory limit: " + worstNode);
@@ -107,7 +107,7 @@ public class PartB_SMAStar {
                 .mapToDouble(Node::getfCost)
                 .min();
         parent.setfCost(minCost.isPresent() ? minCost.getAsDouble() + parent.calculateHeuristic(goal)
-                : Double.POSITIVE_INFINITY);
+                : 10000);
     }
 
     private static void printFrontier(PriorityQueue<Node> frontier) {
