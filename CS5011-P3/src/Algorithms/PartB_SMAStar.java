@@ -5,8 +5,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class PartB_SMAStar {
-    private static Set<Node> forgotten = new HashSet<>(); // Handling forgotten nodes
-
     public static List<Node> smaStar(Node start, Node goal, int planetSize, int memorySize) {
         PriorityQueue<Node> frontier = new PriorityQueue<>(
                 Comparator.comparingDouble(Node::getfCost)
@@ -25,7 +23,7 @@ public class PartB_SMAStar {
             printFrontier(frontier);
             Node current = frontier.poll();
 
-            if (current.getfCost() >= 10000.0) {
+            if (current.getfCost() >= 10000.0 || current.getDepth() >= memorySize) {
                 break;
             }
 
@@ -84,7 +82,6 @@ public class PartB_SMAStar {
                         parent.setfCost(10000); // Mark parent as a leaf if it has no more children
                     }
                 }
-                System.out.println("Removed node due to memory limit: " + worstNode);
             }
         }
     }
