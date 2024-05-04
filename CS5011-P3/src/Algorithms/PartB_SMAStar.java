@@ -70,7 +70,7 @@ public class PartB_SMAStar {
     private static void shrinkFrontier(PriorityQueue<Node> frontier, Map<Node, Node> parentMap, Node goal,
             int memorySize) {
         while (frontier.size() > memorySize) {
-            Node worstNode = getWorstLeafNode(frontier, parentMap);
+            Node worstNode = getWorstLeafNode(frontier);
             if (worstNode != null) {
                 frontier.remove(worstNode);
                 worstNode.setLeaf(false);
@@ -108,7 +108,7 @@ public class PartB_SMAStar {
         return ancestors;
     }
 
-    private static Node getWorstLeafNode(PriorityQueue<Node> frontier, Map<Node, Node> parentMap) {
+    private static Node getWorstLeafNode(PriorityQueue<Node> frontier) {
         return frontier.stream()
                 .filter(node -> node.getLeaf())
                 .max(Comparator.comparingDouble(Node::getfCost))
