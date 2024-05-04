@@ -178,6 +178,10 @@ public class Node implements Comparable<Node> {
         this.depth = depth;
     }
 
+    public boolean getLeaf(){
+        return leaf;
+    }
+
     public void setLeaf(boolean leaf) {
         this.leaf = leaf;
     }
