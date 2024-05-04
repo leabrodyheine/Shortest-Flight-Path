@@ -62,7 +62,7 @@ public class PartB_SMAStar {
             successor.getParent().setLeaf(false);
         }
         frontier.addAll(successors);
-    
+
         if (frontier.size() > memorySize) {
             shrinkFrontier(frontier, parentMap, goal, memorySize);
         }
@@ -129,7 +129,7 @@ public class PartB_SMAStar {
         Node current = goal;
         while (current != null) {
             path.add(current);
-            current = parentMap.get(current); // Follow the chain of parents
+            current = current.getParent(); // Follow the chain of parents
         }
         Collections.reverse(path); // Reverse to start from the beginning
         return path;
