@@ -75,7 +75,7 @@ public class PartB_SMAStar {
             Node worstNode = getWorstLeafNode(frontier, parentMap);
             if (worstNode != null) {
                 frontier.remove(worstNode);
-                forgotten.add(worstNode);
+                worstNode.getForgotten().add(worstNode.getParent());
                 Node parent = parentMap.get(worstNode);
                 if (parent != null) {
                     updateParentCost(parent, frontier, goal, parentMap);

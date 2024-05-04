@@ -31,6 +31,7 @@ public class Node implements Comparable<Node> {
         this.fCost = this.cost + this.heuristic;
         this.depth = depth;
         this.leaf = false;
+        this.forgotten = new ArrayList<Node>();
     }
 
     public Node(int d, int angle, Node parent, double cost, Node goal) {
@@ -45,6 +46,7 @@ public class Node implements Comparable<Node> {
         }
         this.fCost = this.cost + this.heuristic;
         this.depth = 0;
+        this.forgotten = new ArrayList<Node>();
     }
 
     public double calculateHeuristic(Node goal) {
