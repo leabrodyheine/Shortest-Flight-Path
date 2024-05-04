@@ -5,6 +5,7 @@ import Algorithms.PartA_DFS;
 import Algorithms.PartB_BestF;
 import Algorithms.PartB_AStar;
 import Algorithms.PartB_SMAStar;
+import Algorithms.PartC_IDS;
 
 import General.Node;
 
@@ -54,6 +55,9 @@ public class P3main {
 				break;
 			case "SMAStar":
 				path = PartB_SMAStar.smaStar(startNode, goalNode, size, memorySize);
+				break;
+			case "IDS":
+				path = PartC_IDS.iterativeDeepeningSearch(startNode, goalNode, size);
 				break;
 			default:
 				System.out.println("fail");

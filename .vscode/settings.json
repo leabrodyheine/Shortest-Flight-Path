@@ -1,0 +1,9 @@
+{
+    "java.project.sourcePaths": [
+        "CS5011-P3/src"
+    ],
+    "java.project.referencedLibraries": [
+        "/Users/leabrody-heine2/Downloads/hamcrest-core-1.3.jar",
+        "/Users/leabrody-heine2/Downloads/junit-4.13.2.jar"
+    ]
+}

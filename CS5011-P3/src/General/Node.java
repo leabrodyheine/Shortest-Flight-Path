@@ -13,6 +13,25 @@ public class Node implements Comparable<Node> {
     double cost; // Cost to reach this node
     double heuristic; // Heuristic value of the node to the goal
     private double fCost; // f-cost: total cost of the node
+    int depth;
+    boolean leaf;
+    List<Node> forgotten;
+
+    // smastar
+    public Node(int d, int angle, Node parent, double cost, Node goal, int depth) {
+        this.d = d;
+        this.angle = angle;
+        this.parent = parent;
+        this.cost = cost;
+        if (goal != null) {
+            this.heuristic = calculateHeuristic(goal);
+        } else {
+            this.heuristic = 0;
+        }
+        this.fCost = this.cost + this.heuristic;
+        this.depth = depth;
+        this.leaf = false;
+    }
 
     public Node(int d, int angle, Node parent, double cost, Node goal) {
         this.d = d;
@@ -20,11 +39,12 @@ public class Node implements Comparable<Node> {
         this.parent = parent;
         this.cost = cost;
         if (goal != null) {
-            this.heuristic = calculateHeuristic(goal); // Should be 0 if this node *is* the goal
+            this.heuristic = calculateHeuristic(goal);
         } else {
             this.heuristic = 0;
         }
         this.fCost = this.cost + this.heuristic;
+        this.depth = 0;
     }
 
     public double calculateHeuristic(Node goal) {
@@ -43,7 +63,7 @@ public class Node implements Comparable<Node> {
             int newAngle = (this.angle + angleChange + 360) % 360;
             if (this.d > 0) {
                 double additionalCost = calculateAngularCost(this.d, angleChange);
-                successors.add(new Node(this.d, newAngle, this, this.cost + additionalCost, goal));
+                successors.add(new Node(this.d, newAngle, this, this.cost + additionalCost, goal, this.depth + 1));
             }
         }
 
@@ -51,7 +71,7 @@ public class Node implements Comparable<Node> {
             int newD = this.d + distanceChange;
             if (newD > 0 && newD < planetSize) {
                 double additionalCost = calculateRadialCost(distanceChange);
-                successors.add(new Node(newD, this.angle, this, this.cost + additionalCost, goal));
+                successors.add(new Node(newD, this.angle, this, this.cost + additionalCost, goal, this.depth + 1));
             }
         }
         return successors;
@@ -140,5 +160,25 @@ public class Node implements Comparable<Node> {
 
     public void setfCost(double fCost) {
         this.fCost = fCost;
+    }
+
+    public List<Node> getForgotten() {
+        return forgotten;
+    }
+
+    public void setForgotten(List<Node> forgotten) {
+        this.forgotten = forgotten;
+    }
+
+    public int getDepth() {
+        return depth;
+    }
+
+    public void setDepth(int depth) {
+        this.depth = depth;
+    }
+
+    public void setLeaf(boolean leaf) {
+        this.leaf = leaf;
     }
 }

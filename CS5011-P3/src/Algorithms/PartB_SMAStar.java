@@ -13,77 +13,61 @@ public class PartB_SMAStar {
                         .thenComparingInt(Node::getD)
                         .thenComparingInt(Node::getAngle));
         Map<Node, Node> parentMap = new HashMap<>();
-        Set<Node> visited = new HashSet<>();
         Map<Node, Double> costSoFar = new HashMap<>();
+        int visitedCount = 0;
 
         frontier.add(start);
         parentMap.put(start, null);
         costSoFar.put(start, 0.0);
 
         while (!frontier.isEmpty()) {
-            if (frontier.size() > memorySize) {
-                shrinkFrontier(frontier, parentMap, goal, memorySize);
-            }
-
+            visitedCount++;
             printFrontier(frontier);
             Node current = frontier.poll();
 
-            if (visited.contains(current)) {
-                continue;
-            } else if (current.getfCost() >= 10000.0) {
-                continue;
+            if (current.getfCost() >= 10000.0) {
+                break;
             }
-                
-            visited.add(current);
 
             if (current.equals(goal)) {
                 List<Node> path = constructPath(current, parentMap);
-                printPath(path, visited.size());
+                printPath(path, visitedCount);
                 return path;
             }
 
-            expand(current, frontier, parentMap, goal, planetSize, visited, costSoFar);
+            updateFrontier(frontier, current, goal, planetSize, memorySize, parentMap);
         }
         System.out.println("fail");
-        System.out.println(visited.size());
+        System.out.println(visitedCount);
         return null;
     }
 
-    private static void expand(Node current, PriorityQueue<Node> frontier, Map<Node, Node> parentMap, Node goal,
-            int planetSize, Set<Node> visited, Map<Node, Double> costSoFar) {
-
-        List<Node> successors = current.getSuccessors(planetSize, goal);
-
+    private static void updateFrontier(PriorityQueue<Node> frontier, Node current, Node goal, int planetSize, int memorySize,
+            Map<Node, Node> parentMap) {
+        List<Node> successors;
+        if (current.getForgotten() == null) {
+            successors = current.getSuccessors(memorySize, goal);
+        } else {
+            successors = current.getForgotten();
+        }
         for (Node successor : successors) {
-            double newCost = costSoFar.getOrDefault(current, Double.POSITIVE_INFINITY) + successor.getCost();
-                if (!visited.contains(successor) && (newCost < costSoFar.getOrDefault(successor, Double.POSITIVE_INFINITY))) {
-                    costSoFar.put(successor, newCost);
-                    successor.setfCost(newCost + successor.calculateHeuristic(goal));
-                    parentMap.put(successor, current);
-                    frontier.add(successor);
+            if (current.getForgotten().contains(successor)) {
+                current.getForgotten().remove(successor);
+            } else {
+                if (!successor.equals(goal) && successor.getDepth() == memorySize) {
+                    successor.setfCost(Double.POSITIVE_INFINITY);
                 }
             }
-
-        //     double newCost = current.getCost() + current.distance(successor);
-        //     System.out.println("newCost: " + newCost);
-        //     double newHeuristic = successor.calculateHeuristic(goal);
-        //     System.out.println("newHueristic: " + newHeuristic);
-        //     double newFcost = newCost + newHeuristic;
-        //     System.out.println("newFcost: " + newFcost);
-
-        //     if (!visited.contains(successor) && (!frontier.contains(successor) || newFcost < successor.getfCost())) {
-        //         if (frontier.contains(successor)) {
-        //             frontier.remove(successor);
-        //         }
-        //         visited.add(successor);
-        //         successor.setCost(newCost);
-        //         successor.setHeuristic(newHeuristic);
-        //         successor.setfCost(newFcost);
-        //         frontier.add(successor);
-        //         parentMap.put(successor, current);
-        //     }
-        // }
+            successor.setLeaf(true);
+            successor.getParent().setLeaf(false);
+        }
+        frontier.addAll(successors);
+    
+        if (frontier.size() > memorySize) {
+            shrinkFrontier(frontier, parentMap, goal, memorySize);
+        }
     }
+
 
     private static void shrinkFrontier(PriorityQueue<Node> frontier, Map<Node, Node> parentMap, Node goal,
             int memorySize) {
