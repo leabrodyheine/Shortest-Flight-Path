@@ -1,28 +1,32 @@
 package Algorithms;
+
 import java.util.*;
-import java.util.stream.Collectors;
 
 import General.Node;
 
 public class PartC_IDS {
-    private static List<Node> depthLimitedSearch(Node current, Node goal, int depth, int maxDepth, Map<Node, Node> parentMap, Set<Node> visited, int planetSize) {
-        // Print the current frontier for debugging
-        printFrontier(Arrays.asList(current));
 
-        if (depth > maxDepth) return null; // Depth limit reached
-        if (current.equals(goal)) { // Goal check
-            return constructPath(goal, parentMap); // Construct and return the path
-        }
+    private static List<Node> depthLimitedSearch(Node current, Node goal, int depth, Map<Node, Node> parentMap,
+            Set<Node> visited, int planetSize) {
         visited.add(current);
 
-        List<Node> successors = current.getSuccessors(planetSize, goal);
-        Collections.sort(successors); // Sort successors to maintain consistent order
+        if (current.equals(goal)) {
+            List<Node> path = constructPath(current, parentMap);
+            return path;
+        }
+        if (depth == 0) {
+            return null;
+        }
 
-        for (Node next : successors) {
-            if (!visited.contains(next)) {
-                parentMap.put(next, current);
-                List<Node> result = depthLimitedSearch(next, goal, depth + 1, maxDepth, parentMap, visited, planetSize);
-                if (result != null) return result; // Found a path
+        List<Node> successors = current.getSuccessors(planetSize, goal);
+        Collections.sort(successors);
+
+        for (Node node : successors) {
+            if (!visited.contains(node)) {
+                parentMap.put(node, current);
+                List<Node> result = depthLimitedSearch(node, goal, depth - 1, parentMap, visited, planetSize);
+                if (result != null)
+                    return result;
             }
         }
         return null;
@@ -35,23 +39,16 @@ public class PartC_IDS {
             Map<Node, Node> parentMap = new HashMap<>();
             parentMap.put(start, null);
 
-            List<Node> path = depthLimitedSearch(start, goal, 0, depth, parentMap, visited, planetSize);
+            List<Node> path = depthLimitedSearch(start, goal, depth, parentMap, visited, planetSize);
             if (path != null) {
-                printPath(path, visited.size()); // Print the path and stats if found
+                System.out.println(visited);
+                printPath(path, visited.size());
                 return path;
             }
+            System.out.println(visited);
         }
         System.out.println("fail");
-        return null; // No path found within the depth limit
-    }
-
-    private static void printFrontier(Collection<Node> frontier) {
-        if (!frontier.isEmpty()) {
-            String result = frontier.stream()
-                    .map(Node::toString)
-                    .collect(Collectors.joining(","));
-            System.out.println("[" + result + "]");
-        }
+        return null;
     }
 
     private static List<Node> constructPath(Node goal, Map<Node, Node> parentMap) {
@@ -59,7 +56,7 @@ public class PartC_IDS {
         Node current = goal;
         while (current != null) {
             path.addFirst(current);
-            current = parentMap.get(current); 
+            current = parentMap.get(current);
         }
         return path;
     }
