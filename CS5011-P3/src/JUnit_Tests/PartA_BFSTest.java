@@ -41,37 +41,48 @@ public class PartA_BFSTest {
     }
 
     @Test
-    public void testNoPathAvailable() {
-        // Setup scenario where there is no path
-        Node start = new Node(0, 0, null, 0, null);
-        Node goal = new Node(4, 180, null, 0, null);
-        int planetSize = 5; // Use an appropriate size where no path exists due to setup
+    public void testGoalOfZero() {
+        System.setOut(new PrintStream(outContent));
 
-        List<Node> result = PartA_BFS.bfs(start, goal, planetSize);
-        assertNull("Should return null when no path is available.", result);
-    }
+        Node start = new Node(1, 0, null, 0, null);
+        Node goal = new Node(0, 0, null, 0, null);
+        int planetSize = 5; // Use an appropriate size where no path exists due to setup
+        String frontier_result = "[(3:0)]\n"
+                + "[(2:0),(3:45),(3:315)]\n"
+                + "[(3:45),(3:315),(1:0),(2:45),(2:315)]\n"
+                + "[(3:315),(1:0),(2:45),(2:315),(3:90)]\n"
+                + "[(1:0),(2:45),(2:315),(3:90),(3:270)]\n"
+                + "[(2:45),(2:315),(3:90),(3:270),(1:45),(1:315)]\n"
+                + "[(2:315),(3:90),(3:270),(1:45),(1:315),(2:90)]\n"
+                + "[(3:90),(3:270),(1:45),(1:315),(2:90),(2:270)]\n"
+                + "(3:0)(3:45)(3:90)\n"
+                + "4.712\n"
+                + "8\n";
+
+        PartA_BFS.bfs(start, goal, planetSize);
+        assertEquals(frontier_result, outContent.toString());
+    } // expected here is weirdly long?
 
     @Test
     public void testEdgeOfTheGrid() {
-        // Testing edge conditions
-        Node start = new Node(4, 0, null, 0, null);
-        Node goal = new Node(4, 315, null, 0, null);
-        int planetSize = 5; // Ensuring the edge of the grid is handled
+        System.setOut(new PrintStream(outContent));
 
-        List<Node> result = PartA_BFS.bfs(start, goal, planetSize);
-        assertNotNull(result);
-        assertTrue("The path should navigate along the edge to the goal.", result.contains(goal));
-    }
+        Node start = new Node(3, 0, null, 0, null);
+        Node goal = new Node(3, 45, null, 0, null);
+        int planetSize = 2; // Ensuring the edge of the grid is handled
+        String frontier_result = "[(3:0)]\n"
+                + "[(2:0),(3:45),(3:315)]\n"
+                + "[(3:45),(3:315),(1:0),(2:45),(2:315)]\n"
+                + "[(3:315),(1:0),(2:45),(2:315),(3:90)]\n"
+                + "[(1:0),(2:45),(2:315),(3:90),(3:270)]\n"
+                + "[(2:45),(2:315),(3:90),(3:270),(1:45),(1:315)]\n"
+                + "[(2:315),(3:90),(3:270),(1:45),(1:315),(2:90)]\n"
+                + "[(3:90),(3:270),(1:45),(1:315),(2:90),(2:270)]\n"
+                + "(3:0)(3:45)(3:90)\n"
+                + "4.712\n"
+                + "8\n";
 
-    @Test
-    public void testDirectPath() {
-        // Test direct path from start to goal
-        Node start = new Node(1, 0, null, 0, null);
-        Node goal = new Node(1, 45, null, 0, null); // One step away
-        int planetSize = 5; // Sufficient to reach from start to goal
-
-        List<Node> result = PartA_BFS.bfs(start, goal, planetSize);
-        assertNotNull(result);
-        assertEquals("The goal should be the last node in the path.", goal, result.get(result.size() - 1));
-    }
+        PartA_BFS.bfs(start, goal, planetSize);
+        assertEquals(frontier_result, outContent.toString());
+    } // this should fail?
 }
