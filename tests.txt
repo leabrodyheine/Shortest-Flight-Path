@@ -11,26 +11,5 @@ Testing CS5011 P3 Practical
 * COMPARISON TEST - 07_BESTF0/prog-run-07_BESTF0.out : pass
 * COMPARISON TEST - 08_ASTAR0/prog-run-08_ASTAR0.out : pass
 * COMPARISON TEST - 09_SMASTAR0/prog-run-09_SMASTAR0.out : pass
-* COMPARISON TEST - 10_SMASTAR1/prog-run-10_SMASTAR1.out : fail
---- expected output ---
-World: Oedipus 2
-Departure airport -- Start: 1:0
-Destination airport -- Goal: 1:90
-Search algorithm: SMAStar
-[(1:0)1.414]
-[(1:45)10000.000,(1:315)10000.000]
-fail
-2
---- submission output ---
-World: Oedipus 2
-Departure airport -- Start: 1:0
-Destination airport -- Goal: 1:90
-Search algorithm: SMAStar
-[(1:0)1.414]
-[(1:45)1.551,(1:315)2.633]
-[(1:90)1.571,(1:315)2.633]
-fail
-3
----
-
-11 out of 12 tests passed
+* COMPARISON TEST - 10_SMASTAR1/prog-run-10_SMASTAR1.out : pass
+12 out of 12 tests passed
