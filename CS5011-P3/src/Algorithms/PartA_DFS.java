@@ -1,6 +1,7 @@
 package Algorithms;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import General.Node;
 
 public class PartA_DFS {
@@ -40,14 +41,17 @@ public class PartA_DFS {
             }
         }
         System.out.println("fail");
-        System.out.println(visited.size());
+        System.out.println(visited.size()); // Print the number of unique nodes processed
         return null;
     }
 
     private static void printFrontier(Stack<Node> frontier) {
         if (!frontier.isEmpty()) {
+            // String result = frontier.stream()
+            //         .map(Node::toString)
+            //         .collect(Collectors.joining(","));
             String result = "";
-            for (int i = frontier.size() - 1; i >= 0; i--) {
+            for (int i = frontier.size() - 1; i >= 0; i--){
                 Node node = frontier.get(i);
                 result += node.toString() + ",";
 
@@ -57,11 +61,12 @@ public class PartA_DFS {
     }
 
     private static List<Node> constructPath(Node goal, Map<Node, Node> parentMap) {
-        List<Node> path = new ArrayList<>();
-        for (Node current = goal; current != null; current = parentMap.get(current)) {
-            path.add(current);
+        LinkedList<Node> path = new LinkedList<>();
+        Node current = goal;
+        while (current != null) {
+            path.addFirst(current);
+            current = parentMap.get(current); // Retrieve the parent from the map
         }
-        Collections.reverse(path);
         return path;
     }
 
