@@ -65,17 +65,26 @@ public class PartA_DFS {
         return path;
     }
 
+    // public static void printPath(List<Node> path, int visitedCount) {
+    //     if (path == null || path.isEmpty()) {
+    //         System.out.println("fail");
+    //     } else {
+    //         for (Node node : path) {
+    //             System.out.print(node + "");
+    //         }
+    //         Node lastNode = path.get(path.size() - 1);
+    //         double cost = lastNode.getCost();
+    //         System.out.println();
+    //         System.out.printf("%.3f\n%d\n", cost, visitedCount);
+    //     }
+    // }
     public static void printPath(List<Node> path, int visitedCount) {
         if (path == null || path.isEmpty()) {
             System.out.println("fail");
         } else {
-            for (Node node : path) {
-                System.out.print(node + "");
-            }
+            path.forEach(node -> System.out.print(node));
             Node lastNode = path.get(path.size() - 1);
-            double cost = lastNode.getCost();
-            System.out.println();
-            System.out.printf("%.3f\n%d\n", cost, visitedCount);
+            System.out.printf("\n%.3f\n%d\n", lastNode.getCost(), visitedCount);
         }
     }
 }

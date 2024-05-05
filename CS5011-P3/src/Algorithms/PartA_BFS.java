@@ -27,7 +27,7 @@ public class PartA_BFS {
 
             List<Node> successors = current.getSuccessors(planetSize, goal);
 
-            Collections.sort(successors);
+            // Collections.sort(successors);
 
             for (Node next : successors) {
                 if (!visited.contains(next) && !frontier.contains(next)) {
