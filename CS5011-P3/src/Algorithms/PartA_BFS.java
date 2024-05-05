@@ -54,17 +54,6 @@ public class PartA_BFS {
         }
     }
 
-    // private static List<Node> constructPath(Node goal, Map<Node, Node> parentMap)
-    // {
-    // LinkedList<Node> path = new LinkedList<>();
-    // Node current = goal;
-    // while (current != null) {
-    // path.addFirst(current);
-    // current = parentMap.get(current);
-    // }
-    // return path;
-    // }
-
     private static List<Node> constructPath(Node goal, Map<Node, Node> parentMap) {
         List<Node> path = new ArrayList<>();
         for (Node current = goal; current != null; current = parentMap.get(current)) {

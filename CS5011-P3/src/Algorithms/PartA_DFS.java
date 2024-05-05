@@ -47,7 +47,7 @@ public class PartA_DFS {
     private static void printFrontier(Stack<Node> frontier) {
         if (!frontier.isEmpty()) {
             String result = "";
-            for (int i = frontier.size() - 1; i >= 0; i--){
+            for (int i = frontier.size() - 1; i >= 0; i--) {
                 Node node = frontier.get(i);
                 result += node.toString() + ",";
 
@@ -57,12 +57,11 @@ public class PartA_DFS {
     }
 
     private static List<Node> constructPath(Node goal, Map<Node, Node> parentMap) {
-        LinkedList<Node> path = new LinkedList<>();
-        Node current = goal;
-        while (current != null) {
-            path.addFirst(current);
-            current = parentMap.get(current); 
+        List<Node> path = new ArrayList<>();
+        for (Node current = goal; current != null; current = parentMap.get(current)) {
+            path.add(current);
         }
+        Collections.reverse(path);
         return path;
     }
 
