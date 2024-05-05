@@ -40,7 +40,7 @@ public class P3main {
 	private static void runSearch(String algo, int size, Node startNode, Node goalNode, int memorySize) {
 		List<Node> path = null;
 
-		if (size > goalNode.getD() || size > startNode.getD()) {
+		if (size > (goalNode.getD() + 1) || size > (startNode.getD() + 1)) {
 			System.out.println("fail");
 		} else {
 			switch (algo) {
