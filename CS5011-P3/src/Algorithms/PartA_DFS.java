@@ -41,15 +41,12 @@ public class PartA_DFS {
             }
         }
         System.out.println("fail");
-        System.out.println(visited.size()); // Print the number of unique nodes processed
+        System.out.println(visited.size());
         return null;
     }
 
     private static void printFrontier(Stack<Node> frontier) {
         if (!frontier.isEmpty()) {
-            // String result = frontier.stream()
-            //         .map(Node::toString)
-            //         .collect(Collectors.joining(","));
             String result = "";
             for (int i = frontier.size() - 1; i >= 0; i--){
                 Node node = frontier.get(i);
@@ -65,7 +62,7 @@ public class PartA_DFS {
         Node current = goal;
         while (current != null) {
             path.addFirst(current);
-            current = parentMap.get(current); // Retrieve the parent from the map
+            current = parentMap.get(current);
         }
         return path;
     }
