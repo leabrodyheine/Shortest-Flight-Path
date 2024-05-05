@@ -19,16 +19,14 @@ public class PartB_SMAStarTests {
     public void testBasicPathfinding() {
         System.setOut(new PrintStream(outContent));
 
-        Node start = new Node(1, 0, null, 0, null);
         Node goal = new Node(1, 90, null, 0, null);
+        Node start = new Node(1, 0, null, 0, goal);
         int planetSize = 2; // Setting the planet size for successor generation
         int memorySize = 2;
-        String frontier_result = "[(1:90)0.000]\n"
-                + "[(1:135)1.551,(1:45)2.633,(2:90)3.236]\n"
-                + "[(1:180)2.356,(1:45)2.633,(2:90)3.236,(2:135)4.044]\n"
-                + "(1:90)(1:135)(1:180)\n"
-                + "1.571\n"
-                + "3\n";
+        String frontier_result = "[(1:0)1.414]\n"
+        + "[(1:45)10000.000,(1:315)10000.000]\n"
+        + "fail\n"
+        + "2\n";
 
         PartB_SMAStar.smaStar(start, goal, planetSize, memorySize);
         assertEquals(frontier_result, outContent.toString());
@@ -38,8 +36,8 @@ public class PartB_SMAStarTests {
     public void testGoalOfZero() {
         System.setOut(new PrintStream(outContent));
 
-        Node start = new Node(1, 0, null, 0, null);
-        Node goal = new Node(1, 90, null, 0, null);
+        Node goal = new Node(0, 0, null, 0, null);
+        Node start = new Node(1, 0, null, 0, goal);
         int planetSize = 2; // Setting the planet size for successor generation
         int memorySize = 2;
         String frontier_result = "[(1:90)0.000]\n"

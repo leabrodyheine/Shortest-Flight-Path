@@ -43,13 +43,15 @@ public class PartB_SMAStar {
     private static void updateFrontier(PriorityQueue<Node> frontier, Node current, Node goal, int planetSize,
             int memorySize,
             Map<Node, Node> parentMap) {
+
         List<Node> successors;
         if (current.getForgotten().size() == 0) {
-            successors = current.getSuccessors(memorySize, goal);
+            successors = current.getSuccessors(planetSize, goal);
         } else {
             successors = current.getForgotten();
         }
         for (Node successor : successors) {
+
             if (current.getForgotten().contains(successor)) {
                 current.getForgotten().remove(successor);
             } else {

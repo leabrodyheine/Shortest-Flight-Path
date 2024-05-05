@@ -45,7 +45,7 @@ public class Node implements Comparable<Node> {
             this.heuristic = 0;
         }
         this.fCost = this.cost + this.heuristic;
-        this.depth = 0;
+        this.depth = 1;
         this.forgotten = new ArrayList<Node>();
     }
 
