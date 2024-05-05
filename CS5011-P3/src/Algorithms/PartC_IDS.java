@@ -51,24 +51,4 @@ public class PartC_IDS {
         System.out.println("fail");
         return null;
     }
-
-    private static List<Node> constructPath(Node goal, Map<Node, Node> parentMap) {
-        LinkedList<Node> path = new LinkedList<>();
-        Node current = goal;
-        while (current != null) {
-            path.addFirst(current);
-            current = parentMap.get(current);
-        }
-        return path;
-    }
-
-    // public static void printPath(List<Node> path, int visitedCount) {
-    //     if (path == null || path.isEmpty()) {
-    //         System.out.println("fail");
-    //     } else {
-    //         path.forEach(node -> System.out.print(node));
-    //         Node lastNode = path.get(path.size() - 1);
-    //         System.out.printf("\n%.3f\n%d\n", lastNode.getCost(), visitedCount);
-    //     }
-    // }
 }
