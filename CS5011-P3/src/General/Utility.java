@@ -1,6 +1,7 @@
 package General;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +18,7 @@ public class Utility {
      *
      * @param frontier The collection of nodes currently in the frontier.
      */
-    private static void printFrontier(Collection<Node> frontier) {
+    public static void printFrontier(Collection<Node> frontier) {
         if (!frontier.isEmpty()) {
             StringBuilder result = new StringBuilder();
             for (Node node : frontier) {
