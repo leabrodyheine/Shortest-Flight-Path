@@ -1,15 +1,20 @@
 Testing CS5011 P3 Practical
 - Looking for submission in a directory called 'src': found at 'CS5011-P3/src'
-* BUILD TEST - build-all : pass
-* COMPARISON TEST - 00_BFS0/prog-run-00_BFS0.out : pass
-* COMPARISON TEST - 01_BFS1/prog-run-01_BFS1.out : pass
-* COMPARISON TEST - 02_BFS2/prog-run-02_BFS2.out : pass
-* COMPARISON TEST - 03_BFS3/prog-run-03_BFS.out : pass
-* COMPARISON TEST - 04_DFS0/prog-run-04_DFS0.out : pass
-* COMPARISON TEST - 05_DFS1/prog-run-05_DFS1.out : pass
-* COMPARISON TEST - 06_DFS2/prog-run-06_DFS2.out : pass
-* COMPARISON TEST - 07_BESTF0/prog-run-07_BESTF0.out : pass
-* COMPARISON TEST - 08_ASTAR0/prog-run-08_ASTAR0.out : pass
-* COMPARISON TEST - 09_SMASTAR0/prog-run-09_SMASTAR0.out : pass
-* COMPARISON TEST - 10_SMASTAR1/prog-run-10_SMASTAR1.out : pass
-12 out of 12 tests passed
+* BUILD TEST - build-all : fail
+--- submission output ---
+./General/Utility.java:20: error: cannot find symbol
+    private static void printFrontier(Collection<Node> frontier) {
+                                      ^
+  symbol:   class Collection
+  location: class Utility
+./Algorithms/PartA_BFS.java:31: error: printFrontier(<any>) has private access in Utility
+            Utility.printFrontier(frontier);
+                   ^
+./Algorithms/PartA_DFS.java:32: error: printFrontier(<any>) has private access in Utility
+            Utility.printFrontier(frontier);
+                   ^
+3 errors
+---
+
+0 out of 1 tests passed
+Building is failing, so some tests were skipped
