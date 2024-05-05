@@ -29,7 +29,7 @@ public class PartA_DFS {
         parentMap.put(start, null);
 
         while (!frontier.isEmpty()) {
-            Utility.printFrontier(frontier);
+            printFrontier(frontier);
             Node current = frontier.pop();
 
             if (visited.contains(current)) {
@@ -58,20 +58,20 @@ public class PartA_DFS {
         return null;
     }
 
-    // /**
-    //  * Prints the current state of the frontier (nodes to be visited).
-    //  *
-    //  * @param frontier The stack containing the nodes currently in the frontier.
-    //  */
-    // private static void printFrontier(Stack<Node> frontier) {
-    //     if (!frontier.isEmpty()) {
-    //         String result = "";
-    //         for (int i = frontier.size() - 1; i >= 0; i--) {
-    //             Node node = frontier.get(i);
-    //             result += node.toString() + ",";
+    /**
+     * Prints the current state of the frontier (nodes to be visited).
+     *
+     * @param frontier The stack containing the nodes currently in the frontier.
+     */
+    private static void printFrontier(Stack<Node> frontier) {
+        if (!frontier.isEmpty()) {
+            String result = "";
+            for (int i = frontier.size() - 1; i >= 0; i--) {
+                Node node = frontier.get(i);
+                result += node.toString() + ",";
 
-    //         }
-    //         System.out.println("[" + result.substring(0, result.length() - 1) + "]");
-    //     }
-    // }
+            }
+            System.out.println("[" + result.substring(0, result.length() - 1) + "]");
+        }
+    }
 }

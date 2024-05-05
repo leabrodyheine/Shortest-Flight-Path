@@ -3,6 +3,7 @@ package Algorithms;
 import General.Node;
 import java.util.*;
 import java.util.stream.Collectors;
+import General.Utility;
 
 public class PartB_AStar {
     public static List<Node> AStar(Node start, Node goal, int planetSize) {
@@ -20,7 +21,7 @@ public class PartB_AStar {
 
         while (!frontier.isEmpty()) {
             printFrontier(frontier);
-            Node current = frontier.poll(); // Automatically removes the best node
+            Node current = frontier.poll();
 
             if (visited.contains(current)) {
                 continue;
@@ -29,8 +30,8 @@ public class PartB_AStar {
             visited.add(current);
 
             if (current.equals(goal)) {
-                List<Node> path = constructPath(current, parentMap);
-                printPath(path, visited.size());
+                List<Node> path = Utility.constructPath(current, parentMap);
+                Utility.printPath(path, visited.size());
                 return path;
             }
 
@@ -64,26 +65,6 @@ public class PartB_AStar {
                     .map(node -> node.toString() + String.format("%.3f", node.getfCost()))
                     .collect(Collectors.joining(","));
             System.out.println("[" + result + "]");
-        }
-    }
-
-    private static List<Node> constructPath(Node goal, Map<Node, Node> parentMap) {
-        LinkedList<Node> path = new LinkedList<>();
-        Node current = goal;
-        while (current != null) {
-            path.addFirst(current);
-            current = parentMap.get(current);
-        }
-        return path;
-    }
-
-    public static void printPath(List<Node> path, int visitedCount) {
-        if (path == null || path.isEmpty()) {
-            System.out.println("fail");
-        } else {
-            path.forEach(node -> System.out.print(node));
-            Node lastNode = path.get(path.size() - 1);
-            System.out.printf("\n%.3f\n%d\n", lastNode.getCost(), visitedCount);
         }
     }
 }

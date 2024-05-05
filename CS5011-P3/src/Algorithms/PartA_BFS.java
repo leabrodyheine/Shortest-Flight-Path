@@ -52,21 +52,4 @@ public class PartA_BFS {
         Utility.algorithmFails(visited);
         return null;
     }
-
-    // /**
-    //  * Prints the current state of the frontier.
-    //  *
-    //  * @param frontier The collection of nodes currently in the frontier.
-    //  */
-    // private static void printFrontier(Collection<Node> frontier) {
-    //     if (!frontier.isEmpty()) {
-    //         StringBuilder result = new StringBuilder();
-    //         for (Node node : frontier) {
-    //             if (result.length() > 0)
-    //                 result.append(",");
-    //             result.append(node.toString());
-    //         }
-    //         System.out.println("[" + result + "]");
-    //     }
-    // }
 }
