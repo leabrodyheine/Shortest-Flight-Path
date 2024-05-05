@@ -1,9 +1,9 @@
 package Algorithms;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
 import General.Node;
-
 
 public class PartA_BFS {
 
@@ -14,7 +14,6 @@ public class PartA_BFS {
 
         frontier.add(start);
         parentMap.put(start, null);
-
 
         while (!frontier.isEmpty()) {
             printFrontier(frontier);
@@ -27,7 +26,7 @@ public class PartA_BFS {
             visited.add(current);
             if (current.equals(goal)) {
                 List<Node> path = constructPath(current, parentMap);
-                printPath(path, visited.size());
+                printPath(path, visited.size(), planetSize, goal, start);
                 return path;
             }
 
@@ -67,7 +66,7 @@ public class PartA_BFS {
         return path;
     }
 
-    public static void printPath(List<Node> path, int visitedCount) {
+    public static void printPath(List<Node> path, int visitedCount, int planetSize, Node goal, Node start) {
         if (path == null || path.isEmpty()) {
             System.out.println("fail");
         } else {

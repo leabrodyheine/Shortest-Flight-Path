@@ -38,6 +38,9 @@ public class P3main {
 	}
 
 	private static void runSearch(String algo, int size, Node startNode, Node goalNode, int memorySize) {
+		if (size < goalNode.getD() || size < startNode.getD()) {
+			System.out.println("fail");
+		}
 		switch (algo) {
 			case "BFS":
 				PartA_BFS.bfs(startNode, goalNode, size);

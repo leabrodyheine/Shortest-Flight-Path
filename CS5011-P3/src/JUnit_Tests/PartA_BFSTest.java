@@ -84,5 +84,5 @@ public class PartA_BFSTest {
 
         PartA_BFS.bfs(start, goal, planetSize);
         assertEquals(frontier_result, outContent.toString());
-    } // this should fail?
+    } // Is this correct?
 }
