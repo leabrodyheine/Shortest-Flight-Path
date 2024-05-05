@@ -63,7 +63,7 @@ public class Node implements Comparable<Node> {
 
         for (int angleChange : angleChanges) {
             int newAngle = (this.angle + angleChange + 360) % 360;
-            if (this.d > 0) {
+            if (this.d > 0 && this.d < planetSize) {
                 double additionalCost = calculateAngularCost(this.d, angleChange);
                 successors.add(new Node(this.d, newAngle, this, this.cost + additionalCost, goal, this.depth + 1));
             }

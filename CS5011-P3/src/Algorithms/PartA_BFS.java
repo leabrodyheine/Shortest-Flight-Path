@@ -8,7 +8,7 @@ import General.Node;
 public class PartA_BFS {
 
     public static List<Node> bfs(Node start, Node goal, int planetSize) {
-        Queue<Node> frontier = new LinkedList<>();
+        Queue<Node> frontier = new ArrayDeque<>();
         Map<Node, Node> parentMap = new HashMap<>();
         Set<Node> visited = new HashSet<>(); // Explicitly track visited nodes
 
@@ -19,14 +19,10 @@ public class PartA_BFS {
             printFrontier(frontier);
             Node current = frontier.poll();
 
-            if (visited.contains(current)) {
-                continue;
-            }
-
             visited.add(current);
             if (current.equals(goal)) {
                 List<Node> path = constructPath(current, parentMap);
-                printPath(path, visited.size(), planetSize, goal, start);
+                printPath(path, visited.size());
                 return path;
             }
 
@@ -66,7 +62,7 @@ public class PartA_BFS {
         return path;
     }
 
-    public static void printPath(List<Node> path, int visitedCount, int planetSize, Node goal, Node start) {
+    public static void printPath(List<Node> path, int visitedCount) {
         if (path == null || path.isEmpty()) {
             System.out.println("fail");
         } else {
