@@ -1,7 +1,6 @@
 package Algorithms;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import General.Node;
 
@@ -10,7 +9,7 @@ public class PartA_BFS {
     public static List<Node> bfs(Node start, Node goal, int planetSize) {
         Queue<Node> frontier = new ArrayDeque<>();
         Map<Node, Node> parentMap = new HashMap<>();
-        Set<Node> visited = new HashSet<>(); // Explicitly track visited nodes
+        Set<Node> visited = new HashSet<>();
 
         frontier.add(start);
         parentMap.put(start, null);
@@ -39,26 +38,39 @@ public class PartA_BFS {
         }
 
         System.out.println("fail");
-        System.out.println(visited.size()); // Print the number of unique nodes processed
+        System.out.println(visited.size());
         return null;
     }
 
     private static void printFrontier(Collection<Node> frontier) {
         if (!frontier.isEmpty()) {
-            String result = frontier.stream()
-                    .map(Node::toString)
-                    .collect(Collectors.joining(","));
+            StringBuilder result = new StringBuilder();
+            for (Node node : frontier) {
+                if (result.length() > 0)
+                    result.append(",");
+                result.append(node.toString());
+            }
             System.out.println("[" + result + "]");
         }
     }
 
+    // private static List<Node> constructPath(Node goal, Map<Node, Node> parentMap)
+    // {
+    // LinkedList<Node> path = new LinkedList<>();
+    // Node current = goal;
+    // while (current != null) {
+    // path.addFirst(current);
+    // current = parentMap.get(current);
+    // }
+    // return path;
+    // }
+
     private static List<Node> constructPath(Node goal, Map<Node, Node> parentMap) {
-        LinkedList<Node> path = new LinkedList<>();
-        Node current = goal;
-        while (current != null) {
-            path.addFirst(current);
-            current = parentMap.get(current);
+        List<Node> path = new ArrayList<>();
+        for (Node current = goal; current != null; current = parentMap.get(current)) {
+            path.add(current);
         }
+        Collections.reverse(path);
         return path;
     }
 
