@@ -136,9 +136,9 @@ public class PartB_SMAStar {
         Node current = goal;
         while (current != null) {
             path.add(current);
-            current = current.getParent(); // Follow the chain of parents
+            current = current.getParent();
         }
-        Collections.reverse(path); // Reverse to start from the beginning
+        Collections.reverse(path);
         return path;
     }
 
