@@ -10,29 +10,7 @@ Testing CS5011 P3 Practical
 * COMPARISON TEST - 06_DFS2/prog-run-06_DFS2.out : pass
 * COMPARISON TEST - 07_BESTF0/prog-run-07_BESTF0.out : pass
 * COMPARISON TEST - 08_ASTAR0/prog-run-08_ASTAR0.out : pass
-* COMPARISON TEST - 09_SMASTAR0/prog-run-09_SMASTAR0.out : fail
---- expected output ---
-World: Oedipus 3
-Departure airport -- Start: 2:45
-Destination airport -- Goal: 2:0
-Search algorithm: SMAStar
-[(2:45)1.531]
-[(2:0)1.571,(1:45)2.474,(2:90)4.399]
-(2:45)(2:0)
-1.571
-2
---- submission output ---
-World: Oedipus 3
-Departure airport -- Start: 2:45
-Destination airport -- Goal: 2:0
-Search algorithm: SMAStar
-[(2:45)1.531]
-[(2:0)1.571,(1:45)2.474,(2:90)4.399]
-(2:0)
-1.571
-2
----
-
+* COMPARISON TEST - 09_SMASTAR0/prog-run-09_SMASTAR0.out : pass
 * COMPARISON TEST - 10_SMASTAR1/prog-run-10_SMASTAR1.out : fail
 --- expected output ---
 World: Oedipus 2
@@ -50,22 +28,9 @@ Destination airport -- Goal: 1:90
 Search algorithm: SMAStar
 [(1:0)1.414]
 [(1:45)1.551,(1:315)2.633]
-Exception in thread "main" java.lang.NumberFormatException: Infinite or NaN
-	at java.base/java.math.BigDecimal.<init>(BigDecimal.java:985)
-	at java.base/java.math.BigDecimal.<init>(BigDecimal.java:964)
-	at General.Node.getfCost(Node.java:158)
-	at java.base/java.util.Comparator.lambda$comparingDouble$8dcf42ea$1(Comparator.java:536)
-	at java.base/java.util.Comparator.lambda$thenComparing$36697e65$1(Comparator.java:220)
-	at java.base/java.util.Comparator.lambda$thenComparing$36697e65$1(Comparator.java:220)
-	at java.base/java.util.PriorityQueue.siftUpUsingComparator(PriorityQueue.java:660)
-	at java.base/java.util.PriorityQueue.siftUp(PriorityQueue.java:637)
-	at java.base/java.util.PriorityQueue.offer(PriorityQueue.java:330)
-	at java.base/java.util.PriorityQueue.add(PriorityQueue.java:311)
-	at java.base/java.util.AbstractQueue.addAll(AbstractQueue.java:187)
-	at Algorithms.PartB_SMAStar.updateFrontier(PartB_SMAStar.java:64)
-	at Algorithms.PartB_SMAStar.smaStar(PartB_SMAStar.java:38)
-	at P3main.runSearch(P3main.java:57)
-	at P3main.main(P3main.java:37)
+[(1:90)1.571,(1:315)2.633]
+fail
+3
 ---
 
-10 out of 12 tests passed
+11 out of 12 tests passed
