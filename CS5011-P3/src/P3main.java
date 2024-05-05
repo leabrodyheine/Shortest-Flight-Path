@@ -38,34 +38,28 @@ public class P3main {
 	}
 
 	private static void runSearch(String algo, int size, Node startNode, Node goalNode, int memorySize) {
-		List<Node> path = null;
-
-		if (size > goalNode.getD() || size > startNode.getD()) {
-			System.out.println("fail");
-		} else {
-			switch (algo) {
-				case "BFS":
-					PartA_BFS.bfs(startNode, goalNode, size);
-					break;
-				case "DFS":
-					path = PartA_DFS.dfs(startNode, goalNode, size);
-					break;
-				case "BestF":
-					path = PartB_BestF.BestF(startNode, goalNode, size);
-					break;
-				case "AStar":
-					path = PartB_AStar.AStar(startNode, goalNode, size);
-					break;
-				case "SMAStar":
-					path = PartB_SMAStar.smaStar(startNode, goalNode, size, memorySize);
-					break;
-				case "IDS":
-					path = PartC_IDS.iterativeDeepeningSearch(startNode, goalNode, size);
-					break;
-				default:
-					System.out.println("fail");
-					break;
-			}
+		switch (algo) {
+			case "BFS":
+				PartA_BFS.bfs(startNode, goalNode, size);
+				break;
+			case "DFS":
+				PartA_DFS.dfs(startNode, goalNode, size);
+				break;
+			case "BestF":
+				PartB_BestF.BestF(startNode, goalNode, size);
+				break;
+			case "AStar":
+				PartB_AStar.AStar(startNode, goalNode, size);
+				break;
+			case "SMAStar":
+				PartB_SMAStar.smaStar(startNode, goalNode, size, memorySize);
+				break;
+			case "IDS":
+				PartC_IDS.iterativeDeepeningSearch(startNode, goalNode, size);
+				break;
+			default:
+				System.out.println("fail");
+				break;
 		}
 	}
 }
