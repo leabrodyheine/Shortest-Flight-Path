@@ -35,7 +35,7 @@ public class PartB_BestF {
             List<Node> successors = current.getSuccessors(planetSize, goal);
 
             for (Node next : successors) {
-                if (!explored.contains(next) && !frontier.contains(next)) {
+                if (!explored.contains(next)) {
                     frontier.add(next);
                     parentMap.put(next, current);
                 }
