@@ -49,7 +49,7 @@ public class PartA_BFS {
                 }
             }
         }
-        Utility.algorithmFails(visited);
+        Utility.algorithmFails(visited.size());
         return null;
     }
 }

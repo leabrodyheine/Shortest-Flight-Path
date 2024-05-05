@@ -1,6 +1,7 @@
 package Algorithms;
 
 import General.Node;
+import General.Utility;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -29,14 +30,13 @@ public class PartB_SMAStar {
 
             if (current.equals(goal)) {
                 List<Node> path = constructPath(current, parentMap);
-                printPath(path, visitedCount);
+                Utility.printPath(path, visitedCount);
                 return path;
             }
 
             updateFrontier(frontier, current, goal, planetSize, memorySize, parentMap);
         }
-        System.out.println("fail");
-        System.out.println(visitedCount);
+        Utility.algorithmFails(visitedCount);
         return null;
     }
 
@@ -140,15 +140,5 @@ public class PartB_SMAStar {
         }
         Collections.reverse(path);
         return path;
-    }
-
-    public static void printPath(List<Node> path, int visitedCount) {
-        if (path == null || path.isEmpty()) {
-            System.out.println("fail");
-        } else {
-            path.forEach(node -> System.out.print(node));
-            Node lastNode = path.get(path.size() - 1);
-            System.out.printf("\n%.3f\n%d\n", lastNode.getCost(), visitedCount);
-        }
     }
 }

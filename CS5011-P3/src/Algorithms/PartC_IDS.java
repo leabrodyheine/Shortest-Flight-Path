@@ -3,6 +3,7 @@ package Algorithms;
 import java.util.*;
 
 import General.Node;
+import General.Utility;
 
 public class PartC_IDS {
 
@@ -11,7 +12,7 @@ public class PartC_IDS {
         visited.add(current);
 
         if (current.equals(goal)) {
-            List<Node> path = constructPath(current, parentMap);
+            List<Node> path = Utility.constructPath(current, parentMap);
             return path;
         }
         if (depth == 0) {
@@ -42,7 +43,7 @@ public class PartC_IDS {
             List<Node> path = depthLimitedSearch(start, goal, depth, parentMap, visited, planetSize);
             if (path != null) {
                 System.out.println(visited);
-                printPath(path, visited.size());
+                Utility.printPath(path, visited.size());
                 return path;
             }
             System.out.println(visited);
@@ -61,13 +62,13 @@ public class PartC_IDS {
         return path;
     }
 
-    public static void printPath(List<Node> path, int visitedCount) {
-        if (path == null || path.isEmpty()) {
-            System.out.println("fail");
-        } else {
-            path.forEach(node -> System.out.print(node));
-            Node lastNode = path.get(path.size() - 1);
-            System.out.printf("\n%.3f\n%d\n", lastNode.getCost(), visitedCount);
-        }
-    }
+    // public static void printPath(List<Node> path, int visitedCount) {
+    //     if (path == null || path.isEmpty()) {
+    //         System.out.println("fail");
+    //     } else {
+    //         path.forEach(node -> System.out.print(node));
+    //         Node lastNode = path.get(path.size() - 1);
+    //         System.out.printf("\n%.3f\n%d\n", lastNode.getCost(), visitedCount);
+    //     }
+    // }
 }

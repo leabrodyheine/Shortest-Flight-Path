@@ -12,7 +12,7 @@ public class PartB_BestF {
                 Comparator.comparingDouble(Node::getHeuristic)
                         .thenComparingInt(Node::getAngle)
                         .thenComparingInt(Node::getD));
-        Set<Node> explored = new HashSet<>();
+        Set<Node> visited = new HashSet<>();
         Map<Node, Node> parentMap = new HashMap<>();
 
         parentMap.put(start, null);
@@ -22,31 +22,30 @@ public class PartB_BestF {
             printFrontier(frontier);
             Node current = frontier.poll();
 
-            if (explored.contains(current)) {
+            if (visited.contains(current)) {
                 continue;
             }
 
-            explored.add(current);
+            visited.add(current);
 
             if (current.equals(goal)) {
                 List<Node> path = Utility.constructPath(current, parentMap);
-                Utility.printPath(path, explored.size());
+                Utility.printPath(path, visited.size());
                 return path;
             }
             List<Node> successors = current.getSuccessors(planetSize, goal);
 
             for (Node next : successors) {
-                if (!explored.contains(next)) {
+                if (!visited.contains(next)) {
                     frontier.add(next);
                     parentMap.put(next, current);
                 }
             }
         }
-        System.out.println("fail");
-        System.out.println(explored.size());
+        Utility.algorithmFails(visited.size());
         return null;
     }
-    
+
     private static void printFrontier(PriorityQueue<Node> frontier) {
         Node[] frontierArray = frontier.toArray(new Node[0]);
         Arrays.sort(frontierArray,

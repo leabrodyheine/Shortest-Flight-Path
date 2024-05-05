@@ -8,9 +8,9 @@ import java.util.Map;
 import java.util.Set;
 
 public class Utility {
-    public static void algorithmFails(Set<Node> visited) {
+    public static void algorithmFails(int visited) {
         System.out.println("fail");
-        System.out.println(visited.size());
+        System.out.println(visited);
     }
 
     /**

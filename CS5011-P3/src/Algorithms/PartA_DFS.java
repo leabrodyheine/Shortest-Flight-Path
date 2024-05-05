@@ -54,7 +54,7 @@ public class PartA_DFS {
                 }
             }
         }
-        Utility.algorithmFails(visited);
+        Utility.algorithmFails(visited.size());
         return null;
     }
 
