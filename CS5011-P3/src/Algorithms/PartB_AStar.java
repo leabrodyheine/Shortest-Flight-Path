@@ -1,11 +1,38 @@
 package Algorithms;
 
 import General.Node;
-import java.util.*;
+
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.List;
+import java.util.PriorityQueue;
 import java.util.stream.Collectors;
 import General.Utility;
 
+/**
+ * Implements the A* (A-Star) search algorithm to find the most efficient path
+ * from a start node to a goal node. A* is a best-first search algorithm that
+ * uses costs along with heuristics to estimate the most promising path to the
+ * goal. This class uses a priority queue to keep the nodes prioritized by the
+ * estimated cost to reach the goal, combining the actual cost from the start
+ * and a heuristic estimated cost to the goal.
+ */
 public class PartB_AStar {
+    /**
+     * Executes the A* search algorithm to find the shortest path from a start node
+     * to a goal node within a specified planet size, considering both path cost and
+     * heuristic estimates.
+     *
+     * @param start      The starting node of the path.
+     * @param goal       The target node to reach.
+     * @param planetSize The size of the planet which may limit the search area.
+     * @return A list of nodes representing the shortest path from start to goal if
+     *         one exists, otherwise returns null if no path can be found.
+     */
     public static List<Node> AStar(Node start, Node goal, int planetSize) {
         PriorityQueue<Node> frontier = new PriorityQueue<>(
                 Comparator.comparingDouble(Node::getfCost)
@@ -52,6 +79,14 @@ public class PartB_AStar {
         return null;
     }
 
+    /**
+     * Prints the current state of the frontier in the A* algorithm, where the
+     * frontier is prioritized by f-cost, and for nodes with the same f-cost, by
+     * angle and then distance.
+     *
+     * @param frontier The priority queue representing the frontier of the A*
+     *                 search.
+     */
     private static void printFrontier(PriorityQueue<Node> frontier) {
         Node[] frontierArray = frontier.toArray(new Node[0]);
         Arrays.sort(frontierArray,

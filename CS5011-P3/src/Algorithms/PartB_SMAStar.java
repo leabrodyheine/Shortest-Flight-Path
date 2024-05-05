@@ -2,10 +2,38 @@ package Algorithms;
 
 import General.Node;
 import General.Utility;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.PriorityQueue;
 import java.util.stream.Collectors;
 
+/**
+ * Implements the Simplified Memory-Bounded A* (SMA*) search algorithm, which is
+ * a variant of the A* search algorithm designed to handle limited memory. It
+ * dynamically adjusts the search frontier to maintain the size within a
+ * specified memory bound, using a heuristic to prioritize nodes and truncating
+ * the least promising nodes when necessary.
+ */
 public class PartB_SMAStar {
+    /**
+     * Executes the SMA* search from a start node to a goal node, considering a
+     * defined memory size limit.
+     * 
+     * @param start      The starting node of the search.
+     * @param goal       The goal node to find.
+     * @param planetSize The size of the planet, which may influence the maximum
+     *                   search bounds.
+     * @param memorySize The maximum size of the frontier, limiting the number of
+     *                   nodes stored in memory at one time.
+     * @return A list of nodes representing the path from the start to the goal if
+     *         found; null if no path exists.
+     */
     public static List<Node> smaStar(Node start, Node goal, int planetSize, int memorySize) {
         PriorityQueue<Node> frontier = new PriorityQueue<>(
                 Comparator.comparingDouble(Node::getfCost)
@@ -40,6 +68,18 @@ public class PartB_SMAStar {
         return null;
     }
 
+    /**
+     * Updates the frontier by adding successors of the current node, handling the
+     * memory size constraint by potentially truncating less promising nodes.
+     *
+     * @param frontier   The priority queue used to store nodes during the search.
+     * @param current    The current node being expanded.
+     * @param goal       The goal node of the search.
+     * @param planetSize The size of the planet influencing node expansions.
+     * @param memorySize The maximum number of nodes allowed in the frontier.
+     * @param parentMap  A map linking each node to its parent, used to reconstruct
+     *                   paths.
+     */
     private static void updateFrontier(PriorityQueue<Node> frontier, Node current, Node goal, int planetSize,
             int memorySize,
             Map<Node, Node> parentMap) {
@@ -69,6 +109,17 @@ public class PartB_SMAStar {
         }
     }
 
+    /**
+     * Reduces the size of the frontier when it exceeds the memory limit, removing
+     * the least promising nodes.
+     *
+     * @param frontier   The priority queue of nodes.
+     * @param parentMap  A map of nodes to their parents, used to maintain the
+     *                   search tree's structure.
+     * @param goal       The goal node, used for recalculating heuristic values if
+     *                   needed.
+     * @param memorySize The maximum size of the frontier allowed.
+     */
     private static void shrinkFrontier(PriorityQueue<Node> frontier, Map<Node, Node> parentMap, Node goal,
             int memorySize) {
         while (frontier.size() > memorySize) {
@@ -92,6 +143,15 @@ public class PartB_SMAStar {
         }
     }
 
+    /**
+     * Checks if a node's parent is present in the frontier and if this parent is
+     * the worst in terms of cost among its ancestors.
+     *
+     * @param worstNode The node considered the worst based on its f-cost.
+     * @param frontier  The current frontier.
+     * @return true if the worst parent is found among the ancestors of any node in
+     *         the frontier, false otherwise.
+     */
     private static boolean existsInFrontierWhereWorstParentInAncestors(Node worstNode, PriorityQueue<Node> frontier) {
         for (Node node : frontier) {
             if (ancestors(node).contains(worstNode.getParent())) {
@@ -101,6 +161,13 @@ public class PartB_SMAStar {
         return false;
     }
 
+    /**
+     * Computes and returns the list of ancestor nodes for a given node up to the
+     * root of the search tree.
+     *
+     * @param node The node whose ancestors are to be found.
+     * @return A list of nodes representing the ancestors of the given node.
+     */
     private static List<Node> ancestors(Node node) {
         List<Node> ancestors = new ArrayList<Node>();
         while (node.getParent() != null) {
@@ -110,6 +177,14 @@ public class PartB_SMAStar {
         return ancestors;
     }
 
+    /**
+     * Identifies the node with the worst (highest) f-cost that is a leaf node in
+     * the frontier.
+     *
+     * @param frontier The current frontier.
+     * @return The node with the highest f-cost that does not have any children in
+     *         the search tree.
+     */
     private static Node getWorstLeafNode(PriorityQueue<Node> frontier) {
         return frontier.stream()
                 .filter(node -> node.getLeaf())
@@ -117,6 +192,12 @@ public class PartB_SMAStar {
                 .orElse(null);
     }
 
+    /**
+     * Prints the nodes currently in the frontier along with their f-costs, sorted
+     * by f-cost, angle, and distance.
+     *
+     * @param frontier The priority queue containing the nodes.
+     */
     private static void printFrontier(PriorityQueue<Node> frontier) {
         Node[] frontierArray = frontier.toArray(new Node[0]);
         Arrays.sort(frontierArray,
@@ -131,6 +212,15 @@ public class PartB_SMAStar {
         }
     }
 
+    /**
+     * Constructs the path from the goal node back to the start node using the
+     * parent map.
+     *
+     * @param goal      The goal node where the path ends.
+     * @param parentMap A map of child nodes to their parent nodes as discovered
+     *                  during the search.
+     * @return A list of nodes representing the path from the goal to the start.
+     */
     private static List<Node> constructPath(Node goal, Map<Node, Node> parentMap) {
         List<Node> path = new ArrayList<>();
         Node current = goal;

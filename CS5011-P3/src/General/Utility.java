@@ -5,9 +5,22 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
+/**
+ * A utility class providing common functionalities such as printing the
+ * frontier,
+ * constructing paths, and handling failure cases for graph traversal
+ * algorithms.
+ */
 public class Utility {
+
+    /**
+     * Logs a failure message and the number of visited nodes when an algorithm
+     * cannot find a path.
+     *
+     * @param visited The number of nodes that were visited during the execution of
+     *                the algorithm.
+     */
     public static void algorithmFails(int visited) {
         System.out.println("fail");
         System.out.println(visited);
