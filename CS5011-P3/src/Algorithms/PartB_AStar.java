@@ -69,8 +69,10 @@ public class PartB_AStar {
                     next.setCost(newCost);
                     double priority = newCost + next.calculateHeuristic(goal);
                     next.setfCost(priority);
-                    if (!frontier.contains(next)) {
-                        frontier.add(next);
+
+                    if (!next.getVisited() || frontier.contains(next)) {
+                        frontier.remove(next); // Make sure to remove the old node instance
+                        frontier.add(next); // Add the updated node back to the frontier
                     }
                     parentMap.put(next, current);
                 }
