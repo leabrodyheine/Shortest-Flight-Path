@@ -81,32 +81,60 @@ public class PartB_SMAStar {
      *                   paths.
      */
     private static void updateFrontier(PriorityQueue<Node> frontier, Node current, Node goal, int planetSize,
-            int memorySize,
-            Map<Node, Node> parentMap) {
+            int memorySize, Map<Node, Node> parentMap) {
+        List<Node> successors = new ArrayList<>(
+                current.getForgotten().size() == 0 ? current.getSuccessors(planetSize, goal) : current.getForgotten());
 
-        List<Node> successors;
-        if (current.getForgotten().size() == 0) {
-            successors = current.getSuccessors(planetSize, goal);
-        } else {
-            successors = current.getForgotten();
-        }
+        // Process the nodes to add or remove to/from frontier outside of the iteration
+        // over successors
+        List<Node> toAdd = new ArrayList<>();
         for (Node successor : successors) {
-            if (current.getForgotten().contains(successor)) {
-                current.getForgotten().remove(successor);
-            } else {
-                if (!successor.equals(goal) && successor.getDepth() >= memorySize) {
-                    successor.setfCost(10000);
-                }
+            if (!successor.equals(goal) && successor.getDepth() >= memorySize) {
+                successor.setfCost(10000);
             }
             successor.setLeaf(true);
-            successor.getParent().setLeaf(false);
+            if (successor.getParent() != null) {
+                successor.getParent().setLeaf(false);
+            }
+            toAdd.add(successor);
         }
-        frontier.addAll(successors);
+
+        // Now modify the frontier
+        frontier.addAll(toAdd);
 
         if (frontier.size() > memorySize) {
             shrinkFrontier(frontier, parentMap, goal, memorySize);
         }
     }
+
+    // private static void updateFrontier(PriorityQueue<Node> frontier, Node
+    // current, Node goal, int planetSize,
+    // int memorySize,
+    // Map<Node, Node> parentMap) {
+
+    // List<Node> successors;
+    // if (current.getForgotten().size() == 0) {
+    // successors = current.getSuccessors(planetSize, goal);
+    // } else {
+    // successors = current.getForgotten();
+    // }
+    // for (Node successor : successors) {
+    // if (current.getForgotten().contains(successor)) {
+    // current.getForgotten().remove(successor);
+    // } else {
+    // if (!successor.equals(goal) && successor.getDepth() >= memorySize) {
+    // successor.setfCost(10000);
+    // }
+    // }
+    // successor.setLeaf(true);
+    // successor.getParent().setLeaf(false);
+    // }
+    // frontier.addAll(successors);
+
+    // if (frontier.size() > memorySize) {
+    // shrinkFrontier(frontier, parentMap, goal, memorySize);
+    // }
+    // }
 
     /**
      * Reduces the size of the frontier when it exceeds the memory limit, removing
