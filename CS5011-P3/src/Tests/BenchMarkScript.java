@@ -8,29 +8,46 @@ import Algorithms.PartB_BestF;
 import Algorithms.PartB_SMAStar;
 import Algorithms.PartC_IDS;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 public class BenchMarkScript {
 
     public static void main(String[] args) throws IOException {
         FileWriter writer = new FileWriter("BenchMarkOutput.txt");
-        List<Long> bfs_obs = new ArrayList<Long>();
-        List<Long> dfs_obs = new ArrayList<Long>();
-        List<Long> astar_obs = new ArrayList<Long>();
-        List<Long> bestf_obs = new ArrayList<Long>();
-        List<Long> smastar_obs = new ArrayList<Long>();
-        List<Long> ids_obs = new ArrayList<Long>();
+        PrintStream originalOut = System.out;
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(bos));
 
+        List<Long> bfsTimes = new ArrayList<>();
+        List<Double> bfsCosts = new ArrayList<>();
+
+        List<Long> dfsTimes = new ArrayList<>();
+        List<Double> dfsCosts = new ArrayList<>();
+
+        List<Long> astarTimes = new ArrayList<>();
+        List<Double> astarCosts = new ArrayList<>();
+
+        List<Long> bestfTimes = new ArrayList<>();
+        List<Double> bestfCosts = new ArrayList<>();
+
+        List<Long> smastarTimes = new ArrayList<>();
+        List<Double> smastarCosts = new ArrayList<>();
+
+        List<Long> idsTimes = new ArrayList<>();
+        List<Double> idsCosts = new ArrayList<>();
 
         Random rand = new Random();
-        int planetSize = 20;
-        int memorySize = planetSize;
+        int planetSize = 15;
+        int memorySize = planetSize * 3;
 
-        for (int i = 0; i < 500; i++) {
+        for (int i = 0; i < 100; i++) {
             int goal_d = rand.nextInt(planetSize) + 1;
             int start_d = rand.nextInt(planetSize) + 1;
             int goal_a = rand.nextInt(8) * 45;
@@ -40,47 +57,63 @@ public class BenchMarkScript {
             Node start = new Node(start_d, start_a, null, 0, goal);
 
             long startTime = System.nanoTime();
-            PartA_DFS.dfs(start, goal, planetSize);
-            long endTime = System.nanoTime();
-            long duration = (endTime - startTime);
-            dfs_obs.add(duration);
-
-            startTime = System.nanoTime();
             PartA_BFS.bfs(start, goal, planetSize);
-            endTime = System.nanoTime();
-            duration = (endTime - startTime);
-            bfs_obs.add(duration);
+            long endTime = System.nanoTime();
+            bfsTimes.add(endTime - startTime);
+            bfsCosts.add(parseCost(bos.toString()));
+            bos.reset();
 
             startTime = System.nanoTime();
-            PartB_BestF.BestF(start, goal, planetSize);
+            PartA_DFS.dfs(start, goal, planetSize);
             endTime = System.nanoTime();
-            duration = (endTime - startTime);
-            bestf_obs.add(duration);
+            dfsTimes.add(endTime - startTime);
+            dfsCosts.add(parseCost(bos.toString()));
+            bos.reset();
 
             startTime = System.nanoTime();
             PartB_AStar.AStar(start, goal, planetSize);
             endTime = System.nanoTime();
-            duration = (endTime - startTime);
-            astar_obs.add(duration);
+            astarTimes.add(endTime - startTime);
+            astarCosts.add(parseCost(bos.toString()));
+            bos.reset();
+
+            startTime = System.nanoTime();
+            PartB_BestF.BestF(start, goal, planetSize);
+            endTime = System.nanoTime();
+            bestfTimes.add(endTime - startTime);
+            bestfCosts.add(parseCost(bos.toString()));
+            bos.reset();
+
+            // startTime = System.nanoTime();
+            // PartC_IDS.iterativeDeepeningSearch(start, goal, planetSize);
+            // endTime = System.nanoTime();
+            // idsTimes.add(endTime - startTime);
+            // idsCosts.add(parseCost(bos.toString()));
+            // bos.reset();
 
             startTime = System.nanoTime();
             PartB_SMAStar.smaStar(start, goal, planetSize, memorySize);
             endTime = System.nanoTime();
-            duration = (endTime - startTime);
-            smastar_obs.add(duration);
-
-            startTime = System.nanoTime();
-            PartC_IDS.iterativeDeepeningSearch(start, goal, planetSize);
-            endTime = System.nanoTime();
-            duration = (endTime - startTime);
-            ids_obs.add(duration);
+            smastarTimes.add(endTime - startTime);
+            smastarCosts.add(parseCost(bos.toString()));
+            bos.reset();
         }
-        writer.write("dfs: " + dfs_obs + "\n");
-        writer.write("bfs: " + bfs_obs + "\n");
-        writer.write("astar: " + astar_obs + "\n");
-        writer.write("bestf: " + bestf_obs + "\n");
-        writer.write("smastar: " + smastar_obs + "\n");
-        writer.write("ids: " + ids_obs + "\n");
+        System.setOut(originalOut);
+        writer.write("BFS Times: " + bfsTimes + "\nBFS Costs: " + bfsCosts + "\n");
+        writer.write("DFS Times: " + dfsTimes + "\nDFS Costs: " + dfsCosts + "\n");
+        writer.write("AStar Times: " + astarTimes + "\nAStar Costs: " + astarCosts + "\n");
+        writer.write("BestF Times: " + bestfTimes + "\nBestF Costs: " + bestfCosts + "\n");
+        // writer.write("IDS Times: " + idsTimes + "\nIDS Costs: " + idsCosts + "\n");
+        writer.write("SMAStar Times: " + smastarTimes + "\nIDS Costs: " + smastarCosts + "\n");
         writer.close();
+    }
+
+    private static double parseCost(String output) {
+        Pattern pattern = Pattern.compile("\\((\\d+:\\d+)\\)\\n(\\d+\\.\\d+)");
+        java.util.regex.Matcher matcher = pattern.matcher(output);
+        if (matcher.find()) {
+            return Double.parseDouble(matcher.group(2)); // Get the cost from the regex group
+        }
+        return 0.0; // Return 0 or some error value if not found
     }
 }

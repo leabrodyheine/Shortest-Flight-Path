@@ -33,15 +33,13 @@ public class PartC_IDS {
      */
     private static List<Node> depthLimitedSearch(Node current, Node goal, int depth, Map<Node, Node> parentMap,
             Set<Node> visited, int planetSize) {
-        visited.add(current);
 
-        if (current.equals(goal)) {
-            List<Node> path = Utility.constructPath(current, parentMap);
-            return path;
-        }
-        if (depth == 0) {
+        if (depth == 0 && current.equals(goal)) {
+            return Utility.constructPath(current, parentMap);
+        } else if (depth == 0) {
             return null;
         }
+        visited.add(current);
 
         List<Node> successors = current.getSuccessors(planetSize, goal);
         Collections.sort(successors);
@@ -70,9 +68,9 @@ public class PartC_IDS {
      */
     public static List<Node> iterativeDeepeningSearch(Node start, Node goal, int planetSize) {
         for (int depth = 0; depth <= planetSize; depth++) {
-            Set<Node> visited = new HashSet<>();
             Map<Node, Node> parentMap = new HashMap<>();
             parentMap.put(start, null);
+            Set<Node> visited = new HashSet<>();
 
             List<Node> path = depthLimitedSearch(start, goal, depth, parentMap, visited, planetSize);
             if (path != null) {
@@ -80,7 +78,6 @@ public class PartC_IDS {
                 Utility.printPath(path, visited.size());
                 return path;
             }
-            System.out.println(visited);
         }
         System.out.println("fail");
         return null;
