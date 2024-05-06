@@ -47,9 +47,9 @@ public class PartB_AStar {
         parentMap.put(start, null);
 
         while (!frontier.isEmpty()) {
-            visitedCount++;
             printFrontier(frontier);
             Node current = frontier.poll();
+            visitedCount++;
 
             if (current.getVisited()) {
                 continue;
@@ -63,21 +63,21 @@ public class PartB_AStar {
             }
 
             List<Node> successors = current.getSuccessors(planetSize, goal);
+
             for (Node next : successors) {
-                double newCost = current.getCost() + next.distance(current);
+                // double newCost = current.getCost() + next.distance(current);
+                double newCost = current.getCost() + next.getCost();
+
                 if (!next.getVisited() || newCost < next.getCost()) {
                     next.setCost(newCost);
                     double priority = newCost + next.calculateHeuristic(goal);
                     next.setfCost(priority);
 
-                    // Add to frontier if not visited or not already in the frontier
-                    if (!next.getVisited() && !frontier.contains(next)) {
-                        frontier.add(next);
-                    } else if (frontier.contains(next)) {
+                    if (!next.getVisited() || !frontier.contains(next)) {
                         frontier.remove(next); // Ensure the old instance is removed
                         frontier.add(next); // Re-add with updated cost
+                        parentMap.put(next, current);
                     }
-                    parentMap.put(next, current);
                 }
             }
         }
