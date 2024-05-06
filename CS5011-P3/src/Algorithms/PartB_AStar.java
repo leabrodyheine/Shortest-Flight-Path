@@ -41,8 +41,8 @@ public class PartB_AStar {
         Map<Node, Node> parentMap = new HashMap<>();
 
         int visitedCount = 0;
-        start.setCost(0.0); // Ensure start cost is zero
-        start.setfCost(start.calculateHeuristic(goal));
+        // start.setCost(0.0); // Ensure start cost is zero
+        // start.setfCost(start.calculateHeuristic(goal));
         frontier.add(start);
         parentMap.put(start, null);
 
