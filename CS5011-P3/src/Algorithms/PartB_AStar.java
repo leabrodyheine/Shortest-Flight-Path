@@ -41,8 +41,8 @@ public class PartB_AStar {
         Map<Node, Node> parentMap = new HashMap<>();
 
         int visitedCount = 0;
-        // start.setCost(0.0); // Ensure start cost is zero
-        // start.setfCost(start.calculateHeuristic(goal));
+        start.setCost(0.0); // Ensure start cost is zero
+        start.setfCost(start.calculateHeuristic(goal));
         frontier.add(start);
         parentMap.put(start, null);
 
@@ -70,8 +70,7 @@ public class PartB_AStar {
                     double priority = newCost + next.calculateHeuristic(goal);
                     next.setfCost(priority);
 
-                    if (!next.getVisited() || frontier.contains(next)) {
-                        frontier.remove(next); // Make sure to remove the old node instance
+                    if (!next.getVisited() || !frontier.contains(next)) {
                         frontier.add(next); // Add the updated node back to the frontier
                     }
                     parentMap.put(next, current);
