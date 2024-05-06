@@ -39,12 +39,10 @@ public class PartB_AStar {
                         .thenComparingInt(Node::getD)
                         .thenComparingInt(Node::getAngle));
         Map<Node, Node> parentMap = new HashMap<>();
-        Map<Node, Double> costSoFar = new HashMap<>();
-        Set<Node> visited = new HashSet<>();
+        Set<Node> visited = new HashSet<>(); // bool flag
 
         frontier.add(start);
         parentMap.put(start, null);
-        costSoFar.put(start, 0.0);
 
         while (!frontier.isEmpty()) {
             printFrontier(frontier);
@@ -65,13 +63,17 @@ public class PartB_AStar {
             List<Node> successors = current.getSuccessors(planetSize, goal);
 
             for (Node next : successors) {
-                double newCost = costSoFar.get(current) + next.getCost();
-                if (!costSoFar.containsKey(next) || newCost < costSoFar.get(next)) {
-                    costSoFar.put(next, newCost);
+                // double newCost = costSoFar.get(current) + next.getCost();
+                double newCost = current.getCost() + next.distance(current);
+                if (newCost < next.getCost() && !frontier.contains(next)) {
+                    // if (!costSoFar.containsKey(next) || newCost < costSoFar.get(next)) {
                     double priority = newCost + next.calculateHeuristic(goal);
                     next.setfCost(priority);
-                    frontier.add(next);
+                    next.setCost(newCost);
                     parentMap.put(next, current);
+                    if (!frontier.contains(next)) {
+                        frontier.add(next);
+                    }
                 }
             }
         }

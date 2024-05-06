@@ -1,4 +1,4 @@
-package JUnit_Tests;
+package Tests;
 
 import static org.junit.Assert.assertEquals;
 
@@ -17,8 +17,8 @@ public class PartC_IDSTests {
     public void testBasicPathfinding() {
         System.setOut(new PrintStream(outContent));
 
-        Node start = new Node(3, 0, null, 0, null);
         Node goal = new Node(3, 90, null, 0, null);
+        Node start = new Node(3, 0, null, 0, goal);
         int planetSize = 4;
         String frontier_result = "[(3:0)]\n"
                 + "[(3:315), (3:45), (3:0), (2:0)]\n"
@@ -35,8 +35,8 @@ public class PartC_IDSTests {
     public void testPathOutOfBounds() {
         System.setOut(new PrintStream(outContent));
 
-        Node start = new Node(3, 0, null, 0, null);
         Node goal = new Node(1, 90, null, 0, null);
+        Node start = new Node(3, 0, null, 0, goal);
         int planetSize = 2;
         String frontier_result = "[(3:0)]\n"
         + "[(3:0)]\n"

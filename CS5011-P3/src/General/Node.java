@@ -1,7 +1,4 @@
 package General;
-
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -22,7 +19,8 @@ public class Node implements Comparable<Node> {
     int depth; // Depth in the search tree
     boolean leaf; // Whether the node is currently a leaf in the search tree
     List<Node> forgotten; // Nodes that were pruned from the search frontier
-
+    boolean visited;
+    
     /**
      * Constructs a new Node with specified parameters, used in SMA* algorithm.
      *

@@ -4,7 +4,6 @@ import Algorithms.PartB_BestF;
 import Algorithms.PartB_AStar;
 import Algorithms.PartB_SMAStar;
 import Algorithms.PartC_IDS;
-
 import General.Node;
 
 public class P3main {

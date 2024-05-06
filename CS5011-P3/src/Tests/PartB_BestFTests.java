@@ -1,4 +1,4 @@
-package JUnit_Tests;
+package Tests;
 
 import static org.junit.Assert.assertEquals;
 
@@ -18,10 +18,10 @@ public class PartB_BestFTests {
     public void testBasicPathfinding() {
         System.setOut(new PrintStream(outContent));
 
-        Node start = new Node(1, 90, null, 0, null);
         Node goal = new Node(1, 180, null, 0, null);
+        Node start = new Node(1, 90, null, 0, goal);
         int planetSize = 4; // Setting the planet size for successor generation
-        String frontier_result = "[(1:90)0.000]\n"
+        String frontier_result = "[(1:90)1.414]\n"
                 + "[(1:135)0.765,(1:45)1.848,(2:90)2.236]\n"
                 + "[(1:180)0.000,(2:135)1.474,(1:45)1.848,(2:90)2.236]\n"
                 + "(1:90)(1:135)(1:180)\n"
@@ -36,10 +36,10 @@ public class PartB_BestFTests {
     public void testGoalOfZero() {
         System.setOut(new PrintStream(outContent));
 
-        Node start = new Node(1, 90, null, 0, null);
         Node goal = new Node(0, 0, null, 0, null);
+        Node start = new Node(1, 90, null, 0, goal);
         int planetSize = 2;
-        String frontier_result = "[(1:90)0.000]\n"
+        String frontier_result = "[(1:90)1.000]\n"
                 + "[(1:45)1.000,(1:135)1.000]\n"
                 + "[(1:0)1.000,(1:135)1.000]\n"
                 + "[(1:135)1.000,(1:315)1.000]\n"
@@ -57,10 +57,10 @@ public class PartB_BestFTests {
     public void testGoalOutOfBounds() {
         System.setOut(new PrintStream(outContent));
 
-        Node start = new Node(1, 90, null, 0, null);
         Node goal = new Node(4, 90, null, 0, null);
+        Node start = new Node(1, 90, null, 0, goal);
         int planetSize = 2;
-        String frontier_result = "[(1:90)0.000]\n"
+        String frontier_result = "[(1:90)3.000]\n"
                 + "[(1:45)3.368,(1:135)3.368]\n"
                 + "[(1:135)3.368,(1:0)4.123]\n"
                 + "[(1:0)4.123,(1:180)4.123]\n"
@@ -79,10 +79,10 @@ public class PartB_BestFTests {
     public void testStartOutOfBounds() {
         System.setOut(new PrintStream(outContent));
 
-        Node start = new Node(4, 90, null, 0, null);
         Node goal = new Node(1, 90, null, 0, null);
+        Node start = new Node(4, 90, null, 0, goal);
         int planetSize = 2;
-        String frontier_result = "[(4:90)0.000]\n"
+        String frontier_result = "[(4:90)3.000]\n"
                 + "fail\n"
                 + "1\n";
 

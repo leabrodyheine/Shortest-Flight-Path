@@ -1,4 +1,4 @@
-package JUnit_Tests;
+package Tests;
 
 import static org.junit.Assert.assertEquals;
 
@@ -71,11 +71,11 @@ public class PartB_SMAStarTests {
     public void testPathOutOfBounds() {
         System.setOut(new PrintStream(outContent));
 
-        Node start = new Node(3, 0, null, 0, null);
         Node goal = new Node(1, 90, null, 0, null);
+        Node start = new Node(3, 0, null, 0, goal);
         int planetSize = 2;
         int memorySize = 2;
-        String frontier_result = "[(3:0)0.000]\n"
+        String frontier_result = "[(3:0)3.162]\n"
                 + "fail\n"
                 + "1\n";
 
@@ -87,11 +87,11 @@ public class PartB_SMAStarTests {
     public void testPathOutOfBounds2() {
         System.setOut(new PrintStream(outContent));
 
-        Node start = new Node(1, 0, null, 0, null);
         Node goal = new Node(4, 90, null, 0, null);
+        Node start = new Node(1, 0, null, 0, goal);
         int planetSize = 2;
         int memorySize = 2;
-        String frontier_result = "[(1:0)0.000]\n"
+        String frontier_result = "[(1:0)4.123]\n"
                 + "[(1:45)10000.000,(1:315)10000.000]\n"
                 + "fail\n"
                 + "2\n";
@@ -104,11 +104,11 @@ public class PartB_SMAStarTests {
     public void testPathOutOfBounds3() {
         System.setOut(new PrintStream(outContent));
 
-        Node start = new Node(4, 0, null, 0, null);
         Node goal = new Node(4, 90, null, 0, null);
+        Node start = new Node(4, 0, null, 0, goal);
         int planetSize = 2;
         int memorySize = 2;
-        String frontier_result = "[(4:0)0.000]\n"
+        String frontier_result = "[(4:0)5.657]\n"
                 + "fail\n"
                 + "1\n";
 
@@ -120,11 +120,11 @@ public class PartB_SMAStarTests {
     public void testMemoryConstraint() {
         System.setOut(new PrintStream(outContent));
 
-        Node start = new Node(1, 0, null, 0, null);
         Node goal = new Node(2, 180, null, 0, null);
+        Node start = new Node(1, 0, null, 0, goal);
         int planetSize = 3;
         int memorySize = 2;
-        String frontier_result = "[(1:0)0.000]\n"
+        String frontier_result = "[(1:0)3.000]\n"
                 + "[(2:0)10000.000,(1:315)10000.000]\n"
                 + "fail\n"
                 + "2\n";
