@@ -42,7 +42,7 @@ public class PartB_AStar {
 
         int visitedCount = 0;
         start.setCost(0.0); // Ensure start cost is zero
-        start.setfCost(start.calculateHeuristic(goal));
+        start.setfCost(start.getCost() + start.calculateHeuristic(goal));
         frontier.add(start);
         parentMap.put(start, null);
 
