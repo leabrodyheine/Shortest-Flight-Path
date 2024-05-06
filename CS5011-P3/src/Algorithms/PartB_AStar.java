@@ -71,9 +71,10 @@ public class PartB_AStar {
                     next.setfCost(priority);
 
                     if (!next.getVisited() || !frontier.contains(next)) {
-                        frontier.add(next);
+                        frontier.remove(next); // Ensure the old instance is removed
+                        frontier.add(next); // Re-add with updated cost
+                        parentMap.put(next, current);
                     }
-                    parentMap.put(next, current);
                 }
             }
         }
