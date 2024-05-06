@@ -9,7 +9,29 @@ Testing CS5011 P3 Practical
 * COMPARISON TEST - 05_DFS1/prog-run-05_DFS1.out : pass
 * COMPARISON TEST - 06_DFS2/prog-run-06_DFS2.out : pass
 * COMPARISON TEST - 07_BESTF0/prog-run-07_BESTF0.out : pass
-* COMPARISON TEST - 08_ASTAR0/prog-run-08_ASTAR0.out : pass
+* COMPARISON TEST - 08_ASTAR0/prog-run-08_ASTAR0.out : fail
+--- expected output ---
+World: Oedipus 3
+Departure airport -- Start: 2:45
+Destination airport -- Goal: 2:0
+Search algorithm: AStar
+[(2:45)1.531]
+[(2:0)1.571,(1:45)2.474,(2:90)4.399]
+(2:45)(2:0)
+1.571
+2
+--- submission output ---
+World: Oedipus 3
+Departure airport -- Start: 2:45
+Destination airport -- Goal: 2:0
+Search algorithm: AStar
+[(2:45)1.531]
+[(2:0)0.000,(1:45)2.474,(2:90)2.828]
+(2:45)(2:0)
+0.000
+2
+---
+
 * COMPARISON TEST - 09_SMASTAR0/prog-run-09_SMASTAR0.out : pass
 * COMPARISON TEST - 10_SMASTAR1/prog-run-10_SMASTAR1.out : pass
-12 out of 12 tests passed
+11 out of 12 tests passed
