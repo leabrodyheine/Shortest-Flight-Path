@@ -91,7 +91,6 @@ public class PartB_SMAStar {
             successors = current.getForgotten();
         }
         for (Node successor : successors) {
-
             if (current.getForgotten().contains(successor)) {
                 current.getForgotten().remove(successor);
             } else {

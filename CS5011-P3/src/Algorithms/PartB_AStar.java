@@ -39,49 +39,43 @@ public class PartB_AStar {
                         .thenComparingInt(Node::getD)
                         .thenComparingInt(Node::getAngle));
         Map<Node, Node> parentMap = new HashMap<>();
-
-        int visitedCount = 0;
-        start.setCost(0.0); // Ensure start cost is zero
-        start.setfCost(start.getCost() + start.calculateHeuristic(goal));
+        Map<Node, Double> costSoFar = new HashMap<>();
+        int visitCount = 0;
         frontier.add(start);
         parentMap.put(start, null);
+        costSoFar.put(start, 0.0);
 
         while (!frontier.isEmpty()) {
             printFrontier(frontier);
             Node current = frontier.poll();
-            visitedCount++;
+            visitCount++;
 
             if (current.getVisited()) {
                 continue;
             }
+
             current.setVisited(true);
 
             if (current.equals(goal)) {
                 List<Node> path = Utility.constructPath(current, parentMap);
-                Utility.printPath(path, visitedCount);
+                Utility.printPath(path, visitCount);
                 return path;
             }
 
             List<Node> successors = current.getSuccessors(planetSize, goal);
 
             for (Node next : successors) {
-                // double newCost = current.getCost() + next.distance(current);
-                double newCost = current.getCost() + next.getCost();
-
-                if (!next.getVisited() || newCost < next.getCost()) {
-                    next.setCost(newCost);
+                double newCost = costSoFar.get(current) + next.getCost();
+                if (!costSoFar.containsKey(next) || newCost < costSoFar.get(next)) {
+                    costSoFar.put(next, newCost);
                     double priority = newCost + next.calculateHeuristic(goal);
                     next.setfCost(priority);
-
-                    if (!next.getVisited() || !frontier.contains(next)) {
-                        frontier.remove(next); // Ensure the old instance is removed
-                        frontier.add(next); // Re-add with updated cost
-                        parentMap.put(next, current);
-                    }
+                    frontier.add(next);
+                    parentMap.put(next, current);
                 }
             }
         }
-        Utility.algorithmFails(visitedCount);
+        Utility.algorithmFails(visitCount);
         return null;
     }
 

@@ -5,6 +5,8 @@ import Algorithms.PartA_BFS;
 import Algorithms.PartA_DFS;
 import Algorithms.PartB_AStar;
 import Algorithms.PartB_BestF;
+import Algorithms.PartB_SMAStar;
+import Algorithms.PartC_IDS;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -20,11 +22,15 @@ public class BenchMarkScript {
         List<Long> dfs_obs = new ArrayList<Long>();
         List<Long> astar_obs = new ArrayList<Long>();
         List<Long> bestf_obs = new ArrayList<Long>();
+        List<Long> smastar_obs = new ArrayList<Long>();
+        List<Long> ids_obs = new ArrayList<Long>();
+
 
         Random rand = new Random();
-        int planetSize = 100;
+        int planetSize = 20;
+        int memorySize = planetSize;
 
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 500; i++) {
             int goal_d = rand.nextInt(planetSize) + 1;
             int start_d = rand.nextInt(planetSize) + 1;
             int goal_a = rand.nextInt(8) * 45;
@@ -56,11 +62,25 @@ public class BenchMarkScript {
             endTime = System.nanoTime();
             duration = (endTime - startTime);
             astar_obs.add(duration);
+
+            startTime = System.nanoTime();
+            PartB_SMAStar.smaStar(start, goal, planetSize, memorySize);
+            endTime = System.nanoTime();
+            duration = (endTime - startTime);
+            smastar_obs.add(duration);
+
+            startTime = System.nanoTime();
+            PartC_IDS.iterativeDeepeningSearch(start, goal, planetSize);
+            endTime = System.nanoTime();
+            duration = (endTime - startTime);
+            ids_obs.add(duration);
         }
         writer.write("dfs: " + dfs_obs + "\n");
         writer.write("bfs: " + bfs_obs + "\n");
         writer.write("astar: " + astar_obs + "\n");
         writer.write("bestf: " + bestf_obs + "\n");
+        writer.write("smastar: " + smastar_obs + "\n");
+        writer.write("ids: " + ids_obs + "\n");
         writer.close();
     }
 }
