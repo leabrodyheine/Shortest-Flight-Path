@@ -7,7 +7,6 @@ import java.io.PrintStream;
 
 import org.junit.Test;
 
-import Algorithms.PartA_BFS;
 import Algorithms.PartB_AStar;
 import General.Node;
 

@@ -39,45 +39,44 @@ public class PartB_AStar {
                         .thenComparingInt(Node::getD)
                         .thenComparingInt(Node::getAngle));
         Map<Node, Node> parentMap = new HashMap<>();
-        Set<Node> visited = new HashSet<>(); // bool flag
 
+        int visitedCount = 0;
+        start.setCost(0.0); // Ensure start cost is zero
+        start.setfCost(start.calculateHeuristic(goal));
         frontier.add(start);
         parentMap.put(start, null);
 
         while (!frontier.isEmpty()) {
+            visitedCount++;
             printFrontier(frontier);
             Node current = frontier.poll();
 
-            if (visited.contains(current)) {
+            if (current.getVisited()) {
                 continue;
             }
-
-            visited.add(current);
+            current.setVisited(true);
 
             if (current.equals(goal)) {
                 List<Node> path = Utility.constructPath(current, parentMap);
-                Utility.printPath(path, visited.size());
+                Utility.printPath(path, visitedCount);
                 return path;
             }
 
             List<Node> successors = current.getSuccessors(planetSize, goal);
-
             for (Node next : successors) {
-                // double newCost = costSoFar.get(current) + next.getCost();
                 double newCost = current.getCost() + next.distance(current);
-                if (newCost < next.getCost() && !frontier.contains(next)) {
-                    // if (!costSoFar.containsKey(next) || newCost < costSoFar.get(next)) {
+                if (!next.getVisited() || newCost < next.getCost()) {
+                    next.setCost(newCost);
                     double priority = newCost + next.calculateHeuristic(goal);
                     next.setfCost(priority);
-                    next.setCost(newCost);
-                    parentMap.put(next, current);
                     if (!frontier.contains(next)) {
                         frontier.add(next);
                     }
+                    parentMap.put(next, current);
                 }
             }
         }
-        Utility.algorithmFails(visited.size());
+        Utility.algorithmFails(visitedCount);
         return null;
     }
 

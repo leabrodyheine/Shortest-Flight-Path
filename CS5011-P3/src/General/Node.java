@@ -20,7 +20,7 @@ public class Node implements Comparable<Node> {
     boolean leaf; // Whether the node is currently a leaf in the search tree
     List<Node> forgotten; // Nodes that were pruned from the search frontier
     boolean visited;
-    
+
     /**
      * Constructs a new Node with specified parameters, used in SMA* algorithm.
      *
@@ -45,6 +45,7 @@ public class Node implements Comparable<Node> {
         this.depth = depth;
         this.leaf = false;
         this.forgotten = new ArrayList<Node>();
+        this.visited = false;
     }
 
     /**
@@ -70,6 +71,7 @@ public class Node implements Comparable<Node> {
         this.fCost = this.cost + this.heuristic;
         this.depth = 1;
         this.forgotten = new ArrayList<Node>();
+        this.visited = false;
     }
 
     /**
@@ -272,5 +274,13 @@ public class Node implements Comparable<Node> {
 
     public void setLeaf(boolean leaf) {
         this.leaf = leaf;
+    }
+
+    public void setVisited(boolean visited) {
+        this.visited = visited;
+    }
+
+    public boolean getVisited(){
+        return visited;
     }
 }
