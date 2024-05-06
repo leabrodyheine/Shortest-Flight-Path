@@ -71,7 +71,7 @@ public class PartB_AStar {
                     next.setfCost(priority);
 
                     if (!next.getVisited() || !frontier.contains(next)) {
-                        frontier.add(next); // Add the updated node back to the frontier
+                        frontier.add(next);
                     }
                     parentMap.put(next, current);
                 }
