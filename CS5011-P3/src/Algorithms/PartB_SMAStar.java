@@ -39,12 +39,10 @@ public class PartB_SMAStar {
                 Comparator.comparingDouble(Node::getfCost)
                         .thenComparingInt(Node::getD)
                         .thenComparingInt(Node::getAngle));
-        Map<Node, Node> parentMap = new HashMap<>();
         Map<Node, Double> costSoFar = new HashMap<>();
         int visitedCount = 0;
 
         frontier.add(start);
-        parentMap.put(start, null);
         costSoFar.put(start, 0.0);
 
         while (!frontier.isEmpty()) {
@@ -57,12 +55,12 @@ public class PartB_SMAStar {
             }
 
             if (current.equals(goal)) {
-                List<Node> path = constructPath(current, parentMap);
+                List<Node> path = constructPath(current);
                 Utility.printPath(path, visitedCount);
                 return path;
             }
 
-            updateFrontier(frontier, current, goal, planetSize, memorySize, parentMap);
+            updateFrontier(frontier, current, goal, planetSize, memorySize);
         }
         Utility.algorithmFails(visitedCount);
         return null;
@@ -77,11 +75,9 @@ public class PartB_SMAStar {
      * @param goal       The goal node of the search.
      * @param planetSize The size of the planet influencing node expansions.
      * @param memorySize The maximum number of nodes allowed in the frontier.
-     * @param parentMap  A map linking each node to its parent, used to reconstruct
-     *                   paths.
      */
     private static void updateFrontier(PriorityQueue<Node> frontier, Node current, Node goal, int planetSize,
-            int memorySize, Map<Node, Node> parentMap) {
+            int memorySize) {
         List<Node> successors = new ArrayList<>(
                 current.getForgotten().size() == 0 ? current.getSuccessors(planetSize, goal) : current.getForgotten());
 
@@ -103,7 +99,7 @@ public class PartB_SMAStar {
         frontier.addAll(toAdd);
 
         if (frontier.size() > memorySize) {
-            shrinkFrontier(frontier, parentMap, goal, memorySize);
+            shrinkFrontier(frontier, goal, memorySize);
         }
     }
 
@@ -112,13 +108,11 @@ public class PartB_SMAStar {
      * the least promising nodes.
      *
      * @param frontier   The priority queue of nodes.
-     * @param parentMap  A map of nodes to their parents, used to maintain the
-     *                   search tree's structure.
      * @param goal       The goal node, used for recalculating heuristic values if
      *                   needed.
      * @param memorySize The maximum size of the frontier allowed.
      */
-    private static void shrinkFrontier(PriorityQueue<Node> frontier, Map<Node, Node> parentMap, Node goal,
+    private static void shrinkFrontier(PriorityQueue<Node> frontier, Node goal,
             int memorySize) {
         while (frontier.size() > memorySize) {
             Node worstNode = getWorstLeafNode(frontier);
@@ -215,11 +209,9 @@ public class PartB_SMAStar {
      * parent map.
      *
      * @param goal      The goal node where the path ends.
-     * @param parentMap A map of child nodes to their parent nodes as discovered
-     *                  during the search.
      * @return A list of nodes representing the path from the goal to the start.
      */
-    private static List<Node> constructPath(Node goal, Map<Node, Node> parentMap) {
+    private static List<Node> constructPath(Node goal) {
         List<Node> path = new ArrayList<>();
         Node current = goal;
         while (current != null) {

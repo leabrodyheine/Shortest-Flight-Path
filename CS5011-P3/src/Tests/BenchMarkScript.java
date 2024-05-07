@@ -44,10 +44,10 @@ public class BenchMarkScript {
         List<Double> idsCosts = new ArrayList<>();
 
         Random rand = new Random();
-        int planetSize = 10;
+        int planetSize = 5;
         int memorySize = planetSize + 2;
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 10; i++) {
             int goal_d = rand.nextInt(planetSize) + 1;
             int start_d = rand.nextInt(planetSize) + 1;
             int goal_a = rand.nextInt(8) * 45;
