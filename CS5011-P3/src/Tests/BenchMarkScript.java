@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 public class BenchMarkScript {
 
     public static void main(String[] args) throws IOException {
-        FileWriter writer = new FileWriter("BenchMarkOutput.txt");
+        FileWriter writer = new FileWriter("BenchMarkOutput.txt", true);
         PrintStream originalOut = System.out;
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         System.setOut(new PrintStream(bos));
@@ -44,8 +44,8 @@ public class BenchMarkScript {
         List<Double> idsCosts = new ArrayList<>();
 
         Random rand = new Random();
-        int planetSize = 15;
-        int memorySize = planetSize * 3;
+        int planetSize = 10;
+        int memorySize = planetSize + 2;
 
         for (int i = 0; i < 100; i++) {
             int goal_d = rand.nextInt(planetSize) + 1;
@@ -84,12 +84,12 @@ public class BenchMarkScript {
             bestfCosts.add(parseCost(bos.toString()));
             bos.reset();
 
-            // startTime = System.nanoTime();
-            // PartC_IDS.iterativeDeepeningSearch(start, goal, planetSize);
-            // endTime = System.nanoTime();
-            // idsTimes.add(endTime - startTime);
-            // idsCosts.add(parseCost(bos.toString()));
-            // bos.reset();
+            startTime = System.nanoTime();
+            PartC_IDS.iterativeDeepeningSearch(start, goal, planetSize);
+            endTime = System.nanoTime();
+            idsTimes.add(endTime - startTime);
+            idsCosts.add(parseCost(bos.toString()));
+            bos.reset();
 
             startTime = System.nanoTime();
             PartB_SMAStar.smaStar(start, goal, planetSize, memorySize);
@@ -103,8 +103,8 @@ public class BenchMarkScript {
         writer.write("DFS Times: " + dfsTimes + "\nDFS Costs: " + dfsCosts + "\n");
         writer.write("AStar Times: " + astarTimes + "\nAStar Costs: " + astarCosts + "\n");
         writer.write("BestF Times: " + bestfTimes + "\nBestF Costs: " + bestfCosts + "\n");
-        // writer.write("IDS Times: " + idsTimes + "\nIDS Costs: " + idsCosts + "\n");
-        writer.write("SMAStar Times: " + smastarTimes + "\nIDS Costs: " + smastarCosts + "\n");
+        writer.write("IDS Times: " + idsTimes + "\nIDS Costs: " + idsCosts + "\n");
+        writer.write("SMAStar Times: " + smastarTimes + "\nSMAStar Costs: " + smastarCosts + "\n");
         writer.close();
     }
 

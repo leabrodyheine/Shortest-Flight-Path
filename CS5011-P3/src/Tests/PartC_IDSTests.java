@@ -21,11 +21,10 @@ public class PartC_IDSTests {
         Node start = new Node(3, 0, null, 0, goal);
         int planetSize = 4;
         String frontier_result = "[(3:0)]\n"
-                + "[(3:315), (3:45), (3:0), (2:0)]\n"
-                + "[(1:0), (3:90), (2:315), (3:45), (2:45), (3:0), (2:0)]\n"
+                + "[(3:45), (3:0), (2:0)]\n"
                 + "(3:0)(3:45)(3:90)\n"
                 + "4.712\n"
-                + "7\n";
+                + "3\n";
 
         PartC_IDS.iterativeDeepeningSearch(start, goal, planetSize);
         assertEquals(frontier_result, outContent.toString());

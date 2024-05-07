@@ -107,35 +107,6 @@ public class PartB_SMAStar {
         }
     }
 
-    // private static void updateFrontier(PriorityQueue<Node> frontier, Node
-    // current, Node goal, int planetSize,
-    // int memorySize,
-    // Map<Node, Node> parentMap) {
-
-    // List<Node> successors;
-    // if (current.getForgotten().size() == 0) {
-    // successors = current.getSuccessors(planetSize, goal);
-    // } else {
-    // successors = current.getForgotten();
-    // }
-    // for (Node successor : successors) {
-    // if (current.getForgotten().contains(successor)) {
-    // current.getForgotten().remove(successor);
-    // } else {
-    // if (!successor.equals(goal) && successor.getDepth() >= memorySize) {
-    // successor.setfCost(10000);
-    // }
-    // }
-    // successor.setLeaf(true);
-    // successor.getParent().setLeaf(false);
-    // }
-    // frontier.addAll(successors);
-
-    // if (frontier.size() > memorySize) {
-    // shrinkFrontier(frontier, parentMap, goal, memorySize);
-    // }
-    // }
-
     /**
      * Reduces the size of the frontier when it exceeds the memory limit, removing
      * the least promising nodes.
