@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "BenchMarkScript",
+            "request": "launch",
+            "mainClass": "Tests.BenchMarkScript",
+            "projectName": "5011-P3_8d6aa229"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"

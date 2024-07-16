@@ -7,9 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.stream.Collectors;
 
@@ -39,16 +37,15 @@ public class PartB_SMAStar {
                 Comparator.comparingDouble(Node::getfCost)
                         .thenComparingInt(Node::getD)
                         .thenComparingInt(Node::getAngle));
-        Map<Node, Double> costSoFar = new HashMap<>();
         int visitedCount = 0;
 
         frontier.add(start);
-        costSoFar.put(start, 0.0);
 
         while (!frontier.isEmpty()) {
             visitedCount++;
             printFrontier(frontier);
             Node current = frontier.poll();
+            current.setVisited(true);
 
             if (current.getfCost() >= 10000.0 || current.getDepth() >= memorySize) {
                 break;
@@ -81,22 +78,19 @@ public class PartB_SMAStar {
         List<Node> successors = new ArrayList<>(
                 current.getForgotten().size() == 0 ? current.getSuccessors(planetSize, goal) : current.getForgotten());
 
-        // Process the nodes to add or remove to/from frontier outside of the iteration
-        // over successors
-        List<Node> toAdd = new ArrayList<>();
+        // List<Node> sucessors = new ArrayList<>();
         for (Node successor : successors) {
-            if (!successor.equals(goal) && successor.getDepth() >= memorySize) {
+            if (current.getForgotten().contains(successor)) {
+                current.getForgotten().remove(successor);
+            } else if (!successor.equals(goal) && successor.getDepth() >= memorySize) {
                 successor.setfCost(10000);
             }
             successor.setLeaf(true);
             if (successor.getParent() != null) {
                 successor.getParent().setLeaf(false);
             }
-            toAdd.add(successor);
         }
-
-        // Now modify the frontier
-        frontier.addAll(toAdd);
+        frontier.addAll(successors);
 
         if (frontier.size() > memorySize) {
             shrinkFrontier(frontier, goal, memorySize);
@@ -208,7 +202,7 @@ public class PartB_SMAStar {
      * Constructs the path from the goal node back to the start node using the
      * parent map.
      *
-     * @param goal      The goal node where the path ends.
+     * @param goal The goal node where the path ends.
      * @return A list of nodes representing the path from the goal to the start.
      */
     private static List<Node> constructPath(Node goal) {

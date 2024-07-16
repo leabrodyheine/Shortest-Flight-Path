@@ -13,6 +13,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
@@ -20,41 +21,44 @@ import java.util.regex.Pattern;
 public class BenchMarkScript {
 
     public static void main(String[] args) throws IOException {
-        FileWriter writer = new FileWriter("BenchMarkOutput.txt", true);
+        FileWriter writer = new FileWriter("BenchMarkOutput.txt");
         PrintStream originalOut = System.out;
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         System.setOut(new PrintStream(bos));
 
         List<Long> bfsTimes = new ArrayList<>();
-        List<Double> bfsCosts = new ArrayList<>();
+        List<String> bfsCosts = new ArrayList<>();
 
         List<Long> dfsTimes = new ArrayList<>();
-        List<Double> dfsCosts = new ArrayList<>();
+        List<String> dfsCosts = new ArrayList<>();
 
         List<Long> astarTimes = new ArrayList<>();
-        List<Double> astarCosts = new ArrayList<>();
+        List<String> astarCosts = new ArrayList<>();
 
         List<Long> bestfTimes = new ArrayList<>();
-        List<Double> bestfCosts = new ArrayList<>();
+        List<String> bestfCosts = new ArrayList<>();
 
         List<Long> smastarTimes = new ArrayList<>();
-        List<Double> smastarCosts = new ArrayList<>();
+        List<String> smastarCosts = new ArrayList<>();
 
         List<Long> idsTimes = new ArrayList<>();
-        List<Double> idsCosts = new ArrayList<>();
+        List<String> idsCosts = new ArrayList<>();
 
         Random rand = new Random();
-        int planetSize = 5;
-        int memorySize = planetSize + 2;
+        rand.setSeed(5);
+        int planetSize = 8;
+        int memorySize = planetSize * 2;
+        HashMap<Node, Node> testCases = new HashMap<Node, Node>();
 
-        for (int i = 0; i < 10; i++) {
-            int goal_d = rand.nextInt(planetSize) + 1;
-            int start_d = rand.nextInt(planetSize) + 1;
+        for (int i = 0; i < 100; i++) {
+            int goal_d = rand.nextInt(planetSize - 1) + 1;
+            int start_d = rand.nextInt(planetSize - 1) + 1;
             int goal_a = rand.nextInt(8) * 45;
             int start_a = rand.nextInt(8) * 45;
 
             Node goal = new Node(goal_d, goal_a, null, 0, null);
             Node start = new Node(start_d, start_a, null, 0, goal);
+            testCases.put(start, goal);
 
             long startTime = System.nanoTime();
             PartA_BFS.bfs(start, goal, planetSize);
@@ -99,7 +103,10 @@ public class BenchMarkScript {
             bos.reset();
         }
         System.setOut(originalOut);
-        writer.write("BFS Times: " + bfsTimes + "\nBFS Costs: " + bfsCosts + "\n");
+        for (Node start : testCases.keySet()){
+            writer.write(start + ", " + testCases.get(start));
+        }
+        writer.write("\nBFS Times: " + bfsTimes + "\nBFS Costs: " + bfsCosts + "\n");
         writer.write("DFS Times: " + dfsTimes + "\nDFS Costs: " + dfsCosts + "\n");
         writer.write("AStar Times: " + astarTimes + "\nAStar Costs: " + astarCosts + "\n");
         writer.write("BestF Times: " + bestfTimes + "\nBestF Costs: " + bestfCosts + "\n");
@@ -108,12 +115,15 @@ public class BenchMarkScript {
         writer.close();
     }
 
-    private static double parseCost(String output) {
-        Pattern pattern = Pattern.compile("\\((\\d+:\\d+)\\)\\n(\\d+\\.\\d+)");
-        java.util.regex.Matcher matcher = pattern.matcher(output);
-        if (matcher.find()) {
-            return Double.parseDouble(matcher.group(2)); // Get the cost from the regex group
+    private static String parseCost(String output) {
+        String[] arr = output.split("\n");
+        if (arr.length > 1) {
+            String cost = arr[arr.length - 2];
+            if (cost.contains("fail")){
+                return "10000";
+            }
+            return cost;
         }
-        return 0.0; // Return 0 or some error value if not found
+        return null;
     }
 }

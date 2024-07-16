@@ -20,11 +20,22 @@ public class PartC_IDSTests {
         Node goal = new Node(3, 90, null, 0, null);
         Node start = new Node(3, 0, null, 0, goal);
         int planetSize = 4;
-        String frontier_result = "[(3:0)]\n"
-                + "[(3:45), (3:0), (2:0)]\n"
-                + "(3:0)(3:45)(3:90)\n"
-                + "4.712\n"
-                + "3\n";
+        String frontier_result = "(3:0)(3:45)(3:90)\n"
+                + "4.712\n";
+
+        PartC_IDS.iterativeDeepeningSearch(start, goal, planetSize);
+        assertEquals(frontier_result, outContent.toString());
+    }
+
+    @Test
+    public void testBasicPathfinding2() {
+        System.setOut(new PrintStream(outContent));
+
+        Node goal = new Node(7, 90, null, 0, null);
+        Node start = new Node(1, 225, null, 0, goal);
+        int planetSize = 8;
+        String frontier_result = "(1:225)(1:180)(1:135)(1:90)(2:90)(3:90)(4:90)(5:90)(6:90)(7:90)\n"
+                + "8.356\n";
 
         PartC_IDS.iterativeDeepeningSearch(start, goal, planetSize);
         assertEquals(frontier_result, outContent.toString());
@@ -50,10 +61,8 @@ public class PartC_IDSTests {
         Node goal = new Node(2, 90, null, 0, null);
         Node start = new Node(7, 0, null, 0, goal);
         int planetSize = 8;
-        String frontier_result = "[(1:0), (7:0), (6:0), (5:0), (2:45), (4:0), (3:0), (2:0)]\n"
-                + "(7:0)(6:0)(5:0)(4:0)(3:0)(2:0)(2:45)(2:90)\n"
-                + "8.142\n"
-                + "8\n";
+        String frontier_result = "(7:0)(6:0)(5:0)(4:0)(3:0)(2:0)(2:45)(2:90)\n"
+                + "8.142\n";
 
         PartC_IDS.iterativeDeepeningSearch(start, goal, planetSize);
         assertEquals(frontier_result, outContent.toString());
@@ -66,7 +75,7 @@ public class PartC_IDSTests {
         Node goal = new Node(1, 0, null, 0, null);
         Node start = new Node(3, 180, null, 0, goal);
         int planetSize = 4;
-        String frontier_result = "[(3:180)4.000]\n"
+        String frontier_result = "(3:180)(2:180)(1:180)(1:135)(1:90)(1:45)(1:0)\n"
                 + "5.142\n";
         PartC_IDS.iterativeDeepeningSearch(start, goal, planetSize);
         assertEquals(frontier_result, outContent.toString());
