@@ -1,32 +1,18 @@
 # Pathfinding Algorithms for Planetary Navigation
 
 ## Project Overview
-This project implements several pathfinding algorithms to navigate a 2D grid 
-representing a planet. The goal is to find efficient routes from a starting 
-point to a destination under various constraints. The algorithms implemented 
-include Breadth-First Search (BFS), Depth-First Search (DFS), A* Search, 
-Best-First Search, Simplified Memory-Bounded A* (SMA*), and Iterative Deepening 
-Search (IDS). Each algorithm is designed to solve the problem with specific 
-advantages and trade-offs in terms of memory usage, runtime efficiency, and path 
-optimality.
+This project is part of the CS5011 module at the University of St Andrews, focusing on implementing and evaluating AI search algorithms for a flight route planner across the constellation of planets called Oedipus. Each planet is represented as a 2D circular grid. The primary task is to compute the best route from a departure airport (S) to a destination airport (G) using various algorithms under different constraints.
 
-For Part C of the project, I selected the Iterative Deepening Search (IDS) algorithm. 
-I chose IDS for its ability to combine the depth-first searching approach, 
-which minimizes memory usage, with the breadth-first search’s ability to find 
-the shortest path. This makes IDS particularly effective for scenarios where the 
-depth of the solution is unknown or the state space is very large.
+Implemented algorithms include:
+- Uninformed Search: Depth-First Search (DFS), Breadth-First Search (BFS)
+- Informed Search: Best-First Search (BestF), A* Search (AStar), Simplified Memory-Bounded A* (SMA*)
+- Advanced Search Options: Iterative Deepening Search (IDS) and other custom functionalities
 
+## How to Compile and Run the Code
+Ensure you have Java installed (JDK17, as used in the School Lab Machines). Navigate to the project directory and use the following commands:
 
-## How to Run the Benchmark Testing
-Compile the Java files:
-1. cd src
-2. javac Algorithms/*.java General/*.java
-3. javac Tests/BenchMarkScript.java
-4. java Tests/BenchMarkScript.java
-5. view the results in BenchMarkOutput.txt (optional)
-6. From the IDE, run the MakeBoxPlots.py script to generate box plots for runtime 
-and cost. This will display box plots illustrating the performance comparisons 
-across the implemented algorithms.
-
-## How to run Junit testing
-Navigate to the testing folder, then you can run the tests from inside the IDE.
+### Compilation
+```bash
+cd src
+javac Algorithms/*.java General/*.java
+javac Tests/BenchmarkScript.java
