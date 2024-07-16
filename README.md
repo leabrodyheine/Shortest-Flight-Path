@@ -16,3 +16,11 @@ Ensure you have Java installed (JDK17, as used in the School Lab Machines). Navi
 cd src
 javac Algorithms/*.java General/*.java
 javac Tests/BenchmarkScript.java
+
+
+java P3main <Algorithm> <N> <d_s:angle_s> <d_g:angle_g>
+# Example: java P3main BFS 5 2:45 1:180
+
+
+java Tests/BenchmarkScript.java
+# Output in BenchmarkOutput.txt
