@@ -1,7 +1,7 @@
 # Pathfinding Algorithms for Planetary Navigation
 
 ## Project Overview
-This project is part of the CS5011 module at the University of St Andrews, focusing on implementing and evaluating AI search algorithms for a flight route planner across the constellation of planets called Oedipus. Each planet is represented as a 2D circular grid. The primary task is to compute the best route from a departure airport (S) to a destination airport (G) using various algorithms under different constraints.
+This project focuses on implementing and evaluating AI search algorithms for a flight route planner across the constellation of planets called Oedipus. Each planet is represented as a 2D circular grid. The primary task is to compute the best route from a departure airport (S) to a destination airport (G) using various algorithms under different constraints.
 
 Implemented algorithms include:
 - Uninformed Search: Depth-First Search (DFS), Breadth-First Search (BFS)
