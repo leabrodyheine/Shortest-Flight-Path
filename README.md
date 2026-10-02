@@ -1,26 +1,36 @@
 # Pathfinding Algorithms for Planetary Navigation
 
-## Project Overview
-This project focuses on implementing and evaluating AI search algorithms for a flight route planner across the constellation of planets called Oedipus. Each planet is represented as a 2D circular grid. The primary task is to compute the best route from a departure airport (S) to a destination airport (G) using various algorithms under different constraints.
+A completed Java coursework project that compares search strategies for routing between airports in the fictional Oedipus planetary system. Each planet is represented as a two-dimensional circular grid, and the command-line program reports a route from a start airport to a goal airport.
 
-Implemented algorithms include:
-- Uninformed Search: Depth-First Search (DFS), Breadth-First Search (BFS)
-- Informed Search: Best-First Search (BestF), A* Search (AStar), Simplified Memory-Bounded A* (SMA*)
-- Advanced Search Options: Iterative Deepening Search (IDS) and other custom functionalities
+## Algorithms
 
-## How to Compile and Run the Code
-Ensure you have Java installed (JDK17, as used in the School Lab Machines). Navigate to the project directory and use the following commands:
+- Depth-first search (DFS)
+- Breadth-first search (BFS)
+- Best-first search
+- A* search
+- Simplified Memory-Bounded A* (SMA*)
+- Iterative deepening search (IDS)
 
-### Compilation
+## Build and run
+
+The project was developed with JDK 17.
+
 ```bash
-cd src
-javac Algorithms/*.java General/*.java
-javac Tests/BenchmarkScript.java
+cd "Shortest Flight Path/src"
+javac Algorithms/*.java General/*.java Tests/BenchMarkScript.java P3main.java
+java P3main BFS 5 2:45 1:180
+```
 
+The arguments are `<algorithm> <world-size> <start-distance:start-angle> <goal-distance:goal-angle> [memory-size]`. The optional memory size is used by SMA*.
 
-java P3main <Algorithm> <N> <d_s:angle_s> <d_g:angle_g>
-# Example: java P3main BFS 5 2:45 1:180
+Run the benchmark harness with:
 
+```bash
+java Tests.BenchMarkScript
+```
 
-java Tests/BenchmarkScript.java
-# Output in BenchmarkOutput.txt
+Benchmark output and the accompanying analysis are included in `Shortest Flight Path/src/BenchMarkOutput.txt` and `CS5011-P3 Report.pdf`.
+
+## Project status
+
+This repository contains the completed implementation, tests, benchmarks, and report for the assignment.
